@@ -15,6 +15,8 @@ import java.sql.Timestamp;
 import java.util.Calendar;
 import java.util.Properties;
 
+import data.Account;
+
 
 /**
  * Accesses the database
@@ -148,6 +150,33 @@ public class Database implements AutoCloseable {
 	 * @throws SQLException */
 	public void logout(String token) throws SQLException {
 		deleteToken(token);
+	}
+	
+	/** Gets the account for the given token or null if the token is invalid 
+	 * @throws SQLException */
+	public Account getAccount(String token) throws SQLException {
+		Statement statement = connection.createStatement();
+		String sql = String.format("SELECT * FROM accounts JOIN tokens ON accounts.idAccount=tokens.idAccount WHERE token = '%s'", token);
+		ResultSet results = statement.executeQuery(sql);
+		if (results.next()) {
+			int id = results.getInt("idAccount");
+			String netid = results.getString("netid");
+			String firstName = results.getString("firstName");
+			String lastName = results.getString("lastName");
+			return new Account(id, netid, firstName, lastName);
+		} else {
+			return null;
+		}
+	}
+	
+	/** Creates an account */
+	public void createAccount(String netid, String firstName, String lastName) {
+		//TODO implement
+	}
+	
+	/** Deletes an account */
+	public void deleteAccount(String netid) {
+		//TODO implement
 	}
 	
 	/** Closes the connection to the database 
