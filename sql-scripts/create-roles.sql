@@ -1,0 +1,5 @@
+CREATE TABLE roles (
+idRole INT NOT NULL,
+name VARCHAR(10) NOT NULL,
+PRIMARY KEY (idRole)
+);

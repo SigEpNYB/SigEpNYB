@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>SigEp | Dashboard</title>
+</head>
+<body>
+	<noscript>You need javascript!</noscript>
+	
+	<div id="token"></div>
+	
+	<script type="text/javascript">
+		function getCookie(cname) {
+		    var name = cname + "=";
+		    var ca = document.cookie.split(';');
+		    for(var i=0; i<ca.length; i++) {
+		        var c = ca[i];
+		        while (c.charAt(0)==' ') c = c.substring(1);
+		        if (c.indexOf(name) == 0) return c.substring(name.length,c.length);
+		    }
+		    return "";
+		}
+		
+		var token = getCookie('token');
+		
+		var xhr = new XMLHttpRequest();
+		xhr.onreadystatechange = function() {
+    		if (xhr.readyState == 4) {
+        		var data = xhr.responseText;
+        		if (data.charAt(0) == 'f') {
+        			logout();
+        		}
+    		}
+		}
+		
+		xhr.open('GET', 'Login', true);
+		xhr.setRequestHeader('Auth', token)
+		xhr.send(null);
+		
+		document.getElementById('token').innerHTML = 'Your token is: ' + token;
+		
+		function logout() {
+			var xhr = new XMLHttpRequest();
+			xhr.onreadystatechange = function() {
+	    		if (xhr.readyState == 4) {
+	        		window.location.href = '/Fratsite/index.html';
+	        		document.cookie = "token=; expires=Thu, 01 Jan 1970 00:00:00 UTC";
+	    		}
+			}
+			
+			xhr.open('DELETE', 'Login', true);
+			xhr.setRequestHeader('Auth', token)
+			xhr.send(null);
+		}
+	</script>
+	
+	<input type="submit" value="Logout" onclick="logout()"/>
+</body>
+</html>

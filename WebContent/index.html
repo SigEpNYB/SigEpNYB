@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>SigEp | Login</title>
+</head>
+<body>
+	<noscript>You need javascript!</noscript>
+	<script>
+		function login() {
+			var xhr = new XMLHttpRequest();
+	    	xhr.onreadystatechange = function() {
+	        	if (xhr.readyState == 4) {
+	            	var data = xhr.responseText;
+	            	if (xhr.status == 200) {
+	            		document.cookie = 'token=' + data;
+	            		window.location.href = '/Fratsite/dashboard.html';
+	            	} else {
+	            		document.getElementById('errormsg').innerHTML = 'Ivalid Credentials';
+	            		document.getElementById('password').value = '';
+	            	}
+	        	}
+	    	}
+	    	var netid = document.getElementById('netid').value;
+	    	var password = document.getElementById('password').value;
+	    	xhr.open('POST', 'Login?netid=' + netid + '&password=' + password, true);
+	    	xhr.send(null);
+		}
+	</script>
+	
+	<h2>Login</h2><br>
+	<br>
+	<form onsubmit="login(); return false;">
+		NetID: <input type="text" name="netid" id="netid"/><br>
+		Password: <input type="password" name="password" id="password"/><br>
+		<input type="submit" value="Login"/>
+	</form>
+	<div id="errormsg"></div>
+</body>
+</html>
