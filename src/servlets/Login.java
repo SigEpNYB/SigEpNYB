@@ -9,6 +9,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.json.JSONObject;
+
 import database.Database;
 
 /**
@@ -32,10 +34,13 @@ public class Login extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		response.setContentType("text/plain");
 		PrintWriter writer = response.getWriter();
+		JSONObject output = new JSONObject();
 		
 		String token = request.getHeader("Auth");
 		try (Database db = new Database()) {
-			writer.println(db.checkToken(token));
+			output.put("hasToken", db.checkToken(token));
+			output.put("hasError", false);
+			output.write(writer);
 		} catch (Exception e) {
 			response.sendError(500, e.getMessage());
 			e.printStackTrace();
@@ -48,18 +53,22 @@ public class Login extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		response.setContentType("text/plain");
 		PrintWriter writer = response.getWriter();
+		JSONObject output = new JSONObject();
 		
 		String netid = request.getParameter("netid");
 		String password = request.getParameter("password");
 		
 		try (Database db = new Database()) {
 			String token = db.login(netid, password);
-			
+
+			output.put("hasError", false);
 			if (token == null) {
-				response.sendError(400, "Invalid Credentials");
-			} else {
-				writer.println(token);
+				output.put("hasError", true);
+				output.put("error", "Invalid credentials");
 			}
+			output.put("token", token);
+			
+			output.write(writer);
 		} catch (Exception e) {
 			response.sendError(500, e.getMessage());
 			e.printStackTrace();
