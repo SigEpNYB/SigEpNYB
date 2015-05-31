@@ -1,8 +1,8 @@
 INSERT INTO user_roles (idAccount, idRole)
-VALUES (0, 0);
+VALUES (1, 1);
 
 INSERT INTO user_roles (idAccount, idRole)
-VALUES (1, 0);
+VALUES (2, 1);
 
 INSERT INTO user_roles (idAccount, idRole)
-VALUES (0, 1);
+VALUES (1, 2);

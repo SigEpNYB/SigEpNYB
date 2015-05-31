@@ -1,5 +1,5 @@
 CREATE TABLE accounts (
-idAccount INT NOT NULL,
+idAccount INT NOT NULL AUTO_INCREMENT,
 netid VARCHAR(7) NOT NULL,
 password VARCHAR(15) NOT NULL,
 firstName VARCHAR(15) NOT NULL,
