@@ -16,6 +16,7 @@ import java.util.Calendar;
 import java.util.Properties;
 
 import data.Account;
+import data.Roles;
 
 
 /**
@@ -155,6 +156,7 @@ public class Database implements AutoCloseable {
 	/** Gets the account for the given token or null if the token is invalid 
 	 * @throws SQLException */
 	public Account getAccount(String token) throws SQLException {
+		//TODO check token
 		Statement statement = connection.createStatement();
 		String sql = String.format("SELECT * FROM accounts JOIN tokens ON accounts.idAccount=tokens.idAccount WHERE token = '%s'", token);
 		ResultSet results = statement.executeQuery(sql);
@@ -163,8 +165,10 @@ public class Database implements AutoCloseable {
 			String netid = results.getString("netid");
 			String firstName = results.getString("firstName");
 			String lastName = results.getString("lastName");
+			statement.close();
 			return new Account(id, netid, firstName, lastName);
 		} else {
+			statement.close();
 			return null;
 		}
 	}
@@ -177,6 +181,27 @@ public class Database implements AutoCloseable {
 	/** Deletes an account */
 	public void deleteAccount(String netid) {
 		//TODO implement
+	}
+	
+	/** Gets the roles associated with the given token 
+	 * @throws SQLException */
+	public Roles getRoles(String token) throws SQLException {
+		Statement statement = connection.createStatement();
+		String sql = String.format("select roles.name, role_links.pageName, role_links.href from accounts "
+				+ "join tokens on accounts.idAccount=tokens.idAccount "
+				+ "join user_roles on accounts.idAccount=user_roles.idAccount "
+				+ "join roles on user_roles.idRole=roles.idRole "
+				+ "join role_links on user_roles.idRole=role_links.idRole "
+				+ "where token = '%s'", token);
+		ResultSet results = statement.executeQuery(sql);
+		
+		Roles roles = new Roles();
+		while (results.next()) {
+			roles.addLink(results.getString("name"), results.getString("pageName"), results.getString("href"));
+		}
+		
+		statement.close();
+		return roles;
 	}
 	
 	/** Closes the connection to the database 

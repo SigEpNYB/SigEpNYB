@@ -8,6 +8,7 @@
 	<noscript>You need javascript!</noscript>
 	
 	<h1 id="name"></h1>
+	<div id="roles"></div>
 	
 	<script type="text/javascript">
 		function getCookie(cname) {
@@ -52,8 +53,30 @@
 			xhr.setRequestHeader('Auth', token)
 			xhr.send(null);
 		}
+		
+		var xhr2 = new XMLHttpRequest();
+		xhr2.onreadystatechange = function() {
+    		if (xhr2.readyState == 4) {
+        		var resp = JSON.parse(xhr2.responseText);
+        		var rolesHTML = '';
+        		for (var i = 0; i < resp.length; i++) {
+        			var role = resp[i];
+        			rolesHTML += '<h3>' + role.name + '</h3>'
+        			for (var j = 0; j < role.links.length; j++) {
+        				var link = role.links[j];
+        				rolesHTML += '<a href=' + link.href + '>' + link.pageName + '</a><br>'
+        			}
+        		}
+        		document.getElementById('roles').innerHTML = rolesHTML;
+    		}
+		}
+		
+		xhr2.open('GET', 'Roles', true);
+		xhr2.setRequestHeader('Auth', token)
+		xhr2.send(null);
 	</script>
 	
+	<br><br>
 	<input type="submit" value="Logout" onclick="logout()"/>
 </body>
 </html>
