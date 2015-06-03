@@ -55,7 +55,7 @@
 		var xhr2 = new XMLHttpRequest();
 		xhr2.onreadystatechange = function() {
 			if (xhr2.readyState == 4) {
-	    		var table = '<tr><td>First Name</td><td>Last Name</td><td>NetID</td></tr>';
+	    		var table = '<tr><td><b>First Name</b></td><td><b>Last Name</b></td><td><b>NetID</b></td></tr>';
 				var resp = JSON.parse(xhr2.responseText);
 	    		for (var i = 0; i < resp.length; i++) {
 	    			var member = resp[i];
@@ -69,5 +69,7 @@
 		xhr2.setRequestHeader('Auth', token);
 		xhr2.send(null);
 	</script>
+	<br>
+	<button onclick="window.location.href='/Fratsite/dashboard.html'">Dashboard</button>
 </body>
 </html>
