@@ -39,9 +39,14 @@ public class Database implements AutoCloseable {
 		connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/fratdata", properties);
 	}
 	
+	/** Generates a random alpha-numeric string */
+	private String generateRandomStr(int length) {
+		return new BigInteger(length * 5, new SecureRandom()).toString(32);
+	}
+	
 	/** Creates a new token and inserts it in the token table */
 	private String newToken(int idAccount) throws SQLException {
-		String token = new BigInteger(150, new SecureRandom()).toString(32);
+		String token = generateRandomStr(30);
 		Timestamp now = getNow();
 		
 		String sql = String.format("INSERT INTO tokens (token, idAccount, loggedIn, lastActive) VALUES ('%s', %d, ?, ?)", token, idAccount);
@@ -173,9 +178,23 @@ public class Database implements AutoCloseable {
 		}
 	}
 	
-	/** Creates an account */
-	public void createAccount(String netid, String firstName, String lastName) {
-		//TODO implement
+	/** Creates an account 
+	 * @throws SQLException */
+	public void createAccount(String netid, String firstName, String lastName) throws SQLException {
+		String password = generateRandomStr(5);
+		
+		Statement statement = connection.createStatement();
+		String sql = String.format("INSERT INTO accounts (netid, password, firstName, lastName)"
+				+ "VALUES ('%s', '%s', '%s', '%s')", netid, password, firstName, lastName);
+		statement.executeUpdate(sql);
+		
+		ResultSet results = statement.executeQuery(String.format("SELECT idAccount from accounts WHERE netid='%s'", netid));
+		results.next();
+		int idAccount = results.getInt("idAccount");
+		
+		statement.executeUpdate(String.format("INSERT INTO user_roles (idAccount, idRole) VALUES (%d, 1)", idAccount));
+		
+		statement.close();
 	}
 	
 	/** Deletes an account */
@@ -187,21 +206,39 @@ public class Database implements AutoCloseable {
 	 * @throws SQLException */
 	public Roles getRoles(String token) throws SQLException {
 		Statement statement = connection.createStatement();
-		String sql = String.format("select roles.name, role_links.pageName, role_links.href from accounts "
-				+ "join tokens on accounts.idAccount=tokens.idAccount "
+		String sql = String.format("select roles.name, permissions.name, permissions.href from tokens "
+				+ "join accounts on tokens.idAccount=accounts.idAccount "
 				+ "join user_roles on accounts.idAccount=user_roles.idAccount "
 				+ "join roles on user_roles.idRole=roles.idRole "
-				+ "join role_links on user_roles.idRole=role_links.idRole "
-				+ "where token = '%s'", token);
+				+ "join role_permissions on roles.idRole=role_permissions.idRole "
+				+ "join permissions on role_permissions.idPermission=permissions.idPermission "
+				+ "where tokens.token='%s'", token);
 		ResultSet results = statement.executeQuery(sql);
 		
 		Roles roles = new Roles();
 		while (results.next()) {
-			roles.addLink(results.getString("name"), results.getString("pageName"), results.getString("href"));
+			roles.addLink(results.getString(1), results.getString(2), results.getString(3));
 		}
 		
 		statement.close();
 		return roles;
+	}
+	
+	/** Checks whether the user with the given token has the permission in question 
+	 * @throws SQLException */
+	public boolean hasPermission(String token, int idPermission) throws SQLException {
+		Statement statement = connection.createStatement();
+		String sql = String.format("SELECT tokens.token FROM tokens "
+				+ "JOIN accounts ON tokens.idAccount=accounts.idAccount "
+				+ "JOIN user_roles ON accounts.idAccount=user_roles.idAccount "
+				+ "JOIN roles ON user_roles.idRole=roles.idRole "
+				+ "JOIN role_permissions ON roles.idRole=role_permissions.idRole "
+				+ "JOIN permissions ON role_permissions.idPermission=permissions.idPermission "
+				+ "WHERE tokens.token='%s' AND permissions.idPermission=%d", token, idPermission);
+		ResultSet results = statement.executeQuery(sql);
+		boolean ret = results.next();
+		statement.close();
+		return ret;
 	}
 	
 	/** Closes the connection to the database 

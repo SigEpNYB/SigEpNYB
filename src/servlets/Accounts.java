@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.json.JSONObject;
+import org.json.JSONTokener;
 
 import data.Account;
 import database.Database;
@@ -54,7 +55,16 @@ public class Accounts extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
+		String token = request.getHeader("Auth");
+		JSONObject account = new JSONObject(new JSONTokener(request.getInputStream()));
+		try (Database db = new Database()) {
+			if (db.hasPermission(token, 2)) {
+				db.createAccount(account.getString("netid"), account.getString("firstName"), account.getString("lastName"));
+			}
+		} catch (Exception e) {
+			response.sendError(500, e.getMessage());
+			e.printStackTrace();
+		}
 	}
 
 }
