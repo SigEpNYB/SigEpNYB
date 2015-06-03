@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>SigEp | Members</title>
+</head>
+<body>
+	<noscript>You need javascript!</noscript>
+	<h1 id="name"></h1><br>
+	<table id=members></table>
+	<script>
+		function getCookie(cname) {
+		    var name = cname + "=";
+		    var ca = document.cookie.split(';');
+		    for(var i=0; i<ca.length; i++) {
+		        var c = ca[i];
+		        while (c.charAt(0)==' ') c = c.substring(1);
+		        if (c.indexOf(name) == 0) return c.substring(name.length,c.length);
+		    }
+		    return "";
+		}
+		
+		var token = getCookie('token');
+		
+		var xhr = new XMLHttpRequest();
+		xhr.onreadystatechange = function() {
+			if (xhr.readyState == 4) {
+	    		var resp = JSON.parse(xhr.responseText);
+	    		if (resp == null) {
+	    			logout();
+	    		} else {
+	    			document.getElementById('name').innerHTML = resp.firstName + ' ' + resp.lastName;
+	    		}
+			}
+		}
+		
+		xhr.open('GET', 'Account', true);
+		xhr.setRequestHeader('Auth', token);
+		xhr.send(null);
+		
+		function logout() {
+			var xhr = new XMLHttpRequest();
+			xhr.onreadystatechange = function() {
+	    		if (xhr.readyState == 4) {
+	        		window.location.href = '/Fratsite/index.html';
+	        		document.cookie = "token=; expires=Thu, 01 Jan 1970 00:00:00 UTC";
+	    		}
+			}
+			
+			xhr.open('DELETE', 'Login', true);
+			xhr.setRequestHeader('Auth', token);
+			xhr.send(null);
+		}
+		
+		var xhr2 = new XMLHttpRequest();
+		xhr2.onreadystatechange = function() {
+			if (xhr2.readyState == 4) {
+	    		var table = '<tr><td>First Name</td><td>Last Name</td><td>NetID</td></tr>';
+				var resp = JSON.parse(xhr2.responseText);
+	    		for (var i = 0; i < resp.length; i++) {
+	    			var member = resp[i];
+	    			table += '<tr><td>' + member.firstName + '</td><td>' + member.lastName + '</td><td>' + member.netid + '</td></tr>';
+	    		}
+	    		document.getElementById('members').innerHTML = table;
+			}
+		}
+		
+		xhr2.open('GET', 'Accounts', true);
+		xhr2.setRequestHeader('Auth', token);
+		xhr2.send(null);
+	</script>
+</body>
+</html>

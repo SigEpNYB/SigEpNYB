@@ -1,6 +1,7 @@
 package servlets;
 
 import java.io.IOException;
+import java.io.Writer;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -8,6 +9,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 import org.json.JSONTokener;
 
@@ -32,7 +34,19 @@ public class Accounts extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		response.setContentType("text/json");
+		Writer writer = response.getWriter();
 		
+		String token = request.getHeader("Auth");
+		try (Database db = new Database()) {
+			if (db.hasPermission(token, 1)) {
+				JSONArray json = new JSONArray(db.getAccounts());
+				json.write(writer);
+			}
+		} catch (Exception e) {
+			response.sendError(500, e.getMessage());
+			e.printStackTrace();
+		}
 	}
 
 	/**

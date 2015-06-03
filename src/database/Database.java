@@ -13,6 +13,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Timestamp;
 import java.util.Calendar;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Properties;
 
 import data.AccountData;
@@ -176,6 +178,24 @@ public class Database implements AutoCloseable {
 			statement.close();
 			return null;
 		}
+	}
+	
+	/** Gets all of the accounts */
+	public AccountData[] getAccounts() throws SQLException {
+		Statement statement = connection.createStatement();
+		String sql = "SELECT idAccount, netid, firstName, lastName FROM accounts";
+		ResultSet results = statement.executeQuery(sql);
+		
+		List<AccountData> accounts = new LinkedList<>();
+		while (results.next()) {
+			int id = results.getInt("idAccount");
+			String netid = results.getString("netid");
+			String firstName = results.getString("firstName");
+			String lastName = results.getString("lastName");
+			accounts.add(new AccountData(id, netid, firstName, lastName));
+		}
+		statement.close();
+		return accounts.toArray(new AccountData[accounts.size()]);
 	}
 	
 	/** Creates an account 
