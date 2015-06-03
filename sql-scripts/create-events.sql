@@ -1,0 +1,8 @@
+CREATE TABLE events (
+idEvent INT NOT NULL AUTO_INCREMENT,
+startTime DATETIME NOT NULL,
+endTime DATETIME NOT NULL,
+title VARCHAR(30) NOT NULL,
+description TEXT NOT NULL,
+PRIMARY KEY (idEvent)
+);
