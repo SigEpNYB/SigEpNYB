@@ -1,7 +1,6 @@
 package servlets;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -12,7 +11,6 @@ import javax.servlet.http.HttpServletResponse;
 import org.json.JSONObject;
 import org.json.JSONTokener;
 
-import data.Account;
 import database.Database;
 
 /**
@@ -34,21 +32,7 @@ public class Accounts extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		response.setContentType("text/json");
-		PrintWriter writer = response.getWriter();
 		
-		String token = request.getHeader("Auth");
-		try (Database db = new Database()) {
-			Account account = db.getAccount(token);
-			
-			JSONObject output = new JSONObject();
-			output.put("firstName", account.firstName);
-			output.put("lastName", account.lastName);
-			output.write(writer);
-		} catch (Exception e) {
-			response.sendError(500, e.getMessage());
-			e.printStackTrace();
-		}
 	}
 
 	/**

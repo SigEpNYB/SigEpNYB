@@ -15,7 +15,7 @@ import java.sql.Timestamp;
 import java.util.Calendar;
 import java.util.Properties;
 
-import data.Account;
+import data.AccountData;
 import data.Roles;
 
 
@@ -160,7 +160,7 @@ public class Database implements AutoCloseable {
 	
 	/** Gets the account for the given token or null if the token is invalid 
 	 * @throws SQLException */
-	public Account getAccount(String token) throws SQLException {
+	public AccountData getAccount(String token) throws SQLException {
 		//TODO check token
 		Statement statement = connection.createStatement();
 		String sql = String.format("SELECT * FROM accounts JOIN tokens ON accounts.idAccount=tokens.idAccount WHERE token = '%s'", token);
@@ -171,7 +171,7 @@ public class Database implements AutoCloseable {
 			String firstName = results.getString("firstName");
 			String lastName = results.getString("lastName");
 			statement.close();
-			return new Account(id, netid, firstName, lastName);
+			return new AccountData(id, netid, firstName, lastName);
 		} else {
 			statement.close();
 			return null;
