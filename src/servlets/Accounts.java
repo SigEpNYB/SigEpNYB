@@ -65,4 +65,20 @@ public class Accounts extends HttpServlet {
 		}
 	}
 
+
+	/**
+	 * @see HttpServlet#doDelete(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doDelete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String token = request.getHeader("Auth");
+		JSONObject account = new JSONObject(new JSONTokener(request.getInputStream()));
+		try (Database db = new Database()) {
+			if (db.hasPermission(token, 3)) {
+				db.deleteAccount(account.getString("netid"));
+			}
+		} catch (Exception e) {
+			response.sendError(500, e.getMessage());
+			e.printStackTrace();
+		}
+	}
 }
