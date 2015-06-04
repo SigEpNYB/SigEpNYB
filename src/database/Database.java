@@ -228,7 +228,6 @@ public class Database implements AutoCloseable {
 		ResultSet results = statement.executeQuery(String.format("SELECT idAccount FROM accounts WHERE netid='%s'", netid));
 		results.next();
 		int idAccount = results.getInt("idAccount");
-		System.out.println(idAccount);
 		statement.executeUpdate(String.format("DELETE FROM user_roles WHERE idAccount=%d", idAccount));
 		statement.executeUpdate(String.format("DELETE FROM accounts WHERE idAccount=%d", idAccount));
 		statement.close();
