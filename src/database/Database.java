@@ -12,12 +12,16 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Timestamp;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Properties;
 
 import data.AccountData;
+import data.Event;
 import data.Roles;
 
 
@@ -228,6 +232,31 @@ public class Database implements AutoCloseable {
 		statement.executeUpdate(String.format("DELETE FROM user_roles WHERE idAccount=%d", idAccount));
 		statement.executeUpdate(String.format("DELETE FROM accounts WHERE idAccount=%d", idAccount));
 		statement.close();
+	}
+	
+	/** Creates an event 
+	 * @throws SQLException */
+	public void createEvent(String title, Date start, Date end, String description) throws SQLException {
+		Statement statement = connection.createStatement();
+		
+		DateFormat dateFormat = new SimpleDateFormat("YYYY-MM-dd HH:mm:ss");
+		String startStr = dateFormat.format(start);
+		String endStr = dateFormat.format(end);
+		
+		String sql = String.format("INSERT INTO events (title, startTime, endTime, description) VALUES ('%s', '%s', '%s', '%s')", title, startStr, endStr, description);
+		statement.executeUpdate(sql);
+		statement.close();
+	}
+	
+	/** Gets all the events between beginSearch and endSearch */
+	public List<Event> getEvents(Date beginSearch, Date endSearch) {
+		//TODO implement
+		return null;
+	}
+	
+	/** Deletes an event */
+	public void deleteEvent(int id) {
+		//TODO implement
 	}
 	
 	/** Gets the roles associated with the given token 

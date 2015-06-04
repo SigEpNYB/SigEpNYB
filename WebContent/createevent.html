@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>SigEp | Create Event</title>
+</head>
+<body>
+	<noscript>You need javascript!</noscript>
+	<h1 id="name"></h1><br>
+	<script>
+		function getCookie(cname) {
+		    var name = cname + "=";
+		    var ca = document.cookie.split(';');
+		    for(var i=0; i<ca.length; i++) {
+		        var c = ca[i];
+		        while (c.charAt(0)==' ') c = c.substring(1);
+		        if (c.indexOf(name) == 0) return c.substring(name.length,c.length);
+		    }
+		    return "";
+		}
+		
+		var token = getCookie('token');
+		
+		var xhr = new XMLHttpRequest();
+		xhr.onreadystatechange = function() {
+			if (xhr.readyState == 4) {
+	    		var resp = JSON.parse(xhr.responseText);
+	    		if (resp == null) {
+	    			logout();
+	    		} else {
+	    			document.getElementById('name').innerHTML = resp.firstName + ' ' + resp.lastName;
+	    		}
+			}
+		}
+		
+		xhr.open('GET', 'Account', true);
+		xhr.setRequestHeader('Auth', token);
+		xhr.send(null);
+		
+		function logout() {
+			var xhr = new XMLHttpRequest();
+			xhr.onreadystatechange = function() {
+	    		if (xhr.readyState == 4) {
+	        		window.location.href = '/Fratsite/index.html';
+	        		document.cookie = "token=; expires=Thu, 01 Jan 1970 00:00:00 UTC";
+	    		}
+			}
+			
+			xhr.open('DELETE', 'Login', true);
+			xhr.setRequestHeader('Auth', token);
+			xhr.send(null);
+		}
+		
+		function addEvent() {
+			var title = document.getElementById('title').value;
+			document.getElementById('title').value = '';
+			var startTime = document.getElementById('startTime').value;
+			document.getElementById('startTime').value = '';
+			var endTime = document.getElementById('endTime').value;
+			document.getElementById('endTime').value = '';
+			var description = document.getElementById('description').value;
+			document.getElementById('description').value = '';
+			var msg = {title:title, startTime:startTime, endTime:endTime, description:description};
+			
+			var xhr = new XMLHttpRequest();
+			xhr.onreadystatechange = function() {
+	    		if (xhr.readyState == 4) {
+	        		var status;
+	    			if (xhr.status == 200) {
+	        			status = "Successfully created event";
+	        		} else {
+	        			status = "Event creation failed";
+	        		}
+	        		document.getElementById("status").innerHTML = status;
+	    		}
+			}
+			
+			xhr.open('POST', 'Events', true);
+			xhr.setRequestHeader('Auth', token);
+			xhr.send(JSON.stringify(msg));
+		}
+	</script>
+	
+	<h2>New Event</h2>
+	<form onsubmit="addEvent(); return false;">
+		Title: <input type="text" id="title"/><br>
+		Start Time: <input type="datetime-local" id="startTime"/><br>
+		End Time: <input type="datetime-local" id="endTime"/><br>
+		Description:<input type="text" id="description"/><br>
+		<input type="submit" value="Create"/>
+	</form>
+	<div id="status"></div><br>
+	
+	<button onclick="window.location.href='/Fratsite/dashboard.html'">Dashboard</button>
+</body>
+</html>
