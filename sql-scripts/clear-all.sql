@@ -1,3 +1,5 @@
+DROP TABLE IF EXISTS role_pages;
+DROP TABLE IF EXISTS pages;
 DROP TABLE IF EXISTS events;
 DROP TABLE IF EXISTS user_roles;
 DROP TABLE IF EXISTS role_permissions;
@@ -13,3 +15,5 @@ source create-roles.sql;
 source create-role_permissions.sql;
 source create-user_roles.sql;
 source create-events.sql;
+source create-pages.sql;
+source create-role_pages.sql

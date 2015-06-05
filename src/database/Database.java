@@ -262,13 +262,13 @@ public class Database implements AutoCloseable {
 	 * @throws SQLException */
 	public Roles getRoles(String token) throws SQLException {
 		Statement statement = connection.createStatement();
-		String sql = String.format("select roles.name, permissions.name, permissions.href from tokens "
-				+ "join accounts on tokens.idAccount=accounts.idAccount "
-				+ "join user_roles on accounts.idAccount=user_roles.idAccount "
-				+ "join roles on user_roles.idRole=roles.idRole "
-				+ "join role_permissions on roles.idRole=role_permissions.idRole "
-				+ "join permissions on role_permissions.idPermission=permissions.idPermission "
-				+ "where tokens.token='%s'", token);
+		String sql = String.format("SELECT roles.name, pages.name, pages.href FROM tokens "
+				+ "JOIN accounts ON tokens.idAccount=accounts.idAccount "
+				+ "JOIN user_roles ON accounts.idAccount=user_roles.idAccount "
+				+ "JOIN roles ON user_roles.idRole=roles.idRole "
+				+ "JOIN role_pages ON roles.idRole=role_pages.idRole "
+				+ "JOIN pages ON role_pages.idPage=pages.idPage "
+				+ "WHERE tokens.token='%s'", token);
 		ResultSet results = statement.executeQuery(sql);
 		
 		Roles roles = new Roles();
