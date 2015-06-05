@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.json.JSONObject;
 import org.json.JSONTokener;
 
-import database.Database;
+import database.DatabaseOld;
 
 /**
  * Servlet implementation class Events
@@ -44,7 +44,7 @@ public class Events extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String token = request.getHeader("Auth");
 		JSONObject event = new JSONObject(new JSONTokener(request.getInputStream()));
-		try (Database db = new Database()) {
+		try (DatabaseOld db = new DatabaseOld()) {
 			if (db.hasPermission(token, 5)) {
 				String title = event.getString("title");
 				DateFormat dateFormat = new SimpleDateFormat("YYYY-MM-dd'T'HH:mm");

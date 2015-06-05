@@ -13,7 +13,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import org.json.JSONTokener;
 
-import database.Database;
+import database.DatabaseOld;
 
 /**
  * Servlet implementation class Accounts
@@ -38,7 +38,7 @@ public class Accounts extends HttpServlet {
 		Writer writer = response.getWriter();
 		
 		String token = request.getHeader("Auth");
-		try (Database db = new Database()) {
+		try (DatabaseOld db = new DatabaseOld()) {
 			if (db.hasPermission(token, 1)) {
 				JSONArray json = new JSONArray(db.getAccounts());
 				json.write(writer);
@@ -55,7 +55,7 @@ public class Accounts extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String token = request.getHeader("Auth");
 		JSONObject account = new JSONObject(new JSONTokener(request.getInputStream()));
-		try (Database db = new Database()) {
+		try (DatabaseOld db = new DatabaseOld()) {
 			if (db.hasPermission(token, 2)) {
 				db.createAccount(account.getString("netid"), account.getString("firstName"), account.getString("lastName"));
 			}
@@ -72,7 +72,7 @@ public class Accounts extends HttpServlet {
 	protected void doDelete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String token = request.getHeader("Auth");
 		JSONObject account = new JSONObject(new JSONTokener(request.getInputStream()));
-		try (Database db = new Database()) {
+		try (DatabaseOld db = new DatabaseOld()) {
 			if (db.hasPermission(token, 3)) {
 				db.deleteAccount(account.getString("netid"));
 			}

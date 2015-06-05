@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.json.JSONArray;
 
-import database.Database;
+import database.DatabaseOld;
 
 /**
  * Servlet implementation class Roles
@@ -36,7 +36,7 @@ public class Roles extends HttpServlet {
 		PrintWriter writer = response.getWriter();
 		
 		String token = request.getHeader("Auth");
-		try (Database db = new Database()) {
+		try (DatabaseOld db = new DatabaseOld()) {
 			JSONArray output = db.getRoles(token).toJSON();
 			output.write(writer);
 		} catch (Exception e) {

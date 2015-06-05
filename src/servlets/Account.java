@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.json.JSONObject;
 
-import database.Database;
+import database.DatabaseOld;
 
 /**
  * Servlet implementation class Account
@@ -36,7 +36,7 @@ public class Account extends HttpServlet {
 		PrintWriter writer = response.getWriter();
 		
 		String token = request.getHeader("Auth");
-		try (Database db = new Database()) {
+		try (DatabaseOld db = new DatabaseOld()) {
 			JSONObject output = new JSONObject(db.getAccount(token));
 			output.write(writer);
 		} catch (Exception e) {
