@@ -14,7 +14,7 @@ import java.util.Date;
 /**
  * Manages tokens
  */
-public class TokenManager implements AutoCloseable {
+public class TokenDAO {
 	private static final long TIMEOUT = 60000;
 	
 	private static final String IDACCOUNT = "idAccount";
@@ -32,8 +32,8 @@ public class TokenManager implements AutoCloseable {
 	private final Database database;
 	
 	/** Creates a new TokenManager */
-	public TokenManager() throws InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException {
-		database = new Database();
+	TokenDAO(Database database) {
+		this.database = database;
 	}
 	
 	/** Generates a new token */
@@ -83,16 +83,6 @@ public class TokenManager implements AutoCloseable {
 	/** Deletes the given token */
 	public void delete(String token) throws SQLException {
 		database.execute(DELETE_TOKEN_SQL, token);
-	}
-	
-	/*
-	 * (non-Javadoc)
-	 * @see java.lang.AutoCloseable#close()
-	 */
-	@Override
-	public void close() throws Exception {
-		// TODO Auto-generated method stub
-		
 	}
 
 }

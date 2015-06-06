@@ -13,18 +13,18 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 /**
- * Contains information about roles
+ * Contains information about pages
  */
-public class Roles {
+public class Pages {
 	private final Map<String, List<Link>> links;
 	
-	/** Creates a new Roles */
-	public Roles() {
+	/** Creates a new Pages */
+	public Pages() {
 		links = new HashMap<>();
 	}
 	
 	/** Adds a link */
-	public void addLink(String role, String pageName, String href) {
+	public Pages addLink(String role, String pageName, String href) {
 		List<Link> roleLinks;
 		if (links.containsKey(role)) {
 			roleLinks = links.get(role);
@@ -33,6 +33,7 @@ public class Roles {
 			links.put(role, roleLinks);
 		}
 		roleLinks.add(new Link(pageName, href));
+		return this;
 	}
 	
 	/** Translates to json */

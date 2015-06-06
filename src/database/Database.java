@@ -13,7 +13,7 @@ import java.util.Properties;
 /**
  * Contains generic code for accessing a the database
  */
-class Database implements AutoCloseable {
+public class Database implements IDatabase {
 	private final Connection connection;
 	
 	/** 
@@ -33,7 +33,7 @@ class Database implements AutoCloseable {
 	}
 	
 	/** Executes the given sql */
-	public void execute(String sql, Object... args) throws SQLException {
+	void execute(String sql, Object... args) throws SQLException {
 		Statement statement = connection.createStatement();
 		statement.executeUpdate(String.format(sql, args));
 		statement.close();
@@ -49,7 +49,7 @@ class Database implements AutoCloseable {
 	 * @return the result of processing the rows
 	 * @throws SQLException
 	 */
-	public <T> T execute(RowProcessor<T> processor, T init, String sql, Object... args) throws SQLException {
+	<T> T execute(RowProcessor<T> processor, T init, String sql, Object... args) throws SQLException {
 		Statement statement = connection.createStatement();
 		ResultSet results = statement.executeQuery(String.format(sql, args));
 		Row row = new Row(results);
@@ -62,6 +62,54 @@ class Database implements AutoCloseable {
 		statement.close();
 		
 		return acc;
+	}
+	
+	/* (non-Javadoc)
+	 * @see database.IDatabase#getTokenDAO()
+	 */
+	@Override
+	public TokenDAO getTokenDAO() {
+		return new TokenDAO(this);
+	}
+	
+	/* (non-Javadoc)
+	 * @see database.IDatabase#getPermissionDAO()
+	 */
+	@Override
+	public PermissionDAO getPermissionDAO() {
+		return new PermissionDAO(this);
+	}
+	
+	/* (non-Javadoc)
+	 * @see database.IDatabase#getAccountsDAO()
+	 */
+	@Override
+	public AccountsDAO getAccountsDAO() {
+		return new AccountsDAO(this);
+	}
+	
+	/* (non-Javadoc)
+	 * @see database.IDatabase#getRolesDAO()
+	 */
+	@Override
+	public RolesDAO getRolesDAO() {
+		return new RolesDAO(this);
+	}
+	
+	/* (non-Javadoc)
+	 * @see database.IDatabase#getEventsDAO()
+	 */
+	@Override
+	public EventsDAO getEventsDAO() {
+		return new EventsDAO(this);
+	}
+	
+	/* (non-Javadoc)
+	 * @see database.IDatabase#getPagesDAO()
+	 */
+	@Override
+	public PagesDAO getPagesDAO() {
+		return new PagesDAO(this);
 	}
 
 	/* (non-Javadoc)

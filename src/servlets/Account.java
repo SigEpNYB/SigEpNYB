@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.json.JSONObject;
 
-import database.DatabaseOld;
+import database.Database;
 
 /**
  * Servlet implementation class Account
@@ -36,8 +36,13 @@ public class Account extends HttpServlet {
 		PrintWriter writer = response.getWriter();
 		
 		String token = request.getHeader("Auth");
-		try (DatabaseOld db = new DatabaseOld()) {
-			JSONObject output = new JSONObject(db.getAccount(token));
+		try (Database db = new Database()) {
+			if (!db.getTokenDAO().isValid(token)) {
+				response.sendError(401, "Invalid token");
+				return;
+			}
+			
+			JSONObject output = new JSONObject(db.getAccountsDAO().getAccount(token));
 			output.write(writer);
 		} catch (Exception e) {
 			response.sendError(500, e.getMessage());

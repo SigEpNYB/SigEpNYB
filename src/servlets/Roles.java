@@ -11,7 +11,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.json.JSONArray;
 
-import database.DatabaseOld;
+import database.Database;
+import database.PermissionDAO.Permission;
 
 /**
  * Servlet implementation class Roles
@@ -36,8 +37,18 @@ public class Roles extends HttpServlet {
 		PrintWriter writer = response.getWriter();
 		
 		String token = request.getHeader("Auth");
-		try (DatabaseOld db = new DatabaseOld()) {
-			JSONArray output = db.getRoles(token).toJSON();
+		try (Database db = new Database()) {
+			if (!db.getTokenDAO().isValid(token)) {
+				response.sendError(401, "Invalid token");
+				return;
+			}
+			
+			if (!db.getPermissionDAO().has(token, Permission.GETACCOUNTS)) {
+				response.sendError(401, "User does not have correct permission");
+				return;
+			}
+			
+			JSONArray output = db.getPagesDAO().get(token).toJSON();
 			output.write(writer);
 		} catch (Exception e) {
 			response.sendError(500, e.getMessage());

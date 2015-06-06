@@ -11,8 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.json.JSONObject;
 
-import database.DatabaseOld;
-import database.TokenManager;
+import database.Database;
 
 /**
  * Servlet implementation class Login
@@ -38,8 +37,8 @@ public class Login extends HttpServlet {
 		JSONObject output = new JSONObject();
 		
 		String token = request.getHeader("Auth");
-		try (TokenManager tm = new TokenManager()) {
-			output.put("hasToken", tm.isValid(token));
+		try (Database db = new Database()) {
+			output.put("hasToken", db.getTokenDAO().isValid(token));
 			output.put("hasError", false);
 			output.write(writer);
 		} catch (Exception e) {
@@ -59,8 +58,8 @@ public class Login extends HttpServlet {
 		String netid = request.getParameter("netid");
 		String password = request.getParameter("password");
 		
-		try (TokenManager tm = new TokenManager()) {
-			String token = tm.create(netid, password);
+		try (Database db = new Database()) {
+			String token = db.getTokenDAO().create(netid, password);
 
 			output.put("hasError", false);
 			if (token == null) {
@@ -82,8 +81,8 @@ public class Login extends HttpServlet {
 	@Override
 	protected void doDelete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String token = request.getHeader("Auth");
-		try (TokenManager tm = new TokenManager()) {
-			tm.delete(token);
+		try (Database db = new Database()) {
+			db.getTokenDAO().delete(token);
 		} catch (Exception e) {
 			response.sendError(500, e.getMessage());
 			e.printStackTrace();
