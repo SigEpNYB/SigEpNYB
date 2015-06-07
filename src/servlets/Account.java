@@ -38,7 +38,7 @@ public class Account extends HttpServlet {
 		String token = request.getHeader("Auth");
 		try (Database db = new Database()) {
 			if (!db.getTokenDAO().isValid(token)) {
-				response.sendError(401, "Invalid token");
+				response.sendRedirect("/Fratsite/index.html");
 				return;
 			}
 			

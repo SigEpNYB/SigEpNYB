@@ -47,7 +47,7 @@ public class Events extends HttpServlet {
 		JSONObject event = new JSONObject(new JSONTokener(request.getInputStream()));
 		try (Database db = new Database()) {
 			if (!db.getTokenDAO().isValid(token)) {
-				response.sendError(401, "Invalid token");
+				response.sendRedirect("/Fratsite/index.html");
 				return;
 			}
 			
