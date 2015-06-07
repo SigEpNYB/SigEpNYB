@@ -72,7 +72,6 @@ public class TokenDAO {
 		boolean valid = database.execute(
 				(row, t) -> getNow().getTime() - row.getTimestamp(LASTACTIVE).getTime() < TIMEOUT, 
 				false, GET_TOKENTIME_SQL, token);
-		System.out.println(valid);
 		if (!valid) {
 			delete(token);
 		}
