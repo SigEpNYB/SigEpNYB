@@ -10,13 +10,13 @@ import java.util.Date;
  */
 public class Event {
 	private final int id;
+	private final String title;
 	private final Date startTime;
 	private final Date endTime;
-	private final String title;
 	private final String description;
 	
 	/** Creates a new Event */
-	public Event(int id, Date startTime, Date endTime, String title, String description) {
+	public Event(int id, String title, Date startTime, Date endTime, String description) {
 		this.id = id;
 		this.startTime = startTime;
 		this.endTime = endTime;
@@ -32,6 +32,13 @@ public class Event {
 	}
 
 	/**
+	 * @return the title
+	 */
+	public String getTitle() {
+		return title;
+	}
+
+	/**
 	 * @return the startTime
 	 */
 	public Date getStartTime() {
@@ -43,13 +50,6 @@ public class Event {
 	 */
 	public Date getEndTime() {
 		return endTime;
-	}
-
-	/**
-	 * @return the title
-	 */
-	public String getTitle() {
-		return title;
 	}
 
 	/**
