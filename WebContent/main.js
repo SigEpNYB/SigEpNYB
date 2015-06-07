@@ -67,9 +67,7 @@ function logout() {
 
 function getAccount() {
 	httpRequest('GET', 'Account', true, null, function(status, resp) {
-		if (resp == null) {
-			logout(token);
-		} else {
+		if (resp != null) {
 			document.getElementById('name').innerHTML = resp.firstName + ' ' + resp.lastName;
 		}
 	});
