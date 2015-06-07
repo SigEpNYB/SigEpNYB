@@ -48,17 +48,24 @@ public class AccountsDAO {
 		return database.execute((row, t) -> row.getInt(IDACCOUNT), 0, GET_IDACCOUNT_SQL, netid);
 	}
 	
+	/** Builds an AccountData from a given row */
+	private AccountData build(Row row) throws SQLException {
+		int idAccount = row.getInt(IDACCOUNT);
+		String netid = row.getString(NETID);
+		String firstName = row.getString(FIRSTNAME);
+		String lastName = row.getString(LASTNAME);
+		return new AccountData(idAccount, netid, firstName, lastName);
+	}
+	
 	/** Gets the account for the given token */
 	public AccountData getAccount(String token) throws SQLException {
-		return database.execute(
-				(row, t) -> new AccountData(row.getInt(IDACCOUNT), row.getString(NETID), row.getString(FIRSTNAME), row.getString(LASTNAME)), 
-				null, GET_ACCOUNT_SQL, token);
+		return database.execute((row, t) -> build(row), null, GET_ACCOUNT_SQL, token);
 	}
 	
 	/** Gets a list of all the accounts */
 	public AccountData[] getAccounts() throws SQLException {
 		List<AccountData> accounts = database.execute(
-				(row, lst) -> {lst.add(new AccountData(row.getInt(IDACCOUNT), row.getString(NETID), row.getString(FIRSTNAME), row.getString(LASTNAME))); return lst;}, 
+				(row, lst) -> {lst.add(build(row)); return lst;}, 
 				new LinkedList<AccountData>(), GET_ACCOUNTS_SQL);
 		return accounts.toArray(new AccountData[accounts.size()]);
 	}
