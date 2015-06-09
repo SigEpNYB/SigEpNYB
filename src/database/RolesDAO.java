@@ -5,11 +5,15 @@ package database;
 
 import java.sql.SQLException;
 
+import data.Role;
+
 /**
  * Manages Roles
  */
 public class RolesDAO {
-	private static final String INSERT_ROLES_SQL = "INSERT INTO user_roles (idAccount, idRole) VALUES (%d, %d)";
+	private static final String INSERT_ROLE_SQL = "INSERT INTO user_roles (idAccount, idRole) VALUES (%d, %d)";
+	private static final String REMOVE_ROLE_SQL = "DELETE FROM user_roles WHERE idAccount = %d AND idRole = %d";
+	private static final String REMOVE_ALL_ROLES_SQL = "DELETE FROM user_roles WHERE idAccount = %d";
 	
 	private final Database database;
 	
@@ -20,19 +24,16 @@ public class RolesDAO {
 	
 	/** Assigns the role to the account with the given idAccount */
 	public void assign(int idAccount, Role role) throws SQLException {
-		database.execute(INSERT_ROLES_SQL, idAccount, role.id);
+		database.execute(INSERT_ROLE_SQL, idAccount, role.id);
 	}
 	
-	/** The different Roles */
-	public enum Role {
-		BROTHER(1),
-		PRESIDENT(2),
-		VPPROGRAMMING(3);
-		
-		private final int id;
-		
-		Role(int id) {
-			this.id = id;
-		}
+	/** Removes the role form the user */
+	public void unassign(int idAccount, Role role) throws SQLException {
+		database.execute(REMOVE_ROLE_SQL, idAccount, role.id);
+	}
+	
+	/** Removes all the roles from the user */
+	public void unassignAll(int idAccount) throws SQLException {
+		database.execute(REMOVE_ALL_ROLES_SQL, idAccount);
 	}
 }
