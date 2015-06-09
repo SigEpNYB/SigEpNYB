@@ -1,60 +1,25 @@
 package servlets;
 
-import java.io.IOException;
-import java.io.PrintWriter;
-
-import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import org.json.JSONObject;
 
 import services.Services;
-import data.AccountData;
-import exceptions.InternalServerException;
-import exceptions.InvalidTokenException;
+import exceptions.ClientBoundException;
 
 /**
  * Servlet implementation class Account
  */
 @WebServlet("/Account")
-public class Account extends HttpServlet {
+public class Account extends FratServlet {
 	private static final long serialVersionUID = 1L;
-       
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public Account() {
-        super();
-        // TODO Auto-generated constructor stub
-    }
 
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	/* (non-Javadoc)
+	 * @see servlets.FratServlet#get(java.lang.String, org.json.JSONObject)
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		response.setContentType("text/json");
-		PrintWriter writer = response.getWriter();
-		String token = request.getHeader("Auth");
-		
-		try {
-			AccountData account = Services.getAccountService().getAccount(token);
-			JSONObject output = new JSONObject(account);
-			output.write(writer);
-		} catch (InternalServerException e) {
-			response.sendError(500);
-		} catch (InvalidTokenException e) {
-			response.sendRedirect("/Fratsite/index.html");
-		}
-	}
-
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
+	@Override
+	protected Object get(String token, JSONObject data) throws ClientBoundException {
+		return Services.getAccountService().getAccount(token);
 	}
 
 }
