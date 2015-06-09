@@ -19,6 +19,7 @@ public class Services {
 	private final PermissionService permissionService;
 	private final EventService eventService;
 	private final PageService pageService;
+	private final RoleService roleService;
 	
 	/** This class is a singleton */
 	private Services() throws InternalServerException {
@@ -29,6 +30,7 @@ public class Services {
 			permissionService = new PermissionService(database.getPermissionDAO());
 			eventService = new EventService(database.getEventsDAO());
 			pageService = new PageService(database.getPagesDAO());
+			roleService = new RoleService(database.getRolesDAO());
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new InternalServerException();
@@ -63,5 +65,10 @@ public class Services {
 	/** Gets a PageService */
 	public static PageService getPageService() throws InternalServerException {
 		return getInstance().pageService;
+	}
+	
+	/** Gets a RoleService */
+	public static RoleService getRoleService() throws InternalServerException {
+		return getInstance().roleService;
 	}
 }

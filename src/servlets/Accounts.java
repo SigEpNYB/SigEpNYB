@@ -5,7 +5,9 @@ import javax.servlet.annotation.WebServlet;
 import org.json.JSONObject;
 
 import services.Services;
+import exceptions.AccountNotFoundException;
 import exceptions.ClientBoundException;
+import exceptions.MalformedRequestException;
 
 /**
  * Servlet implementation class Accounts
@@ -39,8 +41,12 @@ public class Accounts extends FratServlet {
 	 */
 	@Override
 	protected Object delete(String token, JSONObject data) throws ClientBoundException {
-		int idAccount = data.getInt("idAccount");
-		Services.getAccountService().delete(token, idAccount);
+		String netid = data.getString("netid");
+		try {
+			Services.getAccountService().delete(token, netid);
+		} catch (AccountNotFoundException e) {
+			throw new MalformedRequestException();
+		}
 		return null;
 	}
 }

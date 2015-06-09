@@ -8,6 +8,7 @@ import java.security.SecureRandom;
 
 import data.AccountData;
 import data.Permission;
+import data.Role;
 import database.AccountsDAO;
 import exceptions.AccountNotFoundException;
 import exceptions.InternalServerException;
@@ -29,6 +30,8 @@ public class AccountsService extends Service<AccountsDAO> {
 		run(token, Permission.POSTACCOUNT, (dao, tokenInfo) -> {
 			String password = new BigInteger(25, new SecureRandom()).toString(32);
 			dao.create(netid, password, firstName, lastName);
+			int idAccount = dao.getId(netid);
+			Services.getRoleService().assign(idAccount, Role.BROTHER);
 			return null;
 		})
 		.unwrap();
@@ -67,11 +70,15 @@ public class AccountsService extends Service<AccountsDAO> {
 	}
 	
 	/** Deletes the given account */
-	public void delete(String token, int idAccount) throws InternalServerException, InvalidTokenException, PermissionDeniedException {
+	public void delete(String token, String netid) throws InternalServerException, InvalidTokenException, PermissionDeniedException, AccountNotFoundException {
 		run(token, Permission.DELETEACCOUNT, (dao, tokenInfo) -> {
+			int idAccount = dao.getId(netid);
+			Services.getRoleService().unassignAll(idAccount);
+			if (idAccount == AccountsDAO.ACCOUNT_NOT_FOUND) throw new AccountNotFoundException();
 			dao.delete(idAccount);
 			return null;
 		})
+		.process(AccountNotFoundException.class)
 		.unwrap();
 	}
 }
