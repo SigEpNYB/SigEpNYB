@@ -47,14 +47,15 @@ public class Database implements IDatabase {
 	 * @param sql the sql to execute
 	 * @param args the supporting arguments of the sql
 	 * @return the result of processing the rows
-	 * @throws SQLException
+	 * @throws T
+	 * @throws SQLException 
 	 */
-	<T> T execute(RowProcessor<T> processor, T init, String sql, Object... args) throws SQLException {
+	<R, T extends Exception> R execute(RowProcessor<R, T> processor, R init, String sql, Object... args) throws T, SQLException {
 		Statement statement = connection.createStatement();
 		ResultSet results = statement.executeQuery(String.format(sql, args));
 		Row row = new Row(results);
 		
-		T acc = init;
+		R acc = init;
 		while (results.next() && !row.isDone()) {
 			acc = processor.process(row, acc);
 		}

@@ -11,8 +11,10 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.json.JSONArray;
 
-import database.Database;
-import database.PermissionDAO.Permission;
+import services.Services;
+import data.Pages;
+import exceptions.InternalServerException;
+import exceptions.InvalidTokenException;
 
 /**
  * Servlet implementation class Roles
@@ -35,24 +37,16 @@ public class Roles extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		response.setContentType("text/josn");
 		PrintWriter writer = response.getWriter();
-		
 		String token = request.getHeader("Auth");
-		try (Database db = new Database()) {
-			if (!db.getTokenDAO().isValid(token)) {
-				response.sendRedirect("/Fratsite/index.html");
-				return;
-			}
-			
-			if (!db.getPermissionDAO().has(token, Permission.GETACCOUNTS)) {
-				response.sendError(401, "User does not have correct permission");
-				return;
-			}
-			
-			JSONArray output = db.getPagesDAO().get(token).toJSON();
+		
+		try {
+			Pages pages = Services.getPageService().get(token);
+			JSONArray output = pages.toJSON();
 			output.write(writer);
-		} catch (Exception e) {
-			response.sendError(500, e.getMessage());
-			e.printStackTrace();
+		} catch (InternalServerException e) {
+			response.sendError(500);
+		} catch (InvalidTokenException e) {
+			response.sendRedirect("/Fratsite/index.html");
 		}
 	}
 

@@ -3,12 +3,11 @@
  */
 package database;
 
-import java.sql.SQLException;
 
 /**
  * Processes rows from the database one row at a time
  */
-interface RowProcessor<T> {
+interface RowProcessor<R, T extends Exception> {
 
 	/**
 	 * Processes a row from the database
@@ -17,5 +16,5 @@ interface RowProcessor<T> {
 	 * @param t the result from processing the last row
 	 * @return the result from processing this row
 	 */
-	public T process(Row row, T t) throws SQLException;
+	public R process(Row row, R t) throws T;
 }

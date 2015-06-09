@@ -48,13 +48,13 @@ public class EventsDAO {
 	private Event build(Row row) throws SQLException {
 		int idEvent = row.getInt(IDEVENT);
 		String title = row.getString(TITLE);
-		Date startTime = null;
-		Date endTime = null;
+		Date startTime;
+		Date endTime;
 		try {
 			startTime = dateFormat.parse(row.getString(STARTTIME));
 			endTime = dateFormat.parse(row.getString(ENDTIME));
 		} catch (ParseException e) {
-			System.err.println("The impossible just happened");
+			throw new SQLException(e);
 		}
 		String description = row.getString(DESCRIPTION);
 		

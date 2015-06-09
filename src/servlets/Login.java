@@ -11,7 +11,10 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.json.JSONObject;
 
+import services.Services;
 import database.Database;
+import exceptions.InternalServerException;
+import exceptions.InvalidCredentialsException;
 
 /**
  * Servlet implementation class Login
@@ -29,25 +32,6 @@ public class Login extends HttpServlet {
     }
 
 	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		response.setContentType("text/json");
-		PrintWriter writer = response.getWriter();
-		JSONObject output = new JSONObject();
-		
-		String token = request.getHeader("Auth");
-		try (Database db = new Database()) {
-			output.put("hasToken", db.getTokenDAO().isValid(token));
-			output.put("hasError", false);
-			output.write(writer);
-		} catch (Exception e) {
-			response.sendError(500, e.getMessage());
-			e.printStackTrace();
-		}
-	}
-
-	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -58,21 +42,19 @@ public class Login extends HttpServlet {
 		String netid = request.getParameter("netid");
 		String password = request.getParameter("password");
 		
-		try (Database db = new Database()) {
-			String token = db.getTokenDAO().create(netid, password);
-
+		try {
+			String token = Services.getTokenService().login(netid, password);
 			output.put("hasError", false);
-			if (token == null) {
-				output.put("hasError", true);
-				output.put("error", "Invalid credentials");
-			}
 			output.put("token", token);
-			
-			output.write(writer);
-		} catch (Exception e) {
-			response.sendError(500, e.getMessage());
-			e.printStackTrace();
+		} catch (InternalServerException e) {
+			response.sendError(500);
+			return;
+		} catch (InvalidCredentialsException e) {
+			output.put("hasError", true);
+			output.put("error", "Invalid credentials");
 		}
+		
+		output.write(writer);
 	}
 
 	/* (non-Javadoc)

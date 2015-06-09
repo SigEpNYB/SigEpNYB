@@ -11,7 +11,10 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.json.JSONObject;
 
-import database.Database;
+import services.Services;
+import data.AccountData;
+import exceptions.InternalServerException;
+import exceptions.InvalidTokenException;
 
 /**
  * Servlet implementation class Account
@@ -34,19 +37,16 @@ public class Account extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		response.setContentType("text/json");
 		PrintWriter writer = response.getWriter();
-		
 		String token = request.getHeader("Auth");
-		try (Database db = new Database()) {
-			if (!db.getTokenDAO().isValid(token)) {
-				response.sendRedirect("/Fratsite/index.html");
-				return;
-			}
-			
-			JSONObject output = new JSONObject(db.getAccountsDAO().getAccount(token));
+		
+		try {
+			AccountData account = Services.getAccountService().getAccount(token);
+			JSONObject output = new JSONObject(account);
 			output.write(writer);
-		} catch (Exception e) {
-			response.sendError(500, e.getMessage());
-			e.printStackTrace();
+		} catch (InternalServerException e) {
+			response.sendError(500);
+		} catch (InvalidTokenException e) {
+			response.sendRedirect("/Fratsite/index.html");
 		}
 	}
 

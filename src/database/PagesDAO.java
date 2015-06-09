@@ -15,12 +15,11 @@ public class PagesDAO {
 	private static final String PAGENAME = "pname";
 	private static final String HREF = "href";
 	
-	private static final String GET_PAGES_SQL = "SELECT roles.name AS rname, pages.name AS pname, pages.href FROM tokens "
-			+ "JOIN user_roles ON tokens.idAccount = user_roles.idAccount "
+	private static final String GET_PAGES_SQL = "SELECT roles.name AS rname, pages.name AS pname, pages.href FROM user_roles "
 			+ "JOIN roles ON user_roles.idRole = roles.idRole "
 			+ "JOIN role_pages ON roles.idRole = role_pages.idRole "
 			+ "JOIN pages ON role_pages.idPage = pages.idPage "
-			+ "WHERE tokens.token = '%s'";
+			+ "WHERE user_roles.idAccount = %d";
 	
 	private final Database database;
 	
@@ -30,9 +29,9 @@ public class PagesDAO {
 	}
 	
 	/** Gets the pages for the given user */
-	public Pages get(String token) throws SQLException {
+	public Pages get(int idAccount) throws SQLException {
 		return database.execute(
 				(row, pages) -> pages.addLink(row.getString(ROLENAME), row.getString(PAGENAME), row.getString(HREF)), 
-				new Pages(), GET_PAGES_SQL, token);
+				new Pages(), GET_PAGES_SQL, idAccount);
 	}
 }

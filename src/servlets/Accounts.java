@@ -10,11 +10,15 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 import org.json.JSONTokener;
 
-import database.Database;
-import database.PermissionDAO.Permission;
+import services.Services;
+import data.AccountData;
+import exceptions.InternalServerException;
+import exceptions.InvalidTokenException;
+import exceptions.PermissionDeniedException;
 
 /**
  * Servlet implementation class Accounts
@@ -37,24 +41,18 @@ public class Accounts extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		response.setContentType("text/json");
 		Writer writer = response.getWriter();
-		
 		String token = request.getHeader("Auth");
-		try (Database db = new Database()) {
-			if (!db.getTokenDAO().isValid(token)) {
-				response.sendRedirect("/Fratsite/index.html");
-				return;
-			}
-			
-			if (!db.getPermissionDAO().has(token, Permission.GETACCOUNTS)) {
-				response.sendError(401, "User does not have correct permission");
-				return;
-			}
-			
-			JSONArray json = new JSONArray(db.getAccountsDAO().getAccounts());
+		
+		try {
+			AccountData[] accounts = Services.getAccountService().getAccounts(token);
+			JSONArray json = new JSONArray(accounts);
 			json.write(writer);
-		} catch (Exception e) {
-			response.sendError(500, e.getMessage());
-			e.printStackTrace();
+		} catch (InternalServerException e) {
+			response.sendError(500);
+		} catch (InvalidTokenException e) {
+			response.sendRedirect("/Fratsite/index.html");
+		} catch (PermissionDeniedException e) {
+			response.sendError(401, "Current user does not have correct permissions");
 		}
 	}
 
@@ -64,22 +62,20 @@ public class Accounts extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String token = request.getHeader("Auth");
 		JSONObject account = new JSONObject(new JSONTokener(request.getInputStream()));
-		try (Database db = new Database()) {
-			if (!db.getTokenDAO().isValid(token)) {
-				response.sendError(401, "Invalid token");
-				return;
-			}
-			
-			if (!db.getPermissionDAO().has(token, Permission.POSTACCOUNT)) {
-				response.sendError(401, "User does not have correct permission");
-				return;
-			}
-			
-			
-			db.getAccountsDAO().create(account.getString("netid"), account.getString("firstName"), account.getString("lastName"));
-		} catch (Exception e) {
-			response.sendError(500, e.getMessage());
-			e.printStackTrace();
+		
+		try {
+			String netid = account.getString("netid");
+			String firstName = account.getString("firstName");
+			String lastName = account.getString("lastName");
+			Services.getAccountService().create(token, netid, firstName, lastName);
+		} catch (JSONException e) {
+			response.sendError(401, "Malformed request");
+		} catch (InternalServerException e) {
+			response.sendError(500);
+		} catch (InvalidTokenException e) {
+			response.sendRedirect("/Fratsite/index.html");
+		} catch (PermissionDeniedException e) {
+			response.sendError(401, "Current user does not have correct permissions");
 		}
 	}
 
@@ -90,21 +86,18 @@ public class Accounts extends HttpServlet {
 	protected void doDelete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String token = request.getHeader("Auth");
 		JSONObject account = new JSONObject(new JSONTokener(request.getInputStream()));
-		try (Database db = new Database()) {
-			if (!db.getTokenDAO().isValid(token)) {
-				response.sendError(401, "Invalid token");
-				return;
-			}
-			
-			if (!db.getPermissionDAO().has(token, Permission.DELETEACCOUNT)) {
-				response.sendError(401, "User does not have correct permission");
-				return;
-			}
-			
-			db.getAccountsDAO().delete(account.getString("netid"));
-		} catch (Exception e) {
-			response.sendError(500, e.getMessage());
-			e.printStackTrace();
+		
+		try {
+			int idAccount = account.getInt("idAccount");
+			Services.getAccountService().delete(token, idAccount);
+		} catch (JSONException e) {
+			response.sendError(401, "Malformed request");
+		} catch (InternalServerException e) {
+			response.sendError(500);
+		} catch (InvalidTokenException e) {
+			response.sendRedirect("/Fratsite/index.html");
+		} catch (PermissionDeniedException e) {
+			response.sendError(401, "Current user does not have correct permissions");
 		}
 	}
 }
