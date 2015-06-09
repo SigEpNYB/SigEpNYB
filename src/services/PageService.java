@@ -3,7 +3,7 @@
  */
 package services;
 
-import data.Pages;
+import data.RolePages;
 import database.PagesDAO;
 import exceptions.InternalServerException;
 import exceptions.InvalidTokenException;
@@ -19,7 +19,7 @@ public class PageService extends Service<PagesDAO> {
 	}
 	
 	/** Gets the pages for the given user */
-	public Pages get(String token) throws InternalServerException, InvalidTokenException {
+	public RolePages[] get(String token) throws InternalServerException, InvalidTokenException {
 		return run(token, (dao, tokenInfo) -> {
 			return dao.get(tokenInfo.getIdAccount());
 		})

@@ -130,7 +130,7 @@ function getRoles() {
 		var rolesHTML = '';
 		for (var i = 0; i < resp.length; i++) {
 			var role = resp[i];
-			rolesHTML += '<h3>' + role.name + '</h3>'
+			rolesHTML += '<h3>' + role.role + '</h3>'
 			for (var j = 0; j < role.links.length; j++) {
 				var link = role.links[j];
 				rolesHTML += '<a href=' + link.href + '>' + link.pageName + '</a><br>'

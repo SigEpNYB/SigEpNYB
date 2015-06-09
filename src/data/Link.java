@@ -3,7 +3,6 @@
  */
 package data;
 
-import org.json.JSONObject;
 
 /**
  * Contains information about a link
@@ -17,12 +16,18 @@ public class Link {
 		this.pageName = pageName;
 		this.href = href;
 	}
-	
-	/** Translates to json */
-	public JSONObject toJSON() {
-		JSONObject json = new JSONObject();
-		json.put("pageName", pageName);
-		json.put("href", href);
-		return json;
+
+	/**
+	 * @return the pageName
+	 */
+	public String getPageName() {
+		return pageName;
+	}
+
+	/**
+	 * @return the href
+	 */
+	public String getHref() {
+		return href;
 	}
 }
