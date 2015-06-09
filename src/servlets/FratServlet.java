@@ -3,9 +3,7 @@
  */
 package servlets;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.io.Writer;
 
 import javax.servlet.ServletException;
@@ -15,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
+import org.json.JSONTokener;
 
 import exceptions.ClientBoundException;
 import exceptions.InternalServerException;
@@ -79,14 +78,9 @@ public class FratServlet extends HttpServlet {
 		try {
 			String token = req.getHeader("Auth");
 			
-			BufferedReader reader = new BufferedReader(new InputStreamReader(req.getInputStream()));
-			String input = "";
-			String line = "";
-			while ((line = reader.readLine()) != null) input += line + "\n";
-			
 			JSONObject data;
-			if (!input.equals("")) {
-				data = new JSONObject(input);
+			if (req.getContentLength() > 0) {
+				data = new JSONObject(new JSONTokener(req.getInputStream()));
 			} else {
 				data = new JSONObject();
 			}

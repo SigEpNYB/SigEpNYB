@@ -1,76 +1,51 @@
 package servlets;
 
-import java.io.IOException;
-import java.io.PrintWriter;
-
-import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import org.json.JSONObject;
 
 import services.Services;
-import database.Database;
-import exceptions.InternalServerException;
-import exceptions.InvalidCredentialsException;
+import exceptions.ClientBoundException;
 
 /**
  * Servlet implementation class Login
  */
 @WebServlet("/Login")
-public class Login extends HttpServlet {
+public class Login extends FratServlet {
 	private static final long serialVersionUID = 1L;
-       
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public Login() {
-        super();
-        // TODO Auto-generated constructor stub
-    }
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	/* (non-Javadoc)
+	 * @see servlets.FratServlet#post(java.lang.String, org.json.JSONObject)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		response.setContentType("text/josn");
-		PrintWriter writer = response.getWriter();
-		JSONObject output = new JSONObject();
-		
-		String netid = request.getParameter("netid");
-		String password = request.getParameter("password");
-		
-		try {
-			String token = Services.getTokenService().login(netid, password);
-			output.put("hasError", false);
-			output.put("token", token);
-		} catch (InternalServerException e) {
-			response.sendError(500);
-			return;
-		} catch (InvalidCredentialsException e) {
-			output.put("hasError", true);
-			output.put("error", "Invalid credentials");
-		}
-		
-		output.write(writer);
+	@Override
+	protected Object post(String token, JSONObject data) throws ClientBoundException {
+		String netid = data.getString("netid");
+		String password = data.getString("password");
+		return new Token(Services.getTokenService().login(netid, password));
 	}
 
 	/* (non-Javadoc)
-	 * @see javax.servlet.http.HttpServlet#doDelete(javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse)
+	 * @see servlets.FratServlet#delete(java.lang.String, org.json.JSONObject)
 	 */
 	@Override
-	protected void doDelete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String token = request.getHeader("Auth");
-		try (Database db = new Database()) {
-			db.getTokenDAO().delete(token);
-		} catch (Exception e) {
-			response.sendError(500, e.getMessage());
-			e.printStackTrace();
-		}
+	protected Object delete(String token, JSONObject data) throws ClientBoundException {
+		Services.getTokenService().logout(token);
+		return null;
 	}
 	
-	
+	/** An object storing a token */
+	public class Token {
+		private String token;
+		
+		/** Creates the token object */
+		public Token(String token) {
+			this.token = token;
+		}
+		
+		/** Gets the token */
+		public String getToken() {
+			return token;
+		}
+	}
 
 }

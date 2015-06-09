@@ -29,7 +29,11 @@ function httpRequest(mthd, url, useToken, msg, callback) {
 		var token = getCookie('token');
 		xhr.setRequestHeader('Auth', token);
 	}
-	xhr.send(JSON.stringify(msg));
+	if (msg == null) {
+		xhr.send(null);
+	} else {
+		xhr.send(JSON.stringify(msg));
+	}
 }
 
 function buildObj() {
@@ -45,15 +49,13 @@ function buildObj() {
 }
 
 function login() {
-	var netid = document.getElementById('netid').value;
-	var password = document.getElementById('password').value;
-	httpRequest('POST', 'Login?netid=' + netid + '&password=' + password, false, null, function(status, resp) {
-		if (status == 200 && !resp.hasError) {
+	var msg = buildObj('netid', 'password');
+	httpRequest('POST', 'Login', false, msg, function(status, resp) {
+		if (status == 200) {
     		document.cookie = 'token=' + resp.token;
     		window.location.href = '/Fratsite/dashboard.html';
     	} else {
-    		document.getElementById('errormsg').innerHTML = resp.error;
-    		document.getElementById('password').value = '';
+    		document.getElementById('errormsg').innerHTML = "Error loggin in";
     	}
 	});
 }
