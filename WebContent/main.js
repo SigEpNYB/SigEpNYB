@@ -23,12 +23,12 @@ function httpRequest(mthd, url, useToken, msg, urlParams, success, error, server
 			var status = xhr.status;
 			if (status == 200) {
 				if (success != null) success(resp);
-			} else if (status == 302) {
-				alert(xhr.responseText);
+			} else if (status == 401) {
+				window.location.href = '/Fratsite/index.html';
 			} else if (status == 400) {
 				if (error != null) error();
 				else if (success != null) success();
-			} else if (status == 401) {
+			} else if (status == 403) {
 				if (error != null) error();
 				else if (success != null) success();
 			} else if (status == 500) {
@@ -154,12 +154,9 @@ function getEvents() {
 	var endStr = dateToString(now);
 	
 	var msg = {startTime:startStr, endTime:endStr};
-	alert(JSON.stringify(msg));
 	httpRequest('GET', 'Events', true, null, msg, function() {
-		alert("success");
-	}, function() {
-		alert("failure");
-	})
+		
+	});
 }
 
 function getRoles() {

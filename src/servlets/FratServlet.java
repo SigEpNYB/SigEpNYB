@@ -117,11 +117,11 @@ public class FratServlet extends HttpServlet {
 			} catch (InternalServerException e) {
 				resp.sendError(500);
 			} catch (InvalidTokenException e) {
-				resp.sendRedirect("/Fratsite/index.html");
+				resp.sendError(401);
 			} catch (PermissionDeniedException e) {
-				resp.sendError(401);
+				resp.sendError(403);
 			} catch (InvalidCredentialsException e) {
-				resp.sendError(401);
+				resp.sendError(403);
 			} catch (ClientBoundException e) {
 				e.printStackTrace();
 				resp.sendError(500);
