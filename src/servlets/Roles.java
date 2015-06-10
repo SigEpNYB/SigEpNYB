@@ -1,8 +1,8 @@
 package servlets;
 
-import javax.servlet.annotation.WebServlet;
+import java.util.Map;
 
-import org.json.JSONObject;
+import javax.servlet.annotation.WebServlet;
 
 import services.Services;
 import exceptions.ClientBoundException;
@@ -18,7 +18,7 @@ public class Roles extends FratServlet {
 	 * @see servlets.FratServlet#get(java.lang.String, org.json.JSONObject)
 	 */
 	@Override
-	protected Object get(String token, JSONObject data) throws ClientBoundException {
+	protected Object get(String token, Map<String, String> urlParams) throws ClientBoundException {
 		return Services.getPageService().get(token);
 	}
 

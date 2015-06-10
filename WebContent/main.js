@@ -9,7 +9,7 @@ function getCookie(cname) {
     return "";
 }
 
-function httpRequest(mthd, url, useToken, msg, success, error, serverError) {
+function httpRequest(mthd, url, useToken, msg, urlParams, success, error, serverError) {
 	var xhr = new XMLHttpRequest();
 	xhr.onreadystatechange = function() {
 		if (xhr.readyState == 4) {
@@ -44,7 +44,16 @@ function httpRequest(mthd, url, useToken, msg, success, error, serverError) {
 		}
 	}
 	
-	xhr.open(mthd, url, true);
+	var urlExt = '';
+	if (urlParams != null) {
+		urlExt = '?';
+		for (var paramName in urlParams) {
+			urlExt += paramName + '=' + urlParams[paramName] + '&';
+		}
+		urlExt = urlExt.substring(0, urlExt.length - 1);
+	}
+	
+	xhr.open(mthd, url + urlExt, true);
 	if (useToken) {
 		var token = getCookie('token');
 		xhr.setRequestHeader('Auth', token);
@@ -70,7 +79,7 @@ function buildObj() {
 
 function login() {
 	var msg = buildObj('netid', 'password');
-	httpRequest('POST', 'Login', false, msg, function(resp) {
+	httpRequest('POST', 'Login', false, msg, null, function(resp) {
     	document.cookie = 'token=' + resp.token;
     	window.location.href = '/Fratsite/dashboard.html';
 	}, function() {
@@ -79,21 +88,21 @@ function login() {
 }
 
 function logout() {
-	httpRequest('DELETE', 'Login', true, null, function() {
+	httpRequest('DELETE', 'Login', true, null, null, function() {
 		window.location.href = '/Fratsite/index.html';
 		document.cookie = "token=; expires=Thu, 01 Jan 1970 00:00:00 UTC";
 	});
 }
 
 function getAccount() {
-	httpRequest('GET', 'Account', true, null, function(resp) {
+	httpRequest('GET', 'Account', true, null, null, function(resp) {
 		document.getElementById('name').innerHTML = resp.firstName + ' ' + resp.lastName;
 	});
 }
 
 function addAccount() {
 	var msg = buildObj('netid', 'firstName', 'lastName');
-	httpRequest('POST', 'Accounts', true, msg, function() {
+	httpRequest('POST', 'Accounts', true, msg, null, function() {
 		document.getElementById("status").innerHTML = "Successfully created an account for " + msg.firstName;
 	}, function() { 
 		document.getElementById("status").innerHTML = "Account creation failed";
@@ -101,7 +110,7 @@ function addAccount() {
 }
 
 function getAccounts() {
-	httpRequest('GET', 'Accounts', true, null, function(resp) {
+	httpRequest('GET', 'Accounts', true, null, null, function(resp) {
 		var table = '<tr><td><b>First Name</b></td><td><b>Last Name</b></td><td><b>NetID</b></td></tr>';
 		for (var i = 0; i < resp.length; i++) {
 			var member = resp[i];
@@ -113,7 +122,7 @@ function getAccounts() {
 
 function removeAccount() {
 	var msg = buildObj('netid');
-	httpRequest('DELETE', 'Accounts', true, msg, function() {
+	httpRequest('DELETE', 'Accounts', true, msg, null, function() {
 		document.getElementById("status").innerHTML = "Deleted " + msg.netid + " sucessfully";
 	}, function() {
 		document.getElementById("status").innerHTML = "Error - delete was unsecessful";
@@ -122,15 +131,39 @@ function removeAccount() {
 
 function addEvent() {
 	var msg = buildObj('title', 'startTime', 'endTime', 'description');
-	httpRequest('POST', 'Events', true, msg, function() {
+	httpRequest('POST', 'Events', true, msg, null, function() {
 		document.getElementById("status").innerHTML = "Successfully created event";
 	}, function() {
 		document.getElementById("status").innerHTML = "Event creation failed";
 	});
 }
 
+function dateToString(date) {
+	var year = date.getFullYear();
+	var month = date.getMonth();
+	var day = date.getDate();
+	var hour = date.getHours();
+	var minute = date.getMinutes();
+	return year + "-" + month + "-" + day + "T" + hour + ":" + minute;
+}
+
+function getEvents() {
+	var now = new Date();
+	var startStr = dateToString(now);
+	now.setDate(now.getDate() + 7);
+	var endStr = dateToString(now);
+	
+	var msg = {startTime:startStr, endTime:endStr};
+	alert(JSON.stringify(msg));
+	httpRequest('GET', 'Events', true, null, msg, function() {
+		alert("success");
+	}, function() {
+		alert("failure");
+	})
+}
+
 function getRoles() {
-	httpRequest('GET', 'Roles', true, null, function(resp) {
+	httpRequest('GET', 'Roles', true, null, null, function(resp) {
 		var rolesHTML = '';
 		for (var i = 0; i < resp.length; i++) {
 			var role = resp[i];

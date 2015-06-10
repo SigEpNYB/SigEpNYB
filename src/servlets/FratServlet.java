@@ -5,6 +5,9 @@ package servlets;
 
 import java.io.IOException;
 import java.io.Writer;
+import java.util.Enumeration;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -12,6 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 import org.json.JSONTokener;
 
@@ -33,7 +37,7 @@ public class FratServlet extends HttpServlet {
 	 */
 	@Override
 	protected final void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		process(req, resp, (token, data) -> post(token, data));
+		process(req, resp, (token, urlParams, data) -> post(token, urlParams, data));
 	}
 
 	/* (non-Javadoc)
@@ -41,7 +45,7 @@ public class FratServlet extends HttpServlet {
 	 */
 	@Override
 	protected final void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		process(req, resp, (token, data) -> get(token, data));
+		process(req, resp, (token, urlParams, data) -> get(token, urlParams));
 	}
 
 	/* (non-Javadoc)
@@ -49,7 +53,7 @@ public class FratServlet extends HttpServlet {
 	 */
 	@Override
 	protected final void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		process(req, resp, (token, data) -> put(token, data));
+		process(req, resp, (token, urlParams, data) -> put(token, urlParams, data));
 	}
 
 	/* (non-Javadoc)
@@ -57,20 +61,20 @@ public class FratServlet extends HttpServlet {
 	 */
 	@Override
 	protected final void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		process(req, resp, (token, data) -> delete(token, data));
+		process(req, resp, (token, urlParams, data) -> delete(token, urlParams, data));
 	}
 
 	/** Executes a post */
-	protected Object post(String token, JSONObject data) throws ClientBoundException {return null;}
+	protected Object post(String token, Map<String, String> urlParams, JSONObject data) throws ClientBoundException {return null;}
 
 	/** Executes a post */
-	protected Object get(String token, JSONObject data) throws ClientBoundException {return null;}
+	protected Object get(String token, Map<String, String> urlParams) throws ClientBoundException {return null;}
 
 	/** Executes a post */
-	protected Object put(String token, JSONObject data) throws ClientBoundException {return null;}
+	protected Object put(String token, Map<String, String> urlParams, JSONObject data) throws ClientBoundException {return null;}
 
 	/** Executes a post */
-	protected Object delete(String token, JSONObject data) throws ClientBoundException {return null;}
+	protected Object delete(String token, Map<String, String> urlParams, JSONObject data) throws ClientBoundException {return null;}
 	
 	
 	/** processes a method */
@@ -85,11 +89,18 @@ public class FratServlet extends HttpServlet {
 				data = new JSONObject();
 			}
 			
+			Map<String, String> urlParams = new HashMap<String, String>();
+			Enumeration<String> paramNames = req.getParameterNames();
+			while (paramNames.hasMoreElements()) {
+				String paramName = paramNames.nextElement();
+				urlParams.put(paramName, req.getParameter(paramName));
+			}
+			
 			resp.setContentType("text/json");
 			Writer writer = resp.getWriter();
 			
 			try {
-				Object result = method.exec(token, data);
+				Object result = method.exec(token, urlParams, data);
 				if (result != null) {
 					if (result.getClass().isArray()) {
 						JSONArray json = new JSONArray(result);
@@ -100,6 +111,8 @@ public class FratServlet extends HttpServlet {
 					}
 				}
 			} catch (MalformedRequestException e) {
+				resp.sendError(400);
+			} catch (JSONException e) {
 				resp.sendError(400);
 			} catch (InternalServerException e) {
 				resp.sendError(500);
@@ -129,6 +142,6 @@ public class FratServlet extends HttpServlet {
 	private interface ServletMethod {
 		
 		/** Executes the method */
-		public Object exec(String token, JSONObject data) throws ClientBoundException;
+		public Object exec(String token, Map<String, String> urlParams, JSONObject data) throws ClientBoundException;
 	}
 }
