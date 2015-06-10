@@ -63,4 +63,32 @@ abstract class Service<D> {
 		})
 		.process(PermissionDeniedException.class);
 	}
+	
+	
+	/**
+	 * A function run by a service
+	 */
+	public interface ServiceFunction<D, R> {
+	
+		/** executes the function */
+		public R exec(D dao) throws Exception;
+	}
+	
+	/**
+	 * A method run by a service
+	 */
+	public interface ServiceMethod<D> {
+
+		/** Executes the method */
+		public void exec(D dao) throws Exception;
+	}
+	
+	/**
+	 * A function run by a service that takes in a token
+	 */
+	public interface ServiceTokenFunction<D, R> {
+
+		/** Executes the function */
+		public R exec(D dao, Token token) throws Exception;
+	}
 }
