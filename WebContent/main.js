@@ -9,7 +9,7 @@ function getCookie(cname) {
     return "";
 }
 
-function httpRequest(mthd, url, useToken, msg, callback) {
+function httpRequest(mthd, url, useToken, msg, success, error, serverError) {
 	var xhr = new XMLHttpRequest();
 	xhr.onreadystatechange = function() {
 		if (xhr.readyState == 4) {
@@ -19,8 +19,28 @@ function httpRequest(mthd, url, useToken, msg, callback) {
 			} catch (e) {
 				resp = null;
 			}
+			
 			var status = xhr.status;
-			callback(status, resp);
+			if (status == 200) {
+				if (success != null) success(resp);
+			} else if (status == 302) {
+				alert(xhr.responseText);
+			} else if (status == 400) {
+				if (error != null) error();
+				else if (success != null) success();
+			} else if (status == 401) {
+				if (error != null) error();
+				else if (success != null) success();
+			} else if (status == 500) {
+				if (serverError == null) {
+					if (error != null) error();
+					else if (success != null) success();
+				} else {
+					serverError();
+				}
+			} else {
+				alert("[DEBUG] unhandled response code: " + status);
+			}
 		}
 	}
 	
@@ -42,7 +62,7 @@ function buildObj() {
 		var id = arguments[i];
 		var element = document.getElementById(id);
 		obj[id] = element.value;
-		element.id = '';
+		element.value = '';
 	}
 	
 	return obj;
@@ -50,13 +70,11 @@ function buildObj() {
 
 function login() {
 	var msg = buildObj('netid', 'password');
-	httpRequest('POST', 'Login', false, msg, function(status, resp) {
-		if (status == 200) {
-    		document.cookie = 'token=' + resp.token;
-    		window.location.href = '/Fratsite/dashboard.html';
-    	} else {
-    		document.getElementById('errormsg').innerHTML = "Error loggin in";
-    	}
+	httpRequest('POST', 'Login', false, msg, function(resp) {
+    	document.cookie = 'token=' + resp.token;
+    	window.location.href = '/Fratsite/dashboard.html';
+	}, function() {
+		document.getElementById('errormsg').innerHTML = "Error loggin in";
 	});
 }
 
@@ -68,28 +86,22 @@ function logout() {
 }
 
 function getAccount() {
-	httpRequest('GET', 'Account', true, null, function(status, resp) {
-		if (resp != null) {
-			document.getElementById('name').innerHTML = resp.firstName + ' ' + resp.lastName;
-		}
+	httpRequest('GET', 'Account', true, null, function(resp) {
+		document.getElementById('name').innerHTML = resp.firstName + ' ' + resp.lastName;
 	});
 }
 
 function addAccount() {
 	var msg = buildObj('netid', 'firstName', 'lastName');
-	httpRequest('POST', 'Accounts', true, msg, function(status) {
-		var message;
-		if (status == 200) {
-			message = "Successfully created an account for " + msg.firstName;
-		} else {
-			message = "Account creation failed";
-		}
-		document.getElementById("status").innerHTML = message;
+	httpRequest('POST', 'Accounts', true, msg, function() {
+		document.getElementById("status").innerHTML = "Successfully created an account for " + msg.firstName;
+	}, function() { 
+		document.getElementById("status").innerHTML = "Account creation failed";
 	});
 }
 
 function getAccounts() {
-	httpRequest('GET', 'Accounts', true, null, function(status, resp) {
+	httpRequest('GET', 'Accounts', true, null, function(resp) {
 		var table = '<tr><td><b>First Name</b></td><td><b>Last Name</b></td><td><b>NetID</b></td></tr>';
 		for (var i = 0; i < resp.length; i++) {
 			var member = resp[i];
@@ -101,32 +113,24 @@ function getAccounts() {
 
 function removeAccount() {
 	var msg = buildObj('netid');
-	httpRequest('DELETE', 'Accounts', true, msg, function(status) {
-		var message;
-		if (status == 200) {
-			message = "Deleted " + msg.netid + " sucessfully";
-		} else {
-			message = "Error - delete was unsecessful";
-		}
-		document.getElementById('status').innerHTML = message;
+	httpRequest('DELETE', 'Accounts', true, msg, function() {
+		document.getElementById("status").innerHTML = "Deleted " + msg.netid + " sucessfully";
+	}, function() {
+		document.getElementById("status").innerHTML = "Error - delete was unsecessful";
 	});
 }
 
 function addEvent() {
 	var msg = buildObj('title', 'startTime', 'endTime', 'description');
-	httpRequest('POST', 'Events', true, msg, function(status) {
-		var message;
-		if (status == 200) {
-			message = "Successfully created event";
-		} else {
-			message = "Event creation failed";
-		}
-		document.getElementById("status").innerHTML = message;
+	httpRequest('POST', 'Events', true, msg, function() {
+		document.getElementById("status").innerHTML = "Successfully created event";
+	}, function() {
+		document.getElementById("status").innerHTML = "Event creation failed";
 	});
 }
 
 function getRoles() {
-	httpRequest('GET', 'Roles', true, null, function(status, resp) {
+	httpRequest('GET', 'Roles', true, null, function(resp) {
 		var rolesHTML = '';
 		for (var i = 0; i < resp.length; i++) {
 			var role = resp[i];

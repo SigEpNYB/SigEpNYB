@@ -100,15 +100,15 @@ public class FratServlet extends HttpServlet {
 					}
 				}
 			} catch (MalformedRequestException e) {
-				resp.sendError(400, "Malformed request");
+				resp.sendError(400);
 			} catch (InternalServerException e) {
 				resp.sendError(500);
 			} catch (InvalidTokenException e) {
 				resp.sendRedirect("/Fratsite/index.html");
 			} catch (PermissionDeniedException e) {
-				resp.sendError(401, "Current user does not have correct permissions");
+				resp.sendError(401);
 			} catch (InvalidCredentialsException e) {
-				resp.sendError(401, "Invalid Credentials");
+				resp.sendError(401);
 			} catch (ClientBoundException e) {
 				e.printStackTrace();
 				resp.sendError(500);
