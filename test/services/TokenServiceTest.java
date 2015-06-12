@@ -5,6 +5,9 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
+import java.util.Calendar;
+import java.util.Date;
+
 import org.junit.Before;
 import org.junit.Test;
 
@@ -23,6 +26,8 @@ public class TokenServiceTest {
 
 	@Test
 	public void testLogin() throws InternalServerException, InvalidCredentialsException, TokenNotFoundException {
+		Date now = Calendar.getInstance().getTime();
+		
 		String tokenStr = service.login("mtr73", "pass1");
 		
 		assertNotNull(tokenStr);
@@ -34,6 +39,7 @@ public class TokenServiceTest {
 		assertEquals(token.getIdAccount(), 1);
 		assertNotNull(token.getLoggedIn());
 		assertEquals(token.getLoggedIn(), token.getLastActive());
+		assertTrue(Math.abs(now.getTime() - token.getLoggedIn().getTime()) < 1000);
 		
 		service.logout(tokenStr);
 	}
