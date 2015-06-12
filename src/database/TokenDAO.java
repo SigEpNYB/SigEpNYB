@@ -26,7 +26,7 @@ public class TokenDAO {
 	private static final String UPDATE_LASTACTIVE_SQL = "UPDATE tokens SET lastActive='%s' WHERE token='%s'";
 	private static final String DELETE_TOKEN_SQL = "DELETE FROM tokens WHERE token = '%s'";
 	
-	private static final DateFormat format = new SimpleDateFormat("YYYY-MM-dd HH:mm:ss");
+	private static final DateFormat format = new SimpleDateFormat("yyy-MM-dd HH:mm:ss");
 	
 	private final Database database;
 	
