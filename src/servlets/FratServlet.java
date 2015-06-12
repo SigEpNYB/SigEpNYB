@@ -4,6 +4,7 @@
 package servlets;
 
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.Writer;
 import java.util.Enumeration;
 import java.util.HashMap;
@@ -65,16 +66,16 @@ public class FratServlet extends HttpServlet {
 	}
 
 	/** Executes a post */
-	protected Object post(String token, Map<String, String> urlParams, JSONObject data) throws ClientBoundException {return null;}
+	protected Object post(String token, Map<String, String> urlParams, JSONObject data) throws ClientBoundException, JSONException {return null;}
 
 	/** Executes a post */
-	protected Object get(String token, Map<String, String> urlParams) throws ClientBoundException {return null;}
+	protected Object get(String token, Map<String, String> urlParams) throws ClientBoundException, JSONException {return null;}
 
 	/** Executes a post */
-	protected Object put(String token, Map<String, String> urlParams, JSONObject data) throws ClientBoundException {return null;}
+	protected Object put(String token, Map<String, String> urlParams, JSONObject data) throws ClientBoundException, JSONException {return null;}
 
 	/** Executes a post */
-	protected Object delete(String token, Map<String, String> urlParams, JSONObject data) throws ClientBoundException {return null;}
+	protected Object delete(String token, Map<String, String> urlParams, JSONObject data) throws ClientBoundException, JSONException {return null;}
 	
 	
 	/** processes a method */
@@ -84,7 +85,7 @@ public class FratServlet extends HttpServlet {
 			
 			JSONObject data;
 			if (req.getContentLength() > 0) {
-				data = new JSONObject(new JSONTokener(req.getInputStream()));
+				data = new JSONObject(new JSONTokener(new InputStreamReader(req.getInputStream())));
 			} else {
 				data = new JSONObject();
 			}
@@ -103,10 +104,10 @@ public class FratServlet extends HttpServlet {
 				Object result = method.exec(token, urlParams, data);
 				if (result != null) {
 					if (result.getClass().isArray()) {
-						JSONArray json = new JSONArray(result);
+						JSONArray json = new JSONArray(result, false);
 						json.write(writer);
 					} else {
-						JSONObject json = new JSONObject(result);
+						JSONObject json = new JSONObject(result, false);
 						json.write(writer);
 					}
 				}
@@ -142,6 +143,6 @@ public class FratServlet extends HttpServlet {
 	private interface ServletMethod {
 		
 		/** Executes the method */
-		public Object exec(String token, Map<String, String> urlParams, JSONObject data) throws ClientBoundException;
+		public Object exec(String token, Map<String, String> urlParams, JSONObject data) throws ClientBoundException, JSONException;
 	}
 }

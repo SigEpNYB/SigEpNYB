@@ -4,6 +4,7 @@ import java.util.Map;
 
 import javax.servlet.annotation.WebServlet;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import services.Services;
@@ -20,7 +21,7 @@ public class Login extends FratServlet {
 	 * @see servlets.FratServlet#post(java.lang.String, org.json.JSONObject)
 	 */
 	@Override
-	protected Object post(String token, Map<String, String> urlParams, JSONObject data) throws ClientBoundException {
+	protected Object post(String token, Map<String, String> urlParams, JSONObject data) throws ClientBoundException, JSONException {
 		String netid = data.getString("netid");
 		String password = data.getString("password");
 		return new Token(Services.getTokenService().login(netid, password));
