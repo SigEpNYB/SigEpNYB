@@ -24,7 +24,7 @@ public class Services {
 	/** This class is a singleton */
 	private Services() throws InternalServerException {
 		try {
-			database = new Database("fratsite", "jeff");
+			database = new Database("fratsite", "jeff", "fratdata");
 			tokenService = new TokenService(database.getTokenDAO());
 			accountsService = new AccountsService(database.getAccountsDAO());
 			permissionService = new PermissionService(database.getPermissionDAO());

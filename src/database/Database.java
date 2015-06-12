@@ -19,13 +19,13 @@ public class Database implements IDatabase {
 	/** 
 	 * Creates a new database connection
 	 */
-	public Database(String user, String password) throws SQLException, InstantiationException, IllegalAccessException, ClassNotFoundException {
+	public Database(String user, String password, String database) throws SQLException, InstantiationException, IllegalAccessException, ClassNotFoundException {
 		Properties properties = new Properties();
 		properties.put("user", user);
 		properties.put("password", password);
 		
 		Class.forName("com.mysql.jdbc.Driver");
-		connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/fratdata", properties);
+		connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/" + database, properties);
 	}
 	
 	/** Executes the given sql */
