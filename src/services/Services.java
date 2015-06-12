@@ -3,6 +3,7 @@
  */
 package services;
 
+import util.Settings;
 import database.Database;
 import database.IDatabase;
 import exceptions.InternalServerException;
@@ -24,7 +25,9 @@ public class Services {
 	/** This class is a singleton */
 	private Services() throws InternalServerException {
 		try {
-			database = new Database("fratsite", "jeff", "fratdata");
+			Settings settings = Settings.getInstance();
+			
+			database = new Database(settings.getDatabaseUser(), settings.getDatabasePassword(), settings.getDatabase());
 			tokenService = new TokenService(database.getTokenDAO());
 			accountsService = new AccountsService(database.getAccountsDAO());
 			permissionService = new PermissionService(database.getPermissionDAO());
