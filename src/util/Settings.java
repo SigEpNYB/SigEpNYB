@@ -34,9 +34,4 @@ public class Settings {
 	public String getDatabase() {
 		return "fratdata";
 	}
-	
-	/** Checks if the database should be cleaned */
-	public boolean shouldCleanDatabase() {
-		return false;
-	}
 }
