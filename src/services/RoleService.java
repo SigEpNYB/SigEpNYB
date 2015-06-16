@@ -25,6 +25,14 @@ public class RoleService extends Service<RolesDAO> {
 		.unwrap();
 	}
 	
+	/** Checks whether the user has the given role */
+	boolean has(int idAccount, Role role) throws InternalServerException {
+		return run(dao -> {
+			return dao.has(idAccount, role);
+		})
+		.unwrap();
+	}
+	
 	/** Unassigns all the roles from the user */
 	void unassignAll(int idAccount) throws InternalServerException {
 		run(dao -> {

@@ -12,6 +12,7 @@ import data.Role;
  */
 public class RolesDAO {
 	private static final String INSERT_ROLE_SQL = "INSERT INTO user_roles (idAccount, idRole) VALUES (%d, %d)";
+	private static final String GET_ROLE_SQL = "SELECT idRole FROM user_roles WHERE idAccount = %d AND idRole = %d";
 	private static final String REMOVE_ROLE_SQL = "DELETE FROM user_roles WHERE idAccount = %d AND idRole = %d";
 	private static final String REMOVE_ALL_ROLES_SQL = "DELETE FROM user_roles WHERE idAccount = %d";
 	
@@ -25,6 +26,11 @@ public class RolesDAO {
 	/** Assigns the role to the account with the given idAccount */
 	public void assign(int idAccount, Role role) throws SQLException {
 		database.execute(INSERT_ROLE_SQL, idAccount, role.id);
+	}
+	
+	/** Checks whether the user in question has the given role */
+	public boolean has(int idAccount, Role role) throws SQLException {
+		return database.execute((row, t) -> true, false, GET_ROLE_SQL, idAccount, role.id);
 	}
 	
 	/** Removes the role form the user */
