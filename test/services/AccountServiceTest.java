@@ -1,6 +1,7 @@
 package services;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
@@ -165,6 +166,14 @@ public class AccountServiceTest {
 		
 		service.create(token, "bla", "Mr", "Bla");
 
+		AccountData accountData = null;
+		for (AccountData data : service.getAccounts(token)) {
+			if (data.getNetid().equals("bla")) {
+				accountData = data;
+				break;
+			}
+		}
+		
 		service.delete(token, "bla");
 		
 		for (AccountData account : service.getAccounts(token)) {
@@ -172,6 +181,10 @@ public class AccountServiceTest {
 				fail("'bla' should've been deleted");
 			}
 		}
+		
+		RoleService roleService = Services.getRoleService();
+		
+		assertFalse(roleService.has(accountData.getId(), Role.BROTHER));
 
 		tokenService.logout(token);
 	}
