@@ -18,7 +18,7 @@ import java.util.Properties;
  * Contains generic code for accessing a the database
  */
 public class Database implements IDatabase {
-	private static final DateFormat dateFormat = new SimpleDateFormat("YYYY-MM-dd HH:mm:ss");
+	private static final DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 	
 	/** Takes a date and formats it to a string */
 	public static String dateToString(Date date) {
@@ -27,6 +27,8 @@ public class Database implements IDatabase {
 	
 	/** Takes a date string and parses it to a date */
 	public static Date stringToDate(String date) throws SQLException {
+		if (date == null) return null;
+		
 		try {
 			return dateFormat.parse(date);
 		} catch (ParseException e) {
