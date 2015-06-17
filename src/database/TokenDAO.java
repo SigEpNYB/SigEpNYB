@@ -4,9 +4,6 @@
 package database;
 
 import java.sql.SQLException;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import data.Token;
@@ -26,8 +23,6 @@ public class TokenDAO {
 	private static final String UPDATE_LASTACTIVE_SQL = "UPDATE tokens SET lastActive='%s' WHERE token='%s'";
 	private static final String DELETE_TOKEN_SQL = "DELETE FROM tokens WHERE token = '%s'";
 	
-	private static final DateFormat format = new SimpleDateFormat("yyy-MM-dd HH:mm:ss");
-	
 	private final Database database;
 	
 	/** Creates a new TokenManager */
@@ -37,7 +32,7 @@ public class TokenDAO {
 	
 	/** Adds the given token to the database */
 	public void create(String token, int idAccount, Date date) throws SQLException {
-		String dateStr = format.format(date);
+		String dateStr = Database.dateToString(date);
 		database.execute(INSERT_TOKEN_SQL, token, idAccount, dateStr, dateStr);
 	}
 	
@@ -45,14 +40,8 @@ public class TokenDAO {
 	private Token build(Row row) throws SQLException {
 		String token = row.getString(TOKEN);
 		int idAccount = row.getInt(IDACCOUNT);
-		Date loggedIn;
-		Date lastActive;
-		try {
-			loggedIn = format.parse(row.getString(LOGGEDIN));
-			lastActive = format.parse(row.getString(LASTACTIVE));
-		} catch (ParseException e) {
-			throw new SQLException(e);
-		}
+		Date loggedIn = Database.stringToDate(row.getString(LOGGEDIN));
+		Date lastActive = Database.stringToDate(row.getString(LASTACTIVE));
 		return new Token(token, idAccount, loggedIn, lastActive);
 	}
 	
@@ -68,7 +57,7 @@ public class TokenDAO {
 	
 	/** Updates the last active tag of the token */
 	public void update(String token, Date date) throws SQLException {
-		database.execute(UPDATE_LASTACTIVE_SQL, format.format(date), token);
+		database.execute(UPDATE_LASTACTIVE_SQL, Database.dateToString(date), token);
 	}
 	
 	/** Deletes the given token */
