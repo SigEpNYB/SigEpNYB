@@ -1,3 +1,4 @@
+DROP TABLE IF EXISTS account_requests;
 DROP TABLE IF EXISTS user_todos;
 DROP TABLE IF EXISTS todos;
 DROP TABLE IF EXISTS role_pages;
@@ -21,3 +22,4 @@ source create-pages.sql;
 source create-role_pages.sql
 source create-todos.sql;
 source create-user_todos.sql;
+source create-account_requests.sql;
