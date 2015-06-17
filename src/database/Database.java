@@ -70,7 +70,9 @@ public class Database implements IDatabase {
 	 */
 	<R, T extends Exception> R execute(RowProcessor<R, T> processor, R init, String sql, Object... args) throws T, SQLException {
 		Statement statement = connection.createStatement();
-		ResultSet results = statement.executeQuery(String.format(sql, args));
+		statement.execute(String.format(sql, args), Statement.RETURN_GENERATED_KEYS);
+		ResultSet results = statement.getResultSet();
+		if (results == null) results = statement.getGeneratedKeys();
 		Row row = new Row(results);
 		
 		R acc = init;
