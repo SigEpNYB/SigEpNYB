@@ -4,9 +4,6 @@
 package database;
 
 import java.sql.SQLException;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
@@ -29,18 +26,16 @@ public class EventsDAO {
 	private static final String DELETE_EVENT_SQL = "DELETE FROM events WHERE idEvent = %d";
 	
 	private final Database database;
-	private final DateFormat dateFormat;
 	
 	/** Creates a new EventsDAO */
 	EventsDAO(Database database) {
 		this.database = database;
-		dateFormat = new SimpleDateFormat("YYYY-MM-dd HH:mm:ss");
 	}
 	
 	/** Creates a new Event */
 	public void create(String title, Date start, Date end, String description) throws SQLException {
-		String startStr = dateFormat.format(start);
-		String endStr = dateFormat.format(end);
+		String startStr = Database.dateToString(start);
+		String endStr = Database.dateToString(end);
 		database.execute(CREATE_EVENT_SQL, title, startStr, endStr, description);
 	}
 	
@@ -48,14 +43,8 @@ public class EventsDAO {
 	private Event build(Row row) throws SQLException {
 		int idEvent = row.getInt(IDEVENT);
 		String title = row.getString(TITLE);
-		Date startTime;
-		Date endTime;
-		try {
-			startTime = dateFormat.parse(row.getString(STARTTIME));
-			endTime = dateFormat.parse(row.getString(ENDTIME));
-		} catch (ParseException e) {
-			throw new SQLException(e);
-		}
+		Date startTime = Database.stringToDate(row.getString(STARTTIME));
+		Date endTime = Database.stringToDate(row.getString(ENDTIME));
 		String description = row.getString(DESCRIPTION);
 		
 		return new Event(idEvent, title, startTime, endTime, description);
@@ -65,7 +54,7 @@ public class EventsDAO {
 	public Event[] get(Date start, Date end) throws SQLException {
 		List<Event> events = database.execute(
 				(row, lst) -> {lst.add(build(row)); return lst;}, 
-				new LinkedList<Event>(), GET_EVENTS_SQL, dateFormat.format(end), dateFormat.format(start));
+				new LinkedList<Event>(), GET_EVENTS_SQL, Database.dateToString(start), Database.dateToString(start));
 		return events.toArray(new Event[events.size()]);
 	}
 	

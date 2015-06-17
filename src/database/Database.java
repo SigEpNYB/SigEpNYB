@@ -8,12 +8,32 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Properties;
 
 /**
  * Contains generic code for accessing a the database
  */
 public class Database implements IDatabase {
+	private static final DateFormat dateFormat = new SimpleDateFormat("YYYY-MM-dd HH:mm:ss");
+	
+	/** Takes a date and formats it to a string */
+	public static String dateToString(Date date) {
+		return dateFormat.format(date);
+	}
+	
+	/** Takes a date string and parses it to a date */
+	public static Date stringToDate(String date) throws SQLException {
+		try {
+			return dateFormat.parse(date);
+		} catch (ParseException e) {
+			throw new SQLException(e);
+		}
+	}
+	
 	private final Connection connection;
 	
 	/** 
@@ -116,8 +136,5 @@ public class Database implements IDatabase {
 	public void close() throws Exception {
 		connection.close();
 	}
-	
-	
-	
 	
 }
