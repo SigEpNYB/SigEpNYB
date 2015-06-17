@@ -28,4 +28,7 @@ public interface IDatabase extends AutoCloseable {
 	
 	/** Gets the TodoDAO */
 	public TodoDAO getTodoDAO();
+	
+	/** Gets the AccountRequestDAO */
+	public AccountRequestDAO getAccountRequestDAO();
 }

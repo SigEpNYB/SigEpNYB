@@ -142,6 +142,14 @@ public class Database implements IDatabase {
 	}
 
 	/* (non-Javadoc)
+	 * @see database.IDatabase#getAccountRequestDAO()
+	 */
+	@Override
+	public AccountRequestDAO getAccountRequestDAO() {
+		return new AccountRequestDAO(this);
+	}
+
+	/* (non-Javadoc)
 	 * @see java.lang.AutoCloseable#close()
 	 */
 	@Override
