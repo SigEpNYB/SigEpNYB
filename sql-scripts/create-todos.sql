@@ -1,0 +1,6 @@
+CREATE TABLE todos (
+idTodo INT NOT NULL AUTO_INCREMENT,
+description TEXT NOT NULL,
+dueDate DATETIME,
+PRIMARY KEY (idTodo)
+);

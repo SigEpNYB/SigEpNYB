@@ -1,3 +1,5 @@
+DROP TABLE IF EXISTS user_todos;
+DROP TABLE IF EXISTS todos;
 DROP TABLE IF EXISTS role_pages;
 DROP TABLE IF EXISTS pages;
 DROP TABLE IF EXISTS events;
@@ -17,3 +19,5 @@ source create-user_roles.sql;
 source create-events.sql;
 source create-pages.sql;
 source create-role_pages.sql
+source create-todos.sql;
+source create-user_todos.sql;
