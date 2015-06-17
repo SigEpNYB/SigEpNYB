@@ -134,6 +134,14 @@ public class Database implements IDatabase {
 	}
 
 	/* (non-Javadoc)
+	 * @see database.IDatabase#getTodoDAO()
+	 */
+	@Override
+	public TodoDAO getTodoDAO() {
+		return new TodoDAO(this);
+	}
+
+	/* (non-Javadoc)
 	 * @see java.lang.AutoCloseable#close()
 	 */
 	@Override
