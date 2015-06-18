@@ -21,6 +21,7 @@ public class Services {
 	private final EventService eventService;
 	private final PageService pageService;
 	private final RoleService roleService;
+	private final AccountRequestService accountRequestService;
 	
 	/** This class is a singleton */
 	private Services() throws InternalServerException {
@@ -34,6 +35,7 @@ public class Services {
 			eventService = new EventService(database.getEventsDAO());
 			pageService = new PageService(database.getPagesDAO());
 			roleService = new RoleService(database.getRolesDAO());
+			accountRequestService = new AccountRequestService(database.getAccountRequestDAO());
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new InternalServerException();
@@ -73,5 +75,10 @@ public class Services {
 	/** Gets a RoleService */
 	public static RoleService getRoleService() throws InternalServerException {
 		return getInstance().roleService;
+	}
+
+	/** Gets an AccountRequestService */
+	public static AccountRequestService getAccountRequestService() throws InternalServerException {
+		return getInstance().accountRequestService;
 	}
 }
