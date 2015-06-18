@@ -30,7 +30,7 @@ public class AccountServiceTest {
 		TokenService tokenService = Services.getTokenService();
 		String token = tokenService.login("mtr73", "pass1");
 		
-		service.create(token, "bla", "Mr", "Bla");
+		service.create("bla", "somepass", "Mr", "Bla");
 		
 		AccountData accountData = null;
 		for (AccountData data : service.getAccounts(token)) {
@@ -53,28 +53,6 @@ public class AccountServiceTest {
 		service.delete(token, "bla");
 		
 		tokenService.logout(token);
-	}
-	
-	@Test(expected = InvalidTokenException.class)
-	public void testCreateBadToken() throws InternalServerException, InvalidTokenException, PermissionDeniedException {
-		service.create("badtoken", "dfqe", "sdg", "sadg");
-	}
-	
-	@Test()
-	public void testCreateBadPermission() throws InternalServerException, InvalidCredentialsException {
-		TokenService tokenService = Services.getTokenService();
-		String token = tokenService.login("net123", "letmein");
-		
-		try {
-			service.create(token, "flhwq", "wrg	", "wqrgq");
-		} catch (InvalidTokenException e) {
-			fail("should be a valid token");
-		} catch (PermissionDeniedException e) {
-			tokenService.logout(token);
-			return;
-		}
-		
-		fail("Expected PermissionDeniedException");
 	}
 
 	@Test
@@ -148,7 +126,7 @@ public class AccountServiceTest {
 		String token = tokenService.login("nofun", "plz");
 		
 		try {
-			service.create(token, "flhwq", "wrg	", "wqrgq");
+			service.getAccounts(token);
 		} catch (InvalidTokenException e) {
 			fail("should be a valid token");
 		} catch (PermissionDeniedException e) {
@@ -164,7 +142,7 @@ public class AccountServiceTest {
 		TokenService tokenService = Services.getTokenService();
 		String token = tokenService.login("mtr73", "pass1");
 		
-		service.create(token, "bla", "Mr", "Bla");
+		service.create("bla", "somepass", "Mr", "Bla");
 
 		AccountData accountData = null;
 		for (AccountData data : service.getAccounts(token)) {

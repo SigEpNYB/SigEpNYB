@@ -3,9 +3,6 @@
  */
 package services;
 
-import java.math.BigInteger;
-import java.security.SecureRandom;
-
 import data.AccountData;
 import data.Permission;
 import data.Role;
@@ -26,9 +23,8 @@ public class AccountsService extends Service<AccountsDAO> {
 	}
 
 	/** Creates an account */
-	public void create(String token, String netid, String firstName, String lastName) throws InternalServerException, InvalidTokenException, PermissionDeniedException {
-		run(token, Permission.POSTACCOUNT, (dao, tokenInfo) -> {
-			String password = new BigInteger(25, new SecureRandom()).toString(32);
+	void create(String netid, String password, String firstName, String lastName) throws InternalServerException, InvalidTokenException, PermissionDeniedException {
+		run(dao -> {
 			dao.create(netid, password, firstName, lastName);
 			int idAccount = dao.getId(netid);
 			Services.getRoleService().assign(idAccount, Role.BROTHER);

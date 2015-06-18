@@ -8,6 +8,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import data.AccountData;
+import data.FullAccountData;
 
 /**
  * Manages account requests
@@ -17,8 +18,10 @@ public class AccountRequestDAO {
 	private static final String NETID = "netid";
 	private static final String FIRSTNAME = "firstName";
 	private static final String LASTNAME = "lastName";
+	private static final String PASSWORD = "password";
 	
 	private static final String CREATE_REQUEST_SQL = "INSERT INTO account_requests (netid, password, firstName, lastName) VALUES ('%s', '%s', '%s', '%s')";
+	private static final String GET_REQUEST_SQL = "SELECT idRequest, netid, password, firstName, lastName FROM account_requests WHERE idRequest = %d";
 	private static final String GET_REQUESTS_SQL = "SELECT idRequest, netid, firstName, lastName FROM account_requests";
 	private static final String DELETE_REQUEST_SQL = "DELETE FROM account_requests WHERE idRequest = %d";
 	
@@ -41,6 +44,11 @@ public class AccountRequestDAO {
 		String firstName = row.getString(FIRSTNAME);
 		String lastName = row.getString(LASTNAME);
 		return new AccountData(idAccount, netid, firstName, lastName);
+	}
+	
+	/** Gets an account request with the given id */
+	public FullAccountData get(int idRequest) throws SQLException {
+		return database.execute((row, t) -> new FullAccountData(build(row), row.getString(PASSWORD)), null, GET_REQUEST_SQL, idRequest);
 	}
 	
 	/** Gets all of the requests */

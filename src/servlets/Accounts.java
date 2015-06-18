@@ -19,18 +19,6 @@ import exceptions.MalformedRequestException;
 public class Accounts extends FratServlet {
 	private static final long serialVersionUID = 1L;
 
-    /* (non-Javadoc)
-     * @see servlets.FratServlet#post(java.lang.String, org.json.JSONObject)
-     */
-	@Override
-	protected Object post(String token, Map<String, String> urlParams, JSONObject data) throws ClientBoundException, JSONException {
-		String netid = data.getString("netid");
-		String firstName = data.getString("firstName");
-		String lastName = data.getString("lastName");
-		Services.getAccountService().create(token, netid, firstName, lastName);
-		return null;
-	}
-
 	/* (non-Javadoc)
 	 * @see servlets.FratServlet#get(java.lang.String, org.json.JSONObject)
 	 */
