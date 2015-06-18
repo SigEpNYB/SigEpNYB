@@ -10,6 +10,7 @@ import org.junit.Test;
 
 import util.Settings;
 import data.AccountData;
+import data.FullAccountData;
 
 public class AccountRequestDAOTest {
 	Database db;
@@ -45,6 +46,20 @@ public class AccountRequestDAOTest {
 		
 		dao.delete(requests[0].getId());
 		dao.delete(requests[1].getId());
+	}
+	
+	@Test
+	public void testGet() throws SQLException {
+		dao.create("a", "b", "c", "d");
+		AccountData[] accounts = dao.getAll();
+		FullAccountData request = dao.get(accounts[0].getId());
+		
+		assertEquals(request.getData().getNetid(), "a");
+		assertEquals(request.getPassword(), "b");
+		assertEquals(request.getData().getFirstName(), "c");
+		assertEquals(request.getData().getLastName(), "d");
+		
+		dao.delete(request.getData().getId());
 	}
 
 	@Test
