@@ -29,7 +29,6 @@ public class EventService extends RestrictedService<EventsDAO> {
 			throws InternalServerException, PermissionDeniedException, InvalidTokenException {
 		run(token, Permission.POSTEVENTS, dao -> {
 			dao.create(title, startTime, endTime, description);
-			return null;
 		})
 		.unwrap();
 	}
@@ -46,7 +45,6 @@ public class EventService extends RestrictedService<EventsDAO> {
 	public void cancel(String token, int idEvent) throws InternalServerException, PermissionDeniedException, InvalidTokenException {
 		run(token, Permission.DELETEEVENTS, dao -> {
 			dao.cancel(idEvent);
-			return null;
 		})
 		.unwrap();
 	}

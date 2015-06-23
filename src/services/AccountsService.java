@@ -31,7 +31,6 @@ public class AccountsService extends RestrictedService<AccountsDAO> {
 			dao.create(netid, password, firstName, lastName);
 			int idAccount = dao.getId(netid);
 			roleService.assign(idAccount, Role.BROTHER);
-			return null;
 		})
 		.unwrap();
 	}
@@ -75,7 +74,6 @@ public class AccountsService extends RestrictedService<AccountsDAO> {
 			roleService.unassignAll(idAccount);
 			if (idAccount == AccountsDAO.ACCOUNT_NOT_FOUND) throw new AccountNotFoundException();
 			dao.delete(idAccount);
-			return null;
 		})
 		.process(AccountNotFoundException.class)
 		.unwrap();
