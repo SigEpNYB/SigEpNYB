@@ -62,7 +62,7 @@ public class AccountsService extends RestrictedService<AccountsDAO> {
 	
 	/** Gets all the accounts */
 	public AccountData[] getAccounts(String token) throws InternalServerException, InvalidTokenException, PermissionDeniedException {
-		return run(token, Permission.GETACCOUNTS, (dao, tokenInfo) -> {
+		return run(token, Permission.GETACCOUNTS, dao -> {
 			return dao.getAccounts();
 		})
 		.unwrap();
@@ -70,7 +70,7 @@ public class AccountsService extends RestrictedService<AccountsDAO> {
 	
 	/** Deletes the given account */
 	public void delete(String token, String netid) throws InternalServerException, InvalidTokenException, PermissionDeniedException, AccountNotFoundException {
-		run(token, Permission.DELETEACCOUNT, (dao, tokenInfo) -> {
+		run(token, Permission.DELETEACCOUNT, dao -> {
 			int idAccount = dao.getId(netid);
 			roleService.unassignAll(idAccount);
 			if (idAccount == AccountsDAO.ACCOUNT_NOT_FOUND) throw new AccountNotFoundException();

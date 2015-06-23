@@ -23,11 +23,11 @@ public abstract class RestrictedService<D> extends UserService<D> {
 		this.permissionService = permissionService;
 	}
 	
-	protected final <R> ExceptionProcessor<R, InternalServerException> run(String token, Permission permission, ServiceTokenFunction<D, R> function) 
+	protected final <R> ExceptionProcessor<R, InternalServerException> run(String token, Permission permission, ServiceFunction<D, R> function) 
 			throws PermissionDeniedException, InvalidTokenException {
 		return run(token, (dao, tokenInfo) -> {
 			if (!permissionService.hasPermission(tokenInfo.getIdAccount(), permission)) throw new PermissionDeniedException();
-			return function.exec(dao, tokenInfo);
+			return function.exec(dao);
 		})
 		.process(PermissionDeniedException.class);
 	}

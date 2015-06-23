@@ -35,7 +35,7 @@ public class AccountRequestService extends RestrictedService<AccountRequestDAO> 
 	
 	/** Gets all of the account requests */
 	public AccountData[] get(String token) throws InternalServerException, PermissionDeniedException, InvalidTokenException {
-		return run(token, Permission.GETACCOUNTREQUESTS, (dao, tokenInfo) -> {
+		return run(token, Permission.GETACCOUNTREQUESTS, dao -> {
 			return dao.getAll();
 		})
 		.unwrap();
@@ -43,7 +43,7 @@ public class AccountRequestService extends RestrictedService<AccountRequestDAO> 
 	
 	/** Accepts the given request */
 	public void accept(String token, int idRequest) throws InternalServerException, PermissionDeniedException, InvalidTokenException, AccountNotFoundException {
-		run(token, Permission.ACCEPTREQUEST, (dao, tokenInfo) -> {
+		run(token, Permission.ACCEPTREQUEST, dao -> {
 			FullAccountData request = dao.get(idRequest);
 			if (request == null) throw new AccountNotFoundException();
 			
@@ -62,7 +62,7 @@ public class AccountRequestService extends RestrictedService<AccountRequestDAO> 
 	
 	/** Rejects the given request */
 	public void reject(String token, int idRequest) throws InternalServerException, PermissionDeniedException, InvalidTokenException {
-		run (token, Permission.REJECTREQUEST, (dao, tokenInfo) -> {
+		run (token, Permission.REJECTREQUEST, dao -> {
 			dao.delete(idRequest);
 			return null;
 		})
