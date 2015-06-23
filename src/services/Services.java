@@ -30,12 +30,12 @@ public class Services {
 			
 			database = new Database(settings.getDatabaseUser(), settings.getDatabasePassword(), settings.getDatabase());
 			tokenService = new TokenService(database.getTokenDAO());
-			accountsService = new AccountsService(database.getAccountsDAO());
 			permissionService = new PermissionService(database.getPermissionDAO());
-			eventService = new EventService(database.getEventsDAO());
-			pageService = new PageService(database.getPagesDAO());
 			roleService = new RoleService(database.getRolesDAO());
-			accountRequestService = new AccountRequestService(database.getAccountRequestDAO());
+			accountsService = new AccountsService(database.getAccountsDAO(), tokenService, permissionService, roleService);
+			accountRequestService = new AccountRequestService(database.getAccountRequestDAO(), tokenService, permissionService, accountsService);
+			eventService = new EventService(database.getEventsDAO(), tokenService, permissionService);
+			pageService = new PageService(database.getPagesDAO(), tokenService, permissionService);
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new InternalServerException();

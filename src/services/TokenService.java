@@ -3,6 +3,8 @@
  */
 package services;
 
+import iservice.Service;
+
 import java.math.BigInteger;
 import java.security.SecureRandom;
 import java.util.Calendar;

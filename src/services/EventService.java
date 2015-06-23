@@ -3,6 +3,8 @@
  */
 package services;
 
+import iservice.RestrictedService;
+
 import java.util.Date;
 
 import data.Event;
@@ -15,11 +17,11 @@ import exceptions.PermissionDeniedException;
 /**
  * Logic behind Events
  */
-public class EventService extends Service<EventsDAO> {
+public class EventService extends RestrictedService<EventsDAO> {
 
 	/** Creates an EventService */
-	EventService(EventsDAO dao) {
-		super(dao);
+	EventService(EventsDAO dao, TokenService tokenService, PermissionService permissionService) {
+		super(dao, tokenService, permissionService);
 	}
 
 	/** Creates an event */

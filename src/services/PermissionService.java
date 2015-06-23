@@ -3,6 +3,7 @@
  */
 package services;
 
+import iservice.Service;
 import data.Permission;
 import database.PermissionDAO;
 import exceptions.InternalServerException;

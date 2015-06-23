@@ -3,6 +3,7 @@
  */
 package services;
 
+import iservice.RestrictedService;
 import data.AccountData;
 import data.FullAccountData;
 import data.Permission;
@@ -15,11 +16,13 @@ import exceptions.PermissionDeniedException;
 /**
  * Logic behind account requests
  */
-public class AccountRequestService extends Service<AccountRequestDAO> {
-
+public class AccountRequestService extends RestrictedService<AccountRequestDAO> {
+	private final AccountsService accountsService;
+	
 	/** Creates an AccountRequestService */
-	AccountRequestService(AccountRequestDAO dao) {
-		super(dao);
+	AccountRequestService(AccountRequestDAO dao, TokenService tokenService, PermissionService permissionService, AccountsService accountService) {
+		super(dao, tokenService, permissionService);
+		this.accountsService = accountService;
 	}
 	
 	/** Creates an account request */
@@ -50,7 +53,7 @@ public class AccountRequestService extends Service<AccountRequestDAO> {
 			String password = request.getPassword();
 			String firstName = request.getData().getFirstName();
 			String lastName = request.getData().getLastName();
-			Services.getAccountService().create(netid, password, firstName, lastName);
+			accountsService.create(netid, password, firstName, lastName);
 			return null;
 		})
 		.process(AccountNotFoundException.class)

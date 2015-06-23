@@ -3,6 +3,7 @@
  */
 package services;
 
+import iservice.RestrictedService;
 import data.AccountData;
 import data.Permission;
 import data.Role;
@@ -15,11 +16,13 @@ import exceptions.PermissionDeniedException;
 /**
  * Logic behind accounts
  */
-public class AccountsService extends Service<AccountsDAO> {
+public class AccountsService extends RestrictedService<AccountsDAO> {
+	private final RoleService roleService;
 	
 	/** Creates an AccountsService */
-	AccountsService(AccountsDAO dao) {
-		super(dao);
+	AccountsService(AccountsDAO dao, TokenService tokenService, PermissionService permissionService, RoleService roleService) {
+		super(dao, tokenService, permissionService);
+		this.roleService = roleService;
 	}
 
 	/** Creates an account */
@@ -27,7 +30,7 @@ public class AccountsService extends Service<AccountsDAO> {
 		run(dao -> {
 			dao.create(netid, password, firstName, lastName);
 			int idAccount = dao.getId(netid);
-			Services.getRoleService().assign(idAccount, Role.BROTHER);
+			roleService.assign(idAccount, Role.BROTHER);
 			return null;
 		})
 		.unwrap();
@@ -69,7 +72,7 @@ public class AccountsService extends Service<AccountsDAO> {
 	public void delete(String token, String netid) throws InternalServerException, InvalidTokenException, PermissionDeniedException, AccountNotFoundException {
 		run(token, Permission.DELETEACCOUNT, (dao, tokenInfo) -> {
 			int idAccount = dao.getId(netid);
-			Services.getRoleService().unassignAll(idAccount);
+			roleService.unassignAll(idAccount);
 			if (idAccount == AccountsDAO.ACCOUNT_NOT_FOUND) throw new AccountNotFoundException();
 			dao.delete(idAccount);
 			return null;
