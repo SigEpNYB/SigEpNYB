@@ -2,7 +2,7 @@
 <html>
 <head>
 	<meta charset="UTF-8">
-	<title>SigEp | Login</title>
+	<title>SigEp | Create Account</title>
 	<link rel="stylesheet" type="text/css" href="styles/styles.css">
 	<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,600,700,300' rel='stylesheet' type='text/css'>
 </head>
@@ -11,16 +11,16 @@
 	<script src="main.js"></script>
 
 	<div class="formbg">
-		<img src="img/nyblogowhite.png" alt="SigEp NYB"><br><br>
-		<img src="img/lock.png" alt="Login"><br><br>
+		<a href="index.html"><img src="img/nyblogowhite.png" alt="SigEp NYB"></a><br><br>
 		<form onsubmit="login(); return false;">
+			<input type="text" name="firstname" id="firstname" placeholder="FIRST NAME"/><br>
+			<input type="text" name="lastname" id="lastname" placeholder="LAST NAME"/><br>
+			<br><br>
 			<input type="text" name="netid" id="netid" placeholder="NET ID"/><br>
 			<input type="password" name="password" id="password" placeholder="PASSWORD"/><br>
-			<input type="submit" value="LOGIN"/>
+			<input type="submit" value="CREATE"/>
 		</form>
-		<a class="link" href="createaccount.html">CREATE ACCOUNT</a>
 	</div>
-
 
 	<div id="errormsg"></div>
 

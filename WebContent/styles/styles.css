@@ -1,20 +1,7 @@
-/*Paragraph Styles*/
-.title {
-    font-size: 32px;
-    margin-bottom: 0;
-    font-weight: 400;
-}
-
-@media (max-width:750px) {
-    .title {
-        margin: 0;
-    }
-}
-
-/*Form*/
+/*Login Form*/
 input[type="text"], input[type="password"] {
     width: 250px;
-    padding: 10px 0px 10px 0px;
+    padding: 10px 0px 5px 0px;
     margin-bottom: 25px;
     border: none;
     border-bottom: solid 2px #ffffff;
@@ -28,6 +15,7 @@ input[type="submit"] {
   border-radius: 30px;
   padding: 15px 0px 15px 0px;
   margin-top: 10px;
+  margin-bottom: 25px;
   font-size: 16px;
   font-weight: 600;
   letter-spacing: 7px;
@@ -36,7 +24,7 @@ input[type="submit"] {
   width: 250px;
 }
 input[type="submit"]:hover {
-  background: #d96297;
+  background: #d0739a;
 }
 ::-webkit-input-placeholder {
    color: #ffffff;
@@ -54,18 +42,43 @@ input[type="submit"]:hover {
    color: #ffffff;
    letter-spacing: 7px;
 }
+.link {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  color: #d0739a;
+  border: none;
+}
 
-/*Login*/
+/*Login Page*/
 body {
   text-align: center;
   font-family: 'Open Sans', sans-serif;
   margin: 0;
   background: #f1f1f1;
+  color: #ffffff;
 }
-#login {
+.formbg {
   margin-top: 10%;
   width: 100%;
   padding: 50px 20px;
   text-align: center;
-  background: linear-gradient(to right, #9b3bbf , #dd2920);;
+  background: linear-gradient(to right, #9b3bbf , #dd2920);
+}
+@media (max-width:750px) {
+    body {
+        background: linear-gradient(to right, #9b3bbf , #dd2920);
+    }
+    .formbg {
+      margin-top: 5%;
+      background: none;
+    }
+}
+/*Response*/
+#success {
+  margin-top: 10%;
+  width: 100%;
+  padding: 50px 20px;
+  text-align: center;
+  background: linear-gradient(to right, #89cc52 , #b0d941);
 }
