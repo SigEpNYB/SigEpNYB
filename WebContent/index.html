@@ -3,18 +3,23 @@
 <head>
 	<meta charset="UTF-8">
 	<title>SigEp | Login</title>
+	<link rel="stylesheet" type="text/css" href="styles/styles.css">
+	<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,600,700,300' rel='stylesheet' type='text/css'>
 </head>
 <body>
 	<noscript>You need javascript!</noscript>
 	<script src="main.js"></script>
-	
-	<h2>Login</h2><br>
-	<br>
-	<form onsubmit="login(); return false;">
-		NetID: <input type="text" name="netid" id="netid"/><br>
-		Password: <input type="password" name="password" id="password"/><br>
-		<input type="submit" value="Login"/>
-	</form>
+
+	<div id="logincontainer">
+		<div id="login">
+			<img src="img/nyblogowhite.png" alt="SigEp NYB"><br><br>
+			<form onsubmit="login(); return false;">
+				<input type="text" name="netid" id="netid" placeholder="NET ID"/><br>
+				<input type="password" name="password" id="password" placeholder="PASSWORD"/><br>
+				<input type="submit" value="LOGIN"/>
+			</form>
+		</div>
+	</div>
 	<div id="errormsg"></div>
 </body>
 </html>
