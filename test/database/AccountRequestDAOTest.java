@@ -9,8 +9,8 @@ import org.junit.Before;
 import org.junit.Test;
 
 import util.Settings;
-import data.AccountData;
-import data.FullAccountData;
+import data.AccountRequest;
+import data.FullAccountRequest;
 
 public class AccountRequestDAOTest {
 	Database db;
@@ -35,7 +35,7 @@ public class AccountRequestDAOTest {
 		dao.create("bla", "adfwdf", "wgwf", "Wgww");
 		dao.create("fjwfekh", "sfdkwjf", "wfw", "wwwg");
 		
-		AccountData[] requests = dao.getAll();
+		AccountRequest[] requests = dao.getAll();
 		assertEquals(requests.length, 2);
 		assertEquals(requests[0].getNetid(), "bla");
 		assertEquals(requests[0].getFirstName(), "wgwf");
@@ -51,8 +51,8 @@ public class AccountRequestDAOTest {
 	@Test
 	public void testGet() throws SQLException {
 		dao.create("a", "b", "c", "d");
-		AccountData[] accounts = dao.getAll();
-		FullAccountData request = dao.get(accounts[0].getId());
+		AccountRequest[] accounts = dao.getAll();
+		FullAccountRequest request = dao.get(accounts[0].getId());
 		
 		assertEquals(request.getData().getNetid(), "a");
 		assertEquals(request.getPassword(), "b");
@@ -71,12 +71,12 @@ public class AccountRequestDAOTest {
 		assertEquals(dao.getAll().length, 1);
 		
 		dao.create("e", "f", "g", "h");
-		AccountData[] requests = dao.getAll();
+		AccountRequest[] requests = dao.getAll();
 		
 		assertEquals(requests.length, 2);
 		
 		dao.delete(requests[0].getId());
-		AccountData[] requests2 = dao.getAll();
+		AccountRequest[] requests2 = dao.getAll();
 		
 		assertEquals(requests2.length, 1);
 		assertEquals(requests2[0].getNetid(), requests[1].getNetid());

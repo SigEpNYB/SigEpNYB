@@ -14,8 +14,8 @@ public class Todo {
 	private final Date dueDate;
 	
 	/** Creates a new Todo */
-	public Todo(int id, String description, Date dueDate) {
-		this.id = id;
+	public Todo(int idTodo, String description, Date dueDate) {
+		this.id = idTodo;
 		this.description = description;
 		this.dueDate = dueDate;
 	}

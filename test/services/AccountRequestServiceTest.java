@@ -9,6 +9,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import data.AccountData;
+import data.AccountRequest;
 import exceptions.AccountNotFoundException;
 import exceptions.InternalServerException;
 import exceptions.InvalidCredentialsException;
@@ -30,7 +31,7 @@ public class AccountRequestServiceTest {
 		
 		assertEquals(service.get(token).length, 0);
 		service.create("a", "b", "c", "d");
-		AccountData[] requests = service.get(token);
+		AccountRequest[] requests = service.get(token);
 		assertEquals(requests.length, 1);
 		
 		service.reject(token, requests[0].getId());
@@ -59,7 +60,7 @@ public class AccountRequestServiceTest {
 		String token = tokenService.login("mtr73", "pass1");
 		
 		service.create("foobar", "bla", "foo", "bar");
-		AccountData request = service.get(token)[0];
+		AccountRequest request = service.get(token)[0];
 		service.accept(token, request.getId());
 		
 		assertEquals(service.get(token).length, 0);
@@ -117,7 +118,7 @@ public class AccountRequestServiceTest {
 		String token = tokenService.login("mtr73", "pass1");
 		
 		service.create("blarp", "bla", "foo", "bar");
-		AccountData request = service.get(token)[0];
+		AccountRequest request = service.get(token)[0];
 		service.reject(token, request.getId());
 		
 		assertEquals(service.get(token).length, 0);

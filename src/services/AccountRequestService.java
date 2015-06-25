@@ -4,8 +4,8 @@
 package services;
 
 import iservice.RestrictedService;
-import data.AccountData;
-import data.FullAccountData;
+import data.AccountRequest;
+import data.FullAccountRequest;
 import data.Permission;
 import database.AccountRequestDAO;
 import exceptions.AccountNotFoundException;
@@ -34,7 +34,7 @@ public class AccountRequestService extends RestrictedService<AccountRequestDAO> 
 	}
 	
 	/** Gets all of the account requests */
-	public AccountData[] get(String token) throws InternalServerException, PermissionDeniedException, InvalidTokenException {
+	public AccountRequest[] get(String token) throws InternalServerException, PermissionDeniedException, InvalidTokenException {
 		return run(token, Permission.GETACCOUNTREQUESTS, dao -> {
 			return dao.getAll();
 		})
@@ -44,7 +44,7 @@ public class AccountRequestService extends RestrictedService<AccountRequestDAO> 
 	/** Accepts the given request */
 	public void accept(String token, int idRequest) throws InternalServerException, PermissionDeniedException, InvalidTokenException, AccountNotFoundException {
 		run(token, Permission.ACCEPTREQUEST, dao -> {
-			FullAccountData request = dao.get(idRequest);
+			FullAccountRequest request = dao.get(idRequest);
 			if (request == null) throw new AccountNotFoundException();
 			
 			dao.delete(idRequest);

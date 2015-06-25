@@ -4,17 +4,17 @@
 package data;
 
 /**
- * Stores information about an account
+ * Stores information abount an account request
  */
-public class AccountData {
-	private final int idAccount;
+public class AccountRequest {
+	private final int idRequest;
 	private final String netid;
 	private final String firstName;
 	private final String lastName;
 	
 	/** Creates an Account */
-	public AccountData(int idAccount, String netid, String firstName, String lastName) {
-		this.idAccount = idAccount;
+	public AccountRequest(int idRequest, String netid, String firstName, String lastName) {
+		this.idRequest = idRequest;
 		this.netid = netid;
 		this.firstName = firstName;
 		this.lastName = lastName;
@@ -24,7 +24,7 @@ public class AccountData {
 	 * @return the id
 	 */
 	public int getId() {
-		return idAccount;
+		return idRequest;
 	}
 
 	/**

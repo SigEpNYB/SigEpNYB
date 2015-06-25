@@ -3,11 +3,14 @@
  */
 package database;
 
-import java.sql.Date;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Time;
 import java.sql.Timestamp;
+import java.util.Date;
 
 /**
  * Represents a row of the database
@@ -17,7 +20,7 @@ class Row {
 	private boolean done;
 	
 	/** Creates a new Row */
-	public Row(ResultSet results) {
+	Row(ResultSet results) {
 		this.results = results;
 	}
 
@@ -29,6 +32,42 @@ class Row {
 	/** Checks if this is the last row to process */
 	public boolean isDone() {
 		return done;
+	}
+	
+	/** Builds an object of type T from this row */
+	public <T> T build(Class<T> type) throws SQLException {
+		@SuppressWarnings("unchecked")
+		Constructor<T> constructor = (Constructor<T>) type.getConstructors()[0];
+		
+		Field[] fields = type.getDeclaredFields();
+		Object[] values = new Object[fields.length];
+		
+		for (int i = 0; i < fields.length; i++) {
+			Field field = fields[i];
+			field.setAccessible(true);
+			Class<?> parameterType = field.getType();
+			if (parameterType == int.class) {
+				values[i] = getInt(field.getName());
+			} else if (parameterType == String.class) {
+				values[i] = getString(field.getName());
+			} else if (parameterType == Date.class) {
+				values[i] = new Date(getTimestamp(field.getName()).getTime());
+			} else {
+				values[i] = build(parameterType);
+			}
+		}
+		
+		try {
+			return constructor.newInstance(values);
+		} catch (InstantiationException e) {
+			throw new RuntimeException("Cannot create object of type" + type, e);
+		} catch (IllegalAccessException e) {
+			throw new RuntimeException("Cannot create object of type" + type, e);
+		} catch (IllegalArgumentException e) {
+			throw new RuntimeException("Cannot create object of type" + type, e);
+		} catch (InvocationTargetException e) {
+			throw new RuntimeException("Cannot create object of type" + type, e);
+		}
 	}
 	
 	/**

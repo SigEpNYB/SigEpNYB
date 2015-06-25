@@ -16,8 +16,8 @@ public class Event {
 	private final String description;
 	
 	/** Creates a new Event */
-	public Event(int id, String title, Date startTime, Date endTime, String description) {
-		this.id = id;
+	public Event(int idEvent, String title, Date startTime, Date endTime, String description) {
+		this.id = idEvent;
 		this.startTime = startTime;
 		this.endTime = endTime;
 		this.title = title;
