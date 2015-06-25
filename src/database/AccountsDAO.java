@@ -4,8 +4,6 @@
 package database;
 
 import java.sql.SQLException;
-import java.util.LinkedList;
-import java.util.List;
 
 import data.AccountData;
 
@@ -49,15 +47,12 @@ public class AccountsDAO {
 	
 	/** Gets the account for the given token */
 	public AccountData get(int idAccount) throws SQLException {
-		return database.execute((row, t) -> row.build(AccountData.class), null, GET_ACCOUNT_SQL, idAccount);
+		return database.build(AccountData.class, GET_ACCOUNT_SQL, idAccount);
 	}
 	
 	/** Gets a list of all the accounts */
 	public AccountData[] getAccounts() throws SQLException {
-		List<AccountData> accounts = database.execute(
-				(row, lst) -> {lst.add(row.build(AccountData.class)); return lst;}, 
-				new LinkedList<AccountData>(), GET_ACCOUNTS_SQL);
-		return accounts.toArray(new AccountData[accounts.size()]);
+		return database.buildArray(AccountData.class, GET_ACCOUNTS_SQL);
 	}
 	
 	/** Deletes the account with the given netid */

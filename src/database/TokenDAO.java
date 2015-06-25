@@ -33,12 +33,12 @@ public class TokenDAO {
 	
 	/** Gets all the info for the given token */
 	public Token get(int idAccount) throws SQLException {
-		return database.execute((row, t) -> row.build(Token.class), null, GET_TOKEN_IDACCOUNT_SQL, idAccount);
+		return database.build(Token.class, GET_TOKEN_IDACCOUNT_SQL, idAccount);
 	}
 	
 	/** Gets all the info for the given token */
 	public Token get(String token) throws SQLException {
-		return database.execute((row, t) -> row.build(Token.class), null, GET_TOKEN_SQL, token);
+		return database.build(Token.class, GET_TOKEN_SQL, token);
 	}
 	
 	/** Updates the last active tag of the token */

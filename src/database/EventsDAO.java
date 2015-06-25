@@ -5,8 +5,6 @@ package database;
 
 import java.sql.SQLException;
 import java.util.Date;
-import java.util.LinkedList;
-import java.util.List;
 
 import data.Event;
 
@@ -35,10 +33,7 @@ public class EventsDAO {
 	
 	/** Gets the events that occur between the given start and end dates */
 	public Event[] get(Date start, Date end) throws SQLException {
-		List<Event> events = database.execute(
-				(row, lst) -> {lst.add(row.build(Event.class)); return lst;}, 
-				new LinkedList<Event>(), GET_EVENTS_SQL, Database.dateToString(start), Database.dateToString(start));
-		return events.toArray(new Event[events.size()]);
+		return database.buildArray(Event.class, GET_EVENTS_SQL, Database.dateToString(start), Database.dateToString(start));
 	}
 	
 	/** Cancels the event with the given idEvent */

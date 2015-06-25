@@ -5,8 +5,6 @@ package database;
 
 import java.sql.SQLException;
 import java.util.Date;
-import java.util.LinkedList;
-import java.util.List;
 
 import data.Todo;
 
@@ -48,10 +46,7 @@ public class TodoDAO {
 	
 	/** Gets all the todos for a given user */
 	public Todo[] getTodos(int idAccount) throws SQLException {
-		List<Todo> todos = database.execute(
-				(row, lst) -> {lst.add(row.build(Todo.class)); return lst;}, 
-				new LinkedList<Todo>(), GET_TODOS_SQL, idAccount);
-		return todos.toArray(new Todo[todos.size()]);
+		return database.buildArray(Todo.class, GET_TODOS_SQL, idAccount);
 	}
 	
 	/** Deletes the given todo */
