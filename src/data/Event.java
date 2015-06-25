@@ -9,7 +9,7 @@ import java.util.Date;
  * Holds data for an event
  */
 public class Event {
-	private final int id;
+	private final int idEvent;
 	private final String title;
 	private final Date startTime;
 	private final Date endTime;
@@ -17,7 +17,7 @@ public class Event {
 	
 	/** Creates a new Event */
 	public Event(int idEvent, String title, Date startTime, Date endTime, String description) {
-		this.id = idEvent;
+		this.idEvent = idEvent;
 		this.startTime = startTime;
 		this.endTime = endTime;
 		this.title = title;
@@ -28,7 +28,7 @@ public class Event {
 	 * @return the id
 	 */
 	public int getId() {
-		return id;
+		return idEvent;
 	}
 
 	/**

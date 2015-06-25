@@ -14,12 +14,6 @@ import data.Event;
  * Manages Events
  */
 public class EventsDAO {
-	private static final String IDEVENT = "idEvent";
-	private static final String TITLE = "title";
-	private static final String STARTTIME = "startTime";
-	private static final String ENDTIME = "endTime";
-	private static final String DESCRIPTION = "description";
-	
 	private static final String CREATE_EVENT_SQL = "INSERT INTO events (title, startTime, endTime, description) VALUES ('%s', '%s', '%s', '%s')";
 	private static final String GET_EVENTS_SQL = "SELECT idEvent, title, startTime, endTime, description FROM events "
 			+ "WHERE NOT (startTime > '%s' OR endTime < '%s')";
@@ -39,21 +33,10 @@ public class EventsDAO {
 		database.execute(CREATE_EVENT_SQL, title, startStr, endStr, description);
 	}
 	
-	/** Builds an Event from a row */
-	private Event build(Row row) throws SQLException {
-		int idEvent = row.getInt(IDEVENT);
-		String title = row.getString(TITLE);
-		Date startTime = Database.stringToDate(row.getString(STARTTIME));
-		Date endTime = Database.stringToDate(row.getString(ENDTIME));
-		String description = row.getString(DESCRIPTION);
-		
-		return new Event(idEvent, title, startTime, endTime, description);
-	}
-	
 	/** Gets the events that occur between the given start and end dates */
 	public Event[] get(Date start, Date end) throws SQLException {
 		List<Event> events = database.execute(
-				(row, lst) -> {lst.add(build(row)); return lst;}, 
+				(row, lst) -> {lst.add(row.build(Event.class)); return lst;}, 
 				new LinkedList<Event>(), GET_EVENTS_SQL, Database.dateToString(start), Database.dateToString(start));
 		return events.toArray(new Event[events.size()]);
 	}
