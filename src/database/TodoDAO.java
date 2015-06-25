@@ -16,10 +16,6 @@ import data.Todo;
 public class TodoDAO {
 	public static final int CREATE_FAILED = -1;
 	
-	private static String IDTODO = "idTodo";
-	private static String DESCRIPTION = "description";
-	private static String DUEDATE = "dueDate";
-	
 	private static final String CREATE_TODO_SQL = "INSERT INTO todos (description) VALUES ('%s')";
 	private static final String CREATE_TODO_DUE_SQL = "INSERT INTO todos (description, dueDate) VALUES ('%s', '%s')";
 	private static final String ASSIGN_TODO_SQL = "INSERT INTO user_todos (idAccount, idTodo) VALUES (%d, %d)";
