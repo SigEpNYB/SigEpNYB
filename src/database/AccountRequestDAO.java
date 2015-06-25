@@ -4,8 +4,6 @@
 package database;
 
 import java.sql.SQLException;
-import java.util.LinkedList;
-import java.util.List;
 
 import data.AccountRequest;
 import data.FullAccountRequest;
@@ -33,15 +31,12 @@ public class AccountRequestDAO {
 	
 	/** Gets an account request with the given id */
 	public FullAccountRequest get(int idRequest) throws SQLException {
-		return database.execute((row, t) -> row.build(FullAccountRequest.class), null, GET_REQUEST_SQL, idRequest);
+		return database.build(FullAccountRequest.class, GET_REQUEST_SQL, idRequest);
 	}
 	
 	/** Gets all of the requests */
 	public AccountRequest[] getAll() throws SQLException {
-		List<AccountRequest> requests = database.execute(
-				(row, lst) -> {lst.add(row.build(AccountRequest.class)); return lst;}, 
-				new LinkedList<AccountRequest>(), GET_REQUESTS_SQL);
-		return requests.toArray(new AccountRequest[requests.size()]);
+		return database.buildArray(AccountRequest.class, GET_REQUESTS_SQL);
 	}
 	
 	/** Deletes the account with the given netid */
