@@ -3,6 +3,7 @@
  */
 package database;
 
+import java.lang.reflect.Array;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -12,6 +13,8 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Properties;
 
 /**
@@ -83,6 +86,20 @@ public class Database implements IDatabase {
 		statement.close();
 		
 		return acc;
+	}
+	
+	/** Builds the given type of object from the result of the query */
+	<R> R build(Class<R> type, String sql, Object... args) throws SQLException {
+		return execute((row, t) -> row.build(type), null, sql, args);
+	}
+	
+	/** Builds an array of the given type of object from the result of the query */
+	@SuppressWarnings("unchecked")
+	<R> R[] buildArray(Class<R> type, String sql, Object... args) throws SQLException {
+		List<R> list = execute(
+				(row, lst) -> {lst.add(row.build(type)); return lst;}, 
+				new LinkedList<R>(), sql, args);
+		return list.toArray((R[]) Array.newInstance(type, list.size()));
 	}
 	
 	/* (non-Javadoc)
