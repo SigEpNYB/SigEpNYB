@@ -50,18 +50,10 @@ public class TodoDAO {
 		database.execute(ASSIGN_TODO_SQL, idAccount, idTodo);
 	}
 	
-	/** Builds a todo from a row in the database */
-	private Todo build(Row row) throws SQLException {
-		int idTodo = row.getInt(IDTODO);
-		String description = row.getString(DESCRIPTION);
-		Date dueDate = Database.stringToDate(row.getString(DUEDATE));
-		return new Todo(idTodo, description, dueDate);
-	}
-	
 	/** Gets all the todos for a given user */
 	public Todo[] getTodos(int idAccount) throws SQLException {
 		List<Todo> todos = database.execute(
-				(row, lst) -> {lst.add(build(row)); return lst;}, 
+				(row, lst) -> {lst.add(row.build(Todo.class)); return lst;}, 
 				new LinkedList<Todo>(), GET_TODOS_SQL, idAccount);
 		return todos.toArray(new Todo[todos.size()]);
 	}

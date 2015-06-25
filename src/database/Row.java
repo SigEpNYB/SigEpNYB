@@ -51,7 +51,8 @@ class Row {
 			} else if (parameterType == String.class) {
 				values[i] = getString(field.getName());
 			} else if (parameterType == Date.class) {
-				values[i] = new Date(getTimestamp(field.getName()).getTime());
+				Timestamp timestamp = getTimestamp(field.getName());
+				values[i] = timestamp == null ? null : new Date(timestamp.getTime());
 			} else {
 				values[i] = build(parameterType);
 			}
