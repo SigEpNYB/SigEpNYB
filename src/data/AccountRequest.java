@@ -4,7 +4,7 @@
 package data;
 
 /**
- * Stores information abount an account request
+ * Stores information about an account request
  */
 public class AccountRequest {
 	private final int idRequest;
