@@ -6,11 +6,14 @@ package database;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Modifier;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Time;
 import java.sql.Timestamp;
 import java.util.Date;
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  * Represents a row of the database
@@ -40,34 +43,60 @@ class Row {
 		Constructor<T> constructor = (Constructor<T>) type.getConstructors()[0];
 		
 		Field[] fields = type.getDeclaredFields();
-		Object[] values = new Object[fields.length];
+		List<Object> values = new LinkedList<>();
 		
 		for (int i = 0; i < fields.length; i++) {
 			Field field = fields[i];
+			if (Modifier.isStatic(field.getModifiers())) continue;
 			field.setAccessible(true);
+			
 			Class<?> parameterType = field.getType();
 			if (parameterType == int.class) {
-				values[i] = getInt(field.getName());
+				values.add(getInt(field.getName()));
 			} else if (parameterType == String.class) {
-				values[i] = getString(field.getName());
+				values.add(getString(field.getName()));
 			} else if (parameterType == Date.class) {
 				Timestamp timestamp = getTimestamp(field.getName());
-				values[i] = timestamp == null ? null : new Date(timestamp.getTime());
+				values.add(timestamp == null ? null : new Date(timestamp.getTime()));
+			} else if (parameterType.isEnum()) {
+				try {
+					Field[] paramFields = parameterType.getDeclaredFields();
+					Field idField = null;
+					for (Field paramField : paramFields) {
+						if (Modifier.isStatic(paramField.getModifiers())) continue;
+						idField = paramField;
+						break;
+					}
+					int id = getInt(idField.getName());
+					
+					for (Object obj : parameterType.getEnumConstants()) {
+						if (id == (int) idField.get(obj)) {
+							values.add(obj);
+							break;
+						}
+					}
+				} catch (SecurityException e) {
+					throw new RuntimeException("Enum: " + parameterType + " id field is not accessable");
+				} catch (IllegalArgumentException e) {
+					throw new RuntimeException("Enum: " + parameterType + " id field is not accessable");
+				} catch (IllegalAccessException e) {
+					throw new RuntimeException("Enum: " + parameterType + " id field is not accessable");
+				}
 			} else {
-				values[i] = build(parameterType);
+				values.add(build(parameterType));
 			}
 		}
 		
 		try {
-			return constructor.newInstance(values);
+			return constructor.newInstance(values.toArray());
 		} catch (InstantiationException e) {
-			throw new RuntimeException("Cannot create object of type" + type, e);
+			throw new RuntimeException("Cannot create object of type " + type, e);
 		} catch (IllegalAccessException e) {
-			throw new RuntimeException("Cannot create object of type" + type, e);
+			throw new RuntimeException("Cannot create object of type " + type, e);
 		} catch (IllegalArgumentException e) {
-			throw new RuntimeException("Cannot create object of type" + type, e);
+			throw new RuntimeException("Cannot create object of type " + type, e);
 		} catch (InvocationTargetException e) {
-			throw new RuntimeException("Cannot create object of type" + type, e);
+			throw new RuntimeException("Cannot create object of type " + type, e);
 		}
 	}
 	
