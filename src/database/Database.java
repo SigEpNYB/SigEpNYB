@@ -165,6 +165,14 @@ public class Database implements IDatabase {
 	public AccountRequestDAO getAccountRequestDAO() {
 		return new AccountRequestDAO(this);
 	}
+	
+	/* (non-Javadoc)
+	 * @see database.IDatabase#getDutiesDAO()
+	 */
+	@Override
+	public DutiesDAO getDutiesDAO() {
+		return new DutiesDAO(this);
+	}
 
 	/* (non-Javadoc)
 	 * @see java.lang.AutoCloseable#close()
@@ -173,5 +181,4 @@ public class Database implements IDatabase {
 	public void close() throws Exception {
 		connection.close();
 	}
-	
 }
