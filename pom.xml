@@ -7,6 +7,7 @@
   <build>
     <sourceDirectory>src</sourceDirectory>
     <testSourceDirectory>test</testSourceDirectory>
+    <finalName>fratsite</finalName>
     <plugins>
       <plugin>
         <artifactId>maven-compiler-plugin</artifactId>
