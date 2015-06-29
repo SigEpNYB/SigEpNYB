@@ -5,8 +5,6 @@ package database;
 
 import java.sql.SQLException;
 import java.util.Date;
-import java.util.LinkedList;
-import java.util.List;
 
 import data.Todo;
 
@@ -15,10 +13,6 @@ import data.Todo;
  */
 public class TodoDAO {
 	public static final int CREATE_FAILED = -1;
-	
-	private static String IDTODO = "idTodo";
-	private static String DESCRIPTION = "description";
-	private static String DUEDATE = "dueDate";
 	
 	private static final String CREATE_TODO_SQL = "INSERT INTO todos (description) VALUES ('%s')";
 	private static final String CREATE_TODO_DUE_SQL = "INSERT INTO todos (description, dueDate) VALUES ('%s', '%s')";
@@ -50,20 +44,9 @@ public class TodoDAO {
 		database.execute(ASSIGN_TODO_SQL, idAccount, idTodo);
 	}
 	
-	/** Builds a todo from a row in the database */
-	private Todo build(Row row) throws SQLException {
-		int idTodo = row.getInt(IDTODO);
-		String description = row.getString(DESCRIPTION);
-		Date dueDate = Database.stringToDate(row.getString(DUEDATE));
-		return new Todo(idTodo, description, dueDate);
-	}
-	
 	/** Gets all the todos for a given user */
 	public Todo[] getTodos(int idAccount) throws SQLException {
-		List<Todo> todos = database.execute(
-				(row, lst) -> {lst.add(build(row)); return lst;}, 
-				new LinkedList<Todo>(), GET_TODOS_SQL, idAccount);
-		return todos.toArray(new Todo[todos.size()]);
+		return database.buildArray(Todo.class, GET_TODOS_SQL, idAccount);
 	}
 	
 	/** Deletes the given todo */

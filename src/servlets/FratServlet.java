@@ -30,7 +30,7 @@ import exceptions.PermissionDeniedException;
 /**
  * An abstract servlet
  */
-public class FratServlet extends HttpServlet {
+public abstract class FratServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
 	/* (non-Javadoc)

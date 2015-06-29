@@ -9,20 +9,20 @@ import java.util.Date;
  * A todo
  */
 public class Todo {
-	private final int id;
+	private final int idTodo;
 	private final String description;
 	private final Date dueDate;
 	
 	/** Creates a new Todo */
-	public Todo(int id, String description, Date dueDate) {
-		this.id = id;
+	public Todo(int idTodo, String description, Date dueDate) {
+		this.idTodo = idTodo;
 		this.description = description;
 		this.dueDate = dueDate;
 	}
 	
 	/** Gets the id */
 	public int getId() {
-		return id;
+		return idTodo;
 	}
 	
 	/** Gets the description */

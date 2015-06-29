@@ -1,3 +1,5 @@
+DROP TABLE IF EXISTS duties;
+DROP TABLE IF EXISTS duty_types;
 DROP TABLE IF EXISTS account_requests;
 DROP TABLE IF EXISTS user_todos;
 DROP TABLE IF EXISTS todos;
@@ -23,3 +25,5 @@ source create-role_pages.sql
 source create-todos.sql;
 source create-user_todos.sql;
 source create-account_requests.sql;
+source create-duty_types.sql;
+source create-duties.sql;

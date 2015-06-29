@@ -12,11 +12,6 @@ import data.Token;
  * Manages tokens
  */
 public class TokenDAO {
-	private static final String TOKEN = "token";
-	private static final String IDACCOUNT = "idAccount";
-	private static final String LOGGEDIN = "loggedIn";
-	private static final String LASTACTIVE = "lastActive";
-	
 	private static final String INSERT_TOKEN_SQL = "INSERT INTO tokens (token, idAccount, loggedIn, lastActive) VALUES ('%s', %d, '%s', '%s')";
 	private static final String GET_TOKEN_IDACCOUNT_SQL = "SELECT token, idAccount, loggedIn, lastActive FROM tokens WHERE idAccount = %d";
 	private static final String GET_TOKEN_SQL = "SELECT token, idAccount, loggedIn, lastActive FROM tokens WHERE token = '%s'";
@@ -36,23 +31,14 @@ public class TokenDAO {
 		database.execute(INSERT_TOKEN_SQL, token, idAccount, dateStr, dateStr);
 	}
 	
-	/** Builds a Token from a row */
-	private Token build(Row row) throws SQLException {
-		String token = row.getString(TOKEN);
-		int idAccount = row.getInt(IDACCOUNT);
-		Date loggedIn = Database.stringToDate(row.getString(LOGGEDIN));
-		Date lastActive = Database.stringToDate(row.getString(LASTACTIVE));
-		return new Token(token, idAccount, loggedIn, lastActive);
-	}
-	
 	/** Gets all the info for the given token */
 	public Token get(int idAccount) throws SQLException {
-		return database.execute((row, t) -> build(row), null, GET_TOKEN_IDACCOUNT_SQL, idAccount);
+		return database.build(Token.class, GET_TOKEN_IDACCOUNT_SQL, idAccount);
 	}
 	
 	/** Gets all the info for the given token */
 	public Token get(String token) throws SQLException {
-		return database.execute((row, t) -> build(row), null, GET_TOKEN_SQL, token);
+		return database.build(Token.class, GET_TOKEN_SQL, token);
 	}
 	
 	/** Updates the last active tag of the token */
