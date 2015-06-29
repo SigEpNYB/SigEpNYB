@@ -65,7 +65,7 @@ body {
   text-align: center;
   background: linear-gradient(to right, #9b3bbf , #dd2920);
 }
-@media (max-width:750px) {
+@media screen and (min-resolution: 2dppx) and (max-width: 1440px) {
     body {
         background: linear-gradient(to right, #9b3bbf , #dd2920);
     }
