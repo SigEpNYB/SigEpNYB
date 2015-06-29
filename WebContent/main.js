@@ -83,7 +83,7 @@ function login() {
     	document.cookie = 'token=' + resp.token;
     	window.location.href = '/Fratsite/dashboard.html';
 	}, function() {
-		document.getElementById('errormsg').innerHTML = "Error loggin in";
+		swal("Login Failed", "Please check your NetID and Password", "error")
 	});
 }
 
