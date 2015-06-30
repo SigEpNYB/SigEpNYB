@@ -8,3 +8,5 @@ source populate-user_roles.sql;
 source populate-pages.sql;
 source populate-role_pages.sql;
 source populate-duty_types.sql;
+source populate-groups.sql;
+source populate-group_members.sql;

@@ -173,6 +173,14 @@ public class Database implements IDatabase {
 	public DutiesDAO getDutiesDAO() {
 		return new DutiesDAO(this);
 	}
+	
+	/* (non-Javadoc)
+	 * @see database.IDatabase#getGroupsDAO()
+	 */
+	@Override
+	public GroupsDAO getGroupsDAO() {
+		return new GroupsDAO(this);
+	}
 
 	/* (non-Javadoc)
 	 * @see java.lang.AutoCloseable#close()

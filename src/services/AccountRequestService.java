@@ -4,8 +4,10 @@
 package services;
 
 import iservice.RestrictedService;
+import data.AccountData;
 import data.AccountRequest;
 import data.FullAccountRequest;
+import data.Group;
 import data.Permission;
 import database.AccountRequestDAO;
 import exceptions.AccountNotFoundException;
@@ -18,17 +20,24 @@ import exceptions.PermissionDeniedException;
  */
 public class AccountRequestService extends RestrictedService<AccountRequestDAO> {
 	private final AccountsService accountsService;
+	private final TodoService todoService;
+	private final GroupService groupService;
 	
 	/** Creates an AccountRequestService */
-	AccountRequestService(AccountRequestDAO dao, TokenService tokenService, PermissionService permissionService, AccountsService accountService) {
+	AccountRequestService(AccountRequestDAO dao, TokenService tokenService, PermissionService permissionService, AccountsService accountService, 
+			TodoService todoService, GroupService groupService) {
 		super(dao, tokenService, permissionService);
 		this.accountsService = accountService;
+		this.todoService = todoService;
+		this.groupService = groupService;
 	}
 	
 	/** Creates an account request */
 	public void create(String netid, String password, String firstName, String lastName) throws InternalServerException {
 		run(dao -> {
-			dao.create(netid, password, firstName, lastName);
+			AccountData[] accounts = groupService.getMembers(Group.ACCOUNT_REQUEST_REVIEWERS);
+			int idTodo = todoService.create(String.format("Review account request for: %s %s (%s)", firstName, lastName, netid), accounts);
+			dao.create(netid, password, firstName, lastName, idTodo);
 		})
 		.unwrap();
 	}

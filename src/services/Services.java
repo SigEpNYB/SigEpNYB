@@ -22,6 +22,8 @@ public class Services {
 	private final PageService pageService;
 	private final RoleService roleService;
 	private final AccountRequestService accountRequestService;
+	private final TodoService todoService;
+	private final GroupService groupService;
 	
 	/** This class is a singleton */
 	private Services() throws InternalServerException {
@@ -32,8 +34,10 @@ public class Services {
 			tokenService = new TokenService(database.getTokenDAO());
 			permissionService = new PermissionService(database.getPermissionDAO());
 			roleService = new RoleService(database.getRolesDAO());
+			todoService = new TodoService(database.getTodoDAO());
+			groupService = new GroupService(database.getGroupsDAO());
 			accountsService = new AccountsService(database.getAccountsDAO(), tokenService, permissionService, roleService);
-			accountRequestService = new AccountRequestService(database.getAccountRequestDAO(), tokenService, permissionService, accountsService);
+			accountRequestService = new AccountRequestService(database.getAccountRequestDAO(), tokenService, permissionService, accountsService, todoService, groupService);
 			eventService = new EventService(database.getEventsDAO(), tokenService, permissionService);
 			pageService = new PageService(database.getPagesDAO(), tokenService, permissionService);
 		} catch (Exception e) {

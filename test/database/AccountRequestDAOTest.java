@@ -15,12 +15,14 @@ import data.FullAccountRequest;
 public class AccountRequestDAOTest {
 	Database db;
 	AccountRequestDAO dao;
+	TodoDAO todoDao;
 
 	@Before
 	public void setUp() throws Exception {
 		Settings settings = Settings.getInstance();
 		db = new Database(settings.getDatabaseUser(), settings.getDatabasePassword(), settings.getDatabase());
 		dao = db.getAccountRequestDAO();
+		todoDao = db.getTodoDAO();
 	}
 	
 	@After
@@ -32,8 +34,10 @@ public class AccountRequestDAOTest {
 	public void testCreate() throws SQLException {
 		assertEquals(dao.getAll().length, 0);
 		
-		dao.create("bla", "adfwdf", "wgwf", "Wgww");
-		dao.create("fjwfekh", "sfdkwjf", "wfw", "wwwg");
+		int idTodo = todoDao.create("bla bla");
+		
+		dao.create("bla", "adfwdf", "wgwf", "Wgww", idTodo);
+		dao.create("fjwfekh", "sfdkwjf", "wfw", "wwwg", idTodo);
 		
 		AccountRequest[] requests = dao.getAll();
 		assertEquals(requests.length, 2);
@@ -46,11 +50,15 @@ public class AccountRequestDAOTest {
 		
 		dao.delete(requests[0].getId());
 		dao.delete(requests[1].getId());
+		
+		todoDao.delete(idTodo);
 	}
 	
 	@Test
 	public void testGet() throws SQLException {
-		dao.create("a", "b", "c", "d");
+		int idTodo = todoDao.create("bla bla");
+		
+		dao.create("a", "b", "c", "d", idTodo);
 		AccountRequest[] accounts = dao.getAll();
 		FullAccountRequest request = dao.get(accounts[0].getId());
 		
@@ -60,17 +68,21 @@ public class AccountRequestDAOTest {
 		assertEquals(request.getData().getLastName(), "d");
 		
 		dao.delete(request.getData().getId());
+		
+		todoDao.delete(idTodo);
 	}
 
 	@Test
 	public void testDelete() throws SQLException {
 		assertEquals(dao.getAll().length, 0);
 		
-		dao.create("a", "b", "c", "d");
+		int idTodo = todoDao.create("bla bla");
+		
+		dao.create("a", "b", "c", "d", idTodo);
 		
 		assertEquals(dao.getAll().length, 1);
 		
-		dao.create("e", "f", "g", "h");
+		dao.create("e", "f", "g", "h", idTodo);
 		AccountRequest[] requests = dao.getAll();
 		
 		assertEquals(requests.length, 2);
@@ -84,6 +96,8 @@ public class AccountRequestDAOTest {
 		dao.delete(requests[1].getId());
 		
 		assertEquals(dao.getAll().length, 0);
+		
+		todoDao.delete(idTodo);
 	}
 
 }

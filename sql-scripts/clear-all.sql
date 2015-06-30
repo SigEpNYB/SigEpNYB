@@ -1,3 +1,5 @@
+DROP TABLE IF EXISTS group_members;
+DROP TABLE IF EXISTS groups;
 DROP TABLE IF EXISTS duties;
 DROP TABLE IF EXISTS duty_types;
 DROP TABLE IF EXISTS account_requests;
@@ -27,3 +29,5 @@ source create-user_todos.sql;
 source create-account_requests.sql;
 source create-duty_types.sql;
 source create-duties.sql;
+source create-groups.sql;
+source create-group_members.sql;

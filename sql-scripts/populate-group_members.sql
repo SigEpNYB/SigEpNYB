@@ -1,0 +1,1 @@
+INSERT INTO group_members (idGroup, idAccount) VALUES (1, 1);

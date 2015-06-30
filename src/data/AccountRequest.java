@@ -11,13 +11,15 @@ public class AccountRequest {
 	private final String netid;
 	private final String firstName;
 	private final String lastName;
+	private final int idTodo;
 	
 	/** Creates an Account */
-	public AccountRequest(int idRequest, String netid, String firstName, String lastName) {
+	public AccountRequest(int idRequest, String netid, String firstName, String lastName, int idTodo) {
 		this.idRequest = idRequest;
 		this.netid = netid;
 		this.firstName = firstName;
 		this.lastName = lastName;
+		this.idTodo = idTodo;
 	}
 
 	/**
@@ -46,5 +48,12 @@ public class AccountRequest {
 	 */
 	public String getLastName() {
 		return lastName;
+	}
+	
+	/**
+	 * @return the id of the todo
+	 */
+	public int getIdTodo() {
+		return idTodo;
 	}
 }
