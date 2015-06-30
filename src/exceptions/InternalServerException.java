@@ -8,4 +8,9 @@ package exceptions;
  */
 public class InternalServerException extends ClientBoundException {
 	private static final long serialVersionUID = 1L;
+	
+	/** Creates a new InternalServerException */
+	public InternalServerException() {
+		super("Internal Server Error");
+	}
 }

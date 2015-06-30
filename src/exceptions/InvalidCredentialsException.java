@@ -8,4 +8,9 @@ package exceptions;
  */
 public class InvalidCredentialsException extends ClientBoundException {
 	private static final long serialVersionUID = 1L;
+	
+	/** Creates a new InvalidCredentialsException */
+	public InvalidCredentialsException() {
+		super("Invalid Credentials");
+	}
 }

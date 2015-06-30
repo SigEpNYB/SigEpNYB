@@ -14,8 +14,6 @@ import exceptions.TokenNotFoundException;
  * A generic service that needs a token in at least one method
  */
 public abstract class UserService<D> extends Service<D> {
-	private static final InvalidTokenException INVALID_TOKEN_EXCEPTION = new InvalidTokenException();
-	
 	private final TokenService tokenService;
 	
 	/** Creates a new UserService */
@@ -29,7 +27,7 @@ public abstract class UserService<D> extends Service<D> {
 			Token tokenInfo = tokenService.getTokenInfo(token);
 			return function.exec(dao, tokenInfo);
 		})
-		.process(TokenNotFoundException.class, INVALID_TOKEN_EXCEPTION);
+		.process(TokenNotFoundException.class, new InvalidTokenException(token));
 	}
 
 }

@@ -52,7 +52,7 @@ public class AccountRequests extends FratServlet {
 		try {
 			Services.getAccountRequestService().accept(token, idRequest);
 		} catch (AccountNotFoundException e) {
-			throw new MalformedRequestException();
+			throw new MalformedRequestException(String.format("Account request with id: %d does not exist", idRequest));
 		}
 		return null;
 	}
@@ -66,7 +66,7 @@ public class AccountRequests extends FratServlet {
 		try {
 			Services.getAccountRequestService().reject(token, idRequest);
 		} catch (AccountNotFoundException e) {
-			throw new MalformedRequestException();
+			throw new MalformedRequestException(String.format("Account request with id: %d does not exist", idRequest));
 		}
 		return null;
 	}

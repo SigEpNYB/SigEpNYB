@@ -112,25 +112,25 @@ public abstract class FratServlet extends HttpServlet {
 					}
 				}
 			} catch (MalformedRequestException e) {
-				resp.sendError(400);
+				resp.sendError(400, e.getMessage());
 			} catch (JSONException e) {
-				resp.sendError(400);
+				resp.sendError(400, e.getMessage());
 			} catch (InternalServerException e) {
-				resp.sendError(500);
+				resp.sendError(500, e.getMessage());
 			} catch (InvalidTokenException e) {
-				resp.sendError(401);
+				resp.sendError(401, e.getMessage());
 			} catch (PermissionDeniedException e) {
-				resp.sendError(403);
+				resp.sendError(403, e.getMessage());
 			} catch (InvalidCredentialsException e) {
-				resp.sendError(403);
+				resp.sendError(403, e.getMessage());
 			} catch (ClientBoundException e) {
 				e.printStackTrace();
-				resp.sendError(500);
+				resp.sendError(500, e.getMessage());
 			}
 		} catch (Throwable t) {
 			t.printStackTrace();
 			try {
-				resp.sendError(500);
+				resp.sendError(500, t.getMessage());
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
