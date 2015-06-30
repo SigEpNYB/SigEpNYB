@@ -101,11 +101,11 @@ function getAccount() {
 }
 
 function addAccount() {
-	var msg = buildObj('netid', 'password', 'firstname', 'lastname');
-	httpRequest('POST', 'Accounts', true, msg, null, function() {
-		swal({title: "Account Created", type: "success"}, function() {window.location.href = "/Fratsite/successresponse.html"})
+	var msg = buildObj('netid', 'password', 'firstName', 'lastName');
+	httpRequest('POST', 'AccountRequests', true, msg, null, function() {
+		window.location.href = "/Fratsite/successresponse.html";
 	}, function() { 
-		swal({title: "Account Creation Failed", text: "Please try again", type: "failure"})
+		swal({title: "Account Creation Failed", text: "Please try again", type: "failure"});
 	});
 }
 
