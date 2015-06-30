@@ -1,3 +1,17 @@
+/*General Styles*/
+body {
+  text-align: center;
+  font-family: 'Open Sans', sans-serif;
+  margin: 0;
+  color: #ffffff;
+}
+body#login,#createaccount {
+  background: linear-gradient(to right, #9b3bbf , #dd2920);
+}
+body#successresponse {
+  background: linear-gradient(to right, #89cc52 , #b0d941);
+}
+
 /*Login Form*/
 input[type="text"], input[type="password"] {
     width: 250px;
@@ -51,15 +65,8 @@ input[type="submit"]:hover {
 }
 
 /*Login Page*/
-body {
-  text-align: center;
-  font-family: 'Open Sans', sans-serif;
-  margin: 0;
-  color: #ffffff;
-  background: linear-gradient(to right, #9b3bbf , #dd2920);
-}
 .formbg {
-  margin-top: 10%;
+  margin-top: 8%;
   width: 100%;
   padding: 50px 20px;
   text-align: center;
@@ -68,12 +75,4 @@ body {
     .formbg {
       margin-top: 5%;
     }
-}
-/*Response*/
-#success {
-  margin-top: 10%;
-  width: 100%;
-  padding: 50px 20px;
-  text-align: center;
-  background: linear-gradient(to right, #89cc52 , #b0d941);
 }
