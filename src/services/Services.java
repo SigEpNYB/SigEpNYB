@@ -85,4 +85,9 @@ public class Services {
 	public static AccountRequestService getAccountRequestService() throws InternalServerException {
 		return getInstance().accountRequestService;
 	}
+	
+	/** gets a TodoService */
+	public static TodoService getTodoService() throws InternalServerException {
+		return getInstance().todoService;
+	}
 }

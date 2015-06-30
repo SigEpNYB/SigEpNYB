@@ -63,16 +63,22 @@ public class AccountRequestService extends RestrictedService<AccountRequestDAO> 
 			String firstName = request.getData().getFirstName();
 			String lastName = request.getData().getLastName();
 			accountsService.create(netid, password, firstName, lastName);
+			
+			todoService.done(request.getData().getIdTodo());
 		})
 		.process(AccountNotFoundException.class)
 		.unwrap();
 	}
 	
 	/** Rejects the given request */
-	public void reject(String token, int idRequest) throws InternalServerException, PermissionDeniedException, InvalidTokenException {
+	public void reject(String token, int idRequest) throws InternalServerException, PermissionDeniedException, InvalidTokenException, AccountNotFoundException {
 		run (token, Permission.REJECTREQUEST, dao -> {
+			FullAccountRequest request = dao.get(idRequest);
+			if (request == null) throw new AccountNotFoundException();
 			dao.delete(idRequest);
+			todoService.done(request.getData().getIdTodo());
 		})
+		.process(AccountNotFoundException.class)
 		.unwrap();
 	}
 

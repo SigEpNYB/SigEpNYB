@@ -8,6 +8,7 @@ import iservice.Service;
 import java.util.Date;
 
 import data.AccountData;
+import data.Todo;
 import database.TodoDAO;
 import exceptions.InternalServerException;
 
@@ -61,6 +62,22 @@ public class TodoService extends Service<TodoDAO> {
 				dao.assign(account.getId(), idTodo);
 			}
 			return idTodo;
+		})
+		.unwrap();
+	}
+	
+	/** Gets the todos for the given user */
+	public Todo[] get(int idAccount) throws InternalServerException {
+		return run(dao -> {
+			return dao.get(idAccount);
+		})
+		.unwrap();
+	}
+	
+	/** Makes the gien todo as done */
+	void done(int idTodo) throws InternalServerException {
+		run(dao -> {
+			dao.delete(idTodo);
 		})
 		.unwrap();
 	}

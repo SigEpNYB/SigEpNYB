@@ -10,6 +10,7 @@ import org.junit.Test;
 
 import data.AccountData;
 import data.AccountRequest;
+import data.Todo;
 import exceptions.AccountNotFoundException;
 import exceptions.InternalServerException;
 import exceptions.InvalidCredentialsException;
@@ -25,7 +26,10 @@ public class AccountRequestServiceTest {
 	}
 
 	@Test
-	public void testCreate() throws InternalServerException, InvalidCredentialsException, PermissionDeniedException, InvalidTokenException {
+	public void testCreate() throws InternalServerException, InvalidCredentialsException, PermissionDeniedException, InvalidTokenException, AccountNotFoundException {
+		TodoService todoService = Services.getTodoService();
+		assertEquals(todoService.get(1).length, 0);
+		
 		TokenService tokenService = Services.getTokenService();
 		String token = tokenService.login("mtr73", "pass1");
 		
@@ -33,6 +37,9 @@ public class AccountRequestServiceTest {
 		service.create("a", "b", "c", "d");
 		AccountRequest[] requests = service.get(token);
 		assertEquals(requests.length, 1);
+		
+		Todo[] todos = todoService.get(1);
+		assertEquals(todos.length, 1);
 		
 		service.reject(token, requests[0].getId());
 	}
@@ -61,7 +68,12 @@ public class AccountRequestServiceTest {
 		
 		service.create("foobar", "bla", "foo", "bar");
 		AccountRequest request = service.get(token)[0];
+
+		TodoService todoService = Services.getTodoService();
+		assertEquals(todoService.get(1).length, 1);
+		
 		service.accept(token, request.getId());
+		assertEquals(todoService.get(1).length, 0);
 		
 		assertEquals(service.get(token).length, 0);
 		
@@ -119,7 +131,13 @@ public class AccountRequestServiceTest {
 		
 		service.create("blarp", "bla", "foo", "bar");
 		AccountRequest request = service.get(token)[0];
+
+		TodoService todoService = Services.getTodoService();
+		assertEquals(todoService.get(1).length, 1);
+		
 		service.reject(token, request.getId());
+		
+		assertEquals(todoService.get(1).length, 0);
 		
 		assertEquals(service.get(token).length, 0);
 		
@@ -136,12 +154,12 @@ public class AccountRequestServiceTest {
 	}
 	
 	@Test(expected = InvalidTokenException.class)
-	public void testRejectBadToken() throws InternalServerException, PermissionDeniedException, InvalidTokenException {
+	public void testRejectBadToken() throws InternalServerException, PermissionDeniedException, InvalidTokenException, AccountNotFoundException {
 		service.reject("badtoken", -1);
 	}
 	
 	@Test(expected = PermissionDeniedException.class)
-	public void testRejectBadPermission() throws InternalServerException, InvalidCredentialsException, PermissionDeniedException, InvalidTokenException {
+	public void testRejectBadPermission() throws InternalServerException, InvalidCredentialsException, PermissionDeniedException, InvalidTokenException, AccountNotFoundException {
 		TokenService tokenService = Services.getTokenService();
 		String token = tokenService.login("net123", "letmein");
 		

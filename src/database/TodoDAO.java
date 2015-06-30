@@ -45,7 +45,7 @@ public class TodoDAO {
 	}
 	
 	/** Gets all the todos for a given user */
-	public Todo[] getTodos(int idAccount) throws SQLException {
+	public Todo[] get(int idAccount) throws SQLException {
 		return database.buildArray(Todo.class, GET_TODOS_SQL, idAccount);
 	}
 	

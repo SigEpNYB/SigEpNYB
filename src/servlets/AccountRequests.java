@@ -63,7 +63,11 @@ public class AccountRequests extends FratServlet {
 	@Override
 	protected Object delete(String token, Map<String, String> urlParams, JSONObject data) throws ClientBoundException, JSONException {
 		int idRequest = data.getInt("idRequest");
-		Services.getAccountRequestService().reject(token, idRequest);
+		try {
+			Services.getAccountRequestService().reject(token, idRequest);
+		} catch (AccountNotFoundException e) {
+			throw new MalformedRequestException();
+		}
 		return null;
 	}
 

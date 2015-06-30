@@ -35,7 +35,7 @@ public class TodoDAOTest {
 	public void testCreateString() throws SQLException {
 		int idTodo = dao.create("bla blab bal");
 		dao.assign(3, idTodo);
-		Todo[] todos = dao.getTodos(3);
+		Todo[] todos = dao.get(3);
 		
 		assertEquals(todos.length, 1);
 		assertEquals(todos[0].getId(), idTodo);
@@ -51,7 +51,7 @@ public class TodoDAOTest {
 		
 		int idTodo = dao.create("bla blab bal", now);
 		dao.assign(3, idTodo);
-		Todo[] todos = dao.getTodos(3);
+		Todo[] todos = dao.get(3);
 		
 		assertEquals(todos.length, 1);
 		assertEquals(todos[0].getId(), idTodo);
@@ -69,13 +69,13 @@ public class TodoDAOTest {
 		dao.assign(2, idTodo1);
 		dao.assign(2, idTodo2);
 		
-		Todo[] todos1 = dao.getTodos(3);
+		Todo[] todos1 = dao.get(3);
 		assertEquals(todos1.length, 1);
 		assertEquals(todos1[0].getId(), idTodo1);
 		assertEquals(todos1[0].getDescription(), "bla blab bal");
 		assertNull(todos1[0].getDueDate());
 		
-		Todo[] todos2 = dao.getTodos(2);
+		Todo[] todos2 = dao.get(2);
 		assertEquals(todos2.length, 2);
 		assertEquals(todos2[0].getId(), idTodo1);
 		assertEquals(todos2[0].getDescription(), "bla blab bal");
@@ -97,14 +97,14 @@ public class TodoDAOTest {
 		dao.assign(2, todo2);
 		
 		dao.delete(todo2);
-		assertEquals(dao.getTodos(3).length, 1);
-		assertEquals(dao.getTodos(2).length, 1);
+		assertEquals(dao.get(3).length, 1);
+		assertEquals(dao.get(2).length, 1);
 		dao.delete(todo1);
-		assertEquals(dao.getTodos(3).length, 0);
-		assertEquals(dao.getTodos(2).length, 0);
+		assertEquals(dao.get(3).length, 0);
+		assertEquals(dao.get(2).length, 0);
 		dao.delete(todo1);
-		assertEquals(dao.getTodos(3).length, 0);
-		assertEquals(dao.getTodos(2).length, 0);
+		assertEquals(dao.get(3).length, 0);
+		assertEquals(dao.get(2).length, 0);
 	}
 
 }
