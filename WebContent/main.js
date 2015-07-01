@@ -88,6 +88,7 @@ function login() {
 }
 
 function logout() {
+	console.log("FAILED")
 	httpRequest('DELETE', 'Login', true, null, null, function() {
 		window.location.href = '/Fratsite/index.html';
 		document.cookie = "token=; expires=Thu, 01 Jan 1970 00:00:00 UTC";
@@ -97,6 +98,7 @@ function logout() {
 function getAccount() {
 	httpRequest('GET', 'Account', true, null, null, function(resp) {
 		document.getElementById('name').innerHTML = resp.firstName + ' ' + resp.lastName;
+		$("#navbar-username a").text(resp.firstName + " " + resp.lastName + " (" + resp.netid + ")");
 	});
 }
 
