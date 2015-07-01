@@ -1,23 +1,33 @@
 <!DOCTYPE html>
 <html>
-<head>
-	<meta charset="UTF-8">
-	<title>SigEp | Dashboard</title>
-</head>
-<body>
-	<noscript>You need javascript!</noscript>
-	
-	<h1 id="name"></h1>
-	<div id="roles"></div>
-	
-	<script src="main.js"></script>
-	<script type="text/javascript">
-		getAccount();
-		getRoles();
-		getEvents();
-	</script>
-	
-	<br><br>
-	<input type="submit" value="Logout" onclick="logout()"/>
-</body>
+	<head>
+		<meta charset="UTF-8">
+		<title>SigEp | Dashboard</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+		<link rel="stylesheet" type="text/css" href="styles/styles.css">
+		<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,600,700,300' rel='stylesheet' type='text/css'>
+		<!--jQuery-->
+		<script src="deps/jquery/jquery.min.js"></script>
+		<!--Bootstrap-->
+		<script src="deps/bootstrap/js/bootstrap.min.js"></script>
+		<link rel="stylesheet" type="text/css" href="deps/bootstrap/css/bootstrap.min.css">
+		<!--Sweet Alert-->
+		<script src="deps/sweetalert/sweetalert.min.js"></script>
+		<link rel="stylesheet" type="text/css" href="deps/sweetalert/sweetalert.css">
+	</head>
+	<body>
+		<noscript>You need javascript!</noscript>
+		<h1 id="name"></h1>
+		<div id="roles"></div>
+		
+		<script src="main.js"></script>
+		<script type="text/javascript">
+			getAccount();
+			getRoles();
+			getEvents();
+		</script>
+		
+		<br><br>
+		<input type="submit" value="Logout" onclick="logout()"/>
+	</body>
 </html>

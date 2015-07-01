@@ -1,38 +1,38 @@
 <!DOCTYPE html>
 <html>
-<head>
-	<meta charset="UTF-8">
-	<title>SigEp | Login</title>
-	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-	<link rel="stylesheet" type="text/css" href="styles/styles.css">
-	<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,600,700,300' rel='stylesheet' type='text/css'>
-	<!--jQuery-->
-	<script src="deps/jquery/jquery.min.js"></script>
-	<!--Bootstrap-->
-	<script src="deps/bootstrap/js/bootstrap.min.js"></script>
-	<link rel="stylesheet" type="text/css" href="deps/bootstrap/css/bootstrap.min.css">
-	<!--Sweet Alert-->
-	<script src="deps/sweetalert/sweetalert.min.js"></script>
-	<link rel="stylesheet" type="text/css" href="deps/sweetalert/sweetalert.css">
-</head>
-<body id="login">
-	<noscript>You need javascript!</noscript>
-	<script src="main.js"></script>
-	<div class="container-fluid">
-		<div class="row">
-			<div class="col-xs-12 col-sm-6 col-sm-offset-3">
-				<div class="loginbg">
-					<a href="index.html"><img src="img/nyblogowhite.png" alt="SigEp NYB" height="78px" width="149px"></a><br><br>
-					<img src="img/lock.png" alt="Login" height="52px" width="52px"><br><br>
-					<form onsubmit="login(); return false;">
-						<input type="text" name="netid" id="netid" class="loginInput" placeholder="NET ID"/><br>
-						<input type="password" name="password" id="password" class="loginInput" placeholder="PASSWORD"/><br>
-						<input type="submit" class="loginButton" value="LOGIN"/>
-					</form>
-					<a class="loginLink" href="createaccount.html">CREATE ACCOUNT</a>
+	<head>
+		<meta charset="UTF-8">
+		<title>SigEp | Login</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+		<link rel="stylesheet" type="text/css" href="styles/styles.css">
+		<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,600,700,300' rel='stylesheet' type='text/css'>
+		<!--jQuery-->
+		<script src="deps/jquery/jquery.min.js"></script>
+		<!--Bootstrap-->
+		<script src="deps/bootstrap/js/bootstrap.min.js"></script>
+		<link rel="stylesheet" type="text/css" href="deps/bootstrap/css/bootstrap.min.css">
+		<!--Sweet Alert-->
+		<script src="deps/sweetalert/sweetalert.min.js"></script>
+		<link rel="stylesheet" type="text/css" href="deps/sweetalert/sweetalert.css">
+	</head>
+	<body id="login">
+		<noscript>You need javascript!</noscript>
+		<script src="main.js"></script>
+		<div class="container-fluid">
+			<div class="row">
+				<div class="col-xs-12 col-sm-6 col-sm-offset-3">
+					<div class="loginbg">
+						<a href="index.html"><img src="img/nyblogowhite.png" alt="SigEp NYB" height="78px" width="149px"></a><br><br>
+						<img src="img/lock.png" alt="Login" height="52px" width="52px"><br><br>
+						<form onsubmit="login(); return false;">
+							<input type="text" name="netid" id="netid" class="loginInput" placeholder="NET ID"/><br>
+							<input type="password" name="password" id="password" class="loginInput" placeholder="PASSWORD"/><br>
+							<input type="submit" class="loginButton" value="LOGIN"/>
+						</form>
+						<a class="loginLink" href="createaccount.html">CREATE ACCOUNT</a>
+					</div>
 				</div>
 			</div>
 		</div>
-	</div>
-</body>
+	</body>
 </html>
