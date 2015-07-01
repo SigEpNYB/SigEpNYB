@@ -35,7 +35,7 @@ public class Events extends FratServlet {
 			startTime = dateFormat.parse(data.getString("startTime"));
 			endTime = dateFormat.parse(data.getString("endTime"));
 		} catch (ParseException e) {
-			throw new MalformedRequestException();
+			throw new MalformedRequestException("Dates must be in format: YYYY-MM-dd'T'HH:mm");
 		}
 		String description = data.getString("description");
 		Services.getEventService().create(token, title, startTime, endTime, description);
@@ -54,7 +54,7 @@ public class Events extends FratServlet {
 			startTime = dateFormat.parse(urlParams.get("startTime"));
 			endTime = dateFormat.parse(urlParams.get("endTime"));
 		} catch (ParseException e) {
-			throw new MalformedRequestException();
+			throw new MalformedRequestException("Dates must be in format: YYYY-MM-dd'T'HH:mm");
 		}
 		return Services.getEventService().get(token, startTime, endTime);
 	}

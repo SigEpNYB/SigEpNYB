@@ -10,10 +10,12 @@ import data.FullAccountRequest;
 import data.Group;
 import data.Permission;
 import database.AccountRequestDAO;
+import exceptions.AccountExistsException;
 import exceptions.AccountNotFoundException;
 import exceptions.InternalServerException;
 import exceptions.InvalidTokenException;
 import exceptions.PermissionDeniedException;
+import exceptions.RequestExistsException;
 
 /**
  * Logic behind account requests
@@ -33,12 +35,17 @@ public class AccountRequestService extends RestrictedService<AccountRequestDAO> 
 	}
 	
 	/** Creates an account request */
-	public void create(String netid, String password, String firstName, String lastName) throws InternalServerException {
+	public void create(String netid, String password, String firstName, String lastName) throws InternalServerException, AccountExistsException, RequestExistsException {
 		run(dao -> {
 			AccountData[] accounts = groupService.getMembers(Group.ACCOUNT_REQUEST_REVIEWERS);
 			int idTodo = todoService.create(String.format("Review account request for: %s %s (%s)", firstName, lastName, netid), accounts);
+			
+			if (dao.has(netid)) throw new RequestExistsException();
+			if (accountsService.hasAccount(netid)) throw new AccountExistsException();
 			dao.create(netid, password, firstName, lastName, idTodo);
 		})
+		.process(RequestExistsException.class)
+		.process(AccountExistsException.class)
 		.unwrap();
 	}
 	

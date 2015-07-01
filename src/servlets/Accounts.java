@@ -36,7 +36,7 @@ public class Accounts extends FratServlet {
 		try {
 			Services.getAccountService().delete(token, netid);
 		} catch (AccountNotFoundException e) {
-			throw new MalformedRequestException();
+			throw new MalformedRequestException(String.format("Account with netid: '%s' does not exist", netid));
 		}
 		return null;
 	}

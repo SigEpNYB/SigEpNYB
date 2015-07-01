@@ -11,9 +11,12 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import services.Services;
+import servlets.Error.ErrorType;
+import exceptions.AccountExistsException;
 import exceptions.AccountNotFoundException;
 import exceptions.ClientBoundException;
 import exceptions.MalformedRequestException;
+import exceptions.RequestExistsException;
 
 /**
  * Servlet implementation of class AccountRequests
@@ -31,7 +34,13 @@ public class AccountRequests extends FratServlet {
 		String password = data.getString("password");
 		String firstName = data.getString("firstName");
 		String lastName = data.getString("lastName");
-		Services.getAccountRequestService().create(netid, password, firstName, lastName);
+		try {
+			Services.getAccountRequestService().create(netid, password, firstName, lastName);
+		} catch (AccountExistsException e) {
+			return new Error(ErrorType.ACCOUNT_ALREADY_EXISTS);
+		} catch (RequestExistsException e) {
+			return new Error(ErrorType.REQUEST_ALREADY_EXISTS);
+		}
 		return null;
 	}
 
@@ -52,7 +61,7 @@ public class AccountRequests extends FratServlet {
 		try {
 			Services.getAccountRequestService().accept(token, idRequest);
 		} catch (AccountNotFoundException e) {
-			throw new MalformedRequestException();
+			throw new MalformedRequestException(String.format("Account request with id: %d does not exist", idRequest));
 		}
 		return null;
 	}
@@ -66,7 +75,7 @@ public class AccountRequests extends FratServlet {
 		try {
 			Services.getAccountRequestService().reject(token, idRequest);
 		} catch (AccountNotFoundException e) {
-			throw new MalformedRequestException();
+			throw new MalformedRequestException(String.format("Account request with id: %d does not exist", idRequest));
 		}
 		return null;
 	}
