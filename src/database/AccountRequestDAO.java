@@ -13,6 +13,7 @@ import data.FullAccountRequest;
  */
 public class AccountRequestDAO {
 	private static final String CREATE_REQUEST_SQL = "INSERT INTO account_requests (netid, password, firstName, lastName, idTodo) VALUES ('%s', '%s', '%s', '%s', %d)";
+	private static final String HAS_REQUEST_SQL = "SELECT idRequest FROM account_requests WHERE netid = '%s'";
 	private static final String GET_REQUEST_SQL = "SELECT idRequest, netid, password, firstName, lastName, idTodo FROM account_requests WHERE idRequest = %d";
 	private static final String GET_REQUESTS_SQL = "SELECT idRequest, netid, firstName, lastName, idTodo FROM account_requests";
 	private static final String DELETE_REQUEST_SQL = "DELETE FROM account_requests WHERE idRequest = %d";
@@ -27,6 +28,11 @@ public class AccountRequestDAO {
 	/** Creates an account request */
 	public void create(String netid, String password, String firstName, String lastName, int idTodo) throws SQLException {
 		database.execute(CREATE_REQUEST_SQL, netid, password, firstName, lastName, idTodo);
+	}
+	
+	/** Checks whether there is already an account request with the given netid */
+	public boolean has(String netid) throws SQLException {
+		return database.execute((r, t) -> true, false, HAS_REQUEST_SQL, netid);
 	}
 	
 	/** Gets an account request with the given id */

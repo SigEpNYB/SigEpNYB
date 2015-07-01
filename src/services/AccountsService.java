@@ -46,6 +46,14 @@ public class AccountsService extends RestrictedService<AccountsDAO> {
 		.unwrap();
 	}
 	
+	/** Checks if the account with the given netid exists */
+	boolean hasAccount(String netid) throws InternalServerException {
+		return run(dao -> {
+			return dao.getId(netid) != AccountsDAO.ACCOUNT_NOT_FOUND;
+		})
+		.unwrap();
+	}
+	
 	/** Gets the account for the given token */
 	public AccountData getAccount(String token) throws InternalServerException, InvalidTokenException {
 		return run(token, (dao, tokenInfo) -> {

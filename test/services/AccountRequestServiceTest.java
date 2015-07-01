@@ -11,11 +11,13 @@ import org.junit.Test;
 import data.AccountData;
 import data.AccountRequest;
 import data.Todo;
+import exceptions.AccountExistsException;
 import exceptions.AccountNotFoundException;
 import exceptions.InternalServerException;
 import exceptions.InvalidCredentialsException;
 import exceptions.InvalidTokenException;
 import exceptions.PermissionDeniedException;
+import exceptions.RequestExistsException;
 
 public class AccountRequestServiceTest {
 	AccountRequestService service;
@@ -26,7 +28,7 @@ public class AccountRequestServiceTest {
 	}
 
 	@Test
-	public void testCreate() throws InternalServerException, InvalidCredentialsException, PermissionDeniedException, InvalidTokenException, AccountNotFoundException {
+	public void testCreate() throws InternalServerException, InvalidCredentialsException, PermissionDeniedException, InvalidTokenException, AccountNotFoundException, AccountExistsException, RequestExistsException {
 		TodoService todoService = Services.getTodoService();
 		assertEquals(todoService.get(1).length, 0);
 		
@@ -62,7 +64,7 @@ public class AccountRequestServiceTest {
 	}
 
 	@Test
-	public void testAccept() throws InternalServerException, InvalidCredentialsException, PermissionDeniedException, InvalidTokenException, AccountNotFoundException {
+	public void testAccept() throws InternalServerException, InvalidCredentialsException, PermissionDeniedException, InvalidTokenException, AccountNotFoundException, AccountExistsException, RequestExistsException {
 		TokenService tokenService = Services.getTokenService();
 		String token = tokenService.login("mtr73", "pass1");
 		
@@ -125,7 +127,7 @@ public class AccountRequestServiceTest {
 	}
 
 	@Test
-	public void testReject() throws InternalServerException, PermissionDeniedException, InvalidTokenException, AccountNotFoundException, InvalidCredentialsException {
+	public void testReject() throws InternalServerException, PermissionDeniedException, InvalidTokenException, AccountNotFoundException, InvalidCredentialsException, AccountExistsException, RequestExistsException {
 		TokenService tokenService = Services.getTokenService();
 		String token = tokenService.login("mtr73", "pass1");
 		
