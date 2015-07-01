@@ -56,6 +56,9 @@ body {
   color: #d0739a;
   border: none;
 }
+.loginLink:hover {
+  color: #ffffff;
+}
 
 /*Login Pages*/
 .loginbg {
