@@ -1,19 +1,13 @@
 /*General Styles*/
-body {
+/*body {
   text-align: center;
   font-family: 'Open Sans', sans-serif;
   margin: 0;
   color: #ffffff;
-}
-body#login,#createaccount {
-  background: linear-gradient(to right, #9b3bbf , #dd2920);
-}
-body#successresponse {
-  background: linear-gradient(to right, #89cc52 , #b0d941);
-}
+}*/
 
-/*Login Form*/
-input[type="text"], input[type="password"] {
+/*Login Forms*/
+.loginInput {
     width: 250px;
     padding: 10px 0px 5px 0px;
     margin-bottom: 25px;
@@ -24,7 +18,7 @@ input[type="text"], input[type="password"] {
     text-align: center;
     background: none;
 }
-input[type="submit"] {
+.loginButton {
   border: 2px solid;
   border-radius: 30px;
   padding: 15px 0px 15px 0px;
@@ -37,7 +31,7 @@ input[type="submit"] {
   background: none;
   width: 250px;
 }
-input[type="submit"]:hover {
+.loginButton:hover {
   background: #d0739a;
 }
 ::-webkit-input-placeholder {
@@ -56,7 +50,7 @@ input[type="submit"]:hover {
    color: #ffffff;
    letter-spacing: 7px;
 }
-.link {
+.loginLink {
   font-size: 10px;
   font-weight: 600;
   letter-spacing: 2px;
@@ -64,15 +58,21 @@ input[type="submit"]:hover {
   border: none;
 }
 
-/*Login Page*/
-.formbg {
+/*Login Pages*/
+.loginbg {
   margin-top: 8%;
   width: 100%;
   padding: 50px 20px;
   text-align: center;
 }
+body#login,#createaccount {
+  background: linear-gradient(to right, #9b3bbf , #dd2920);
+}
+body#successresponse {
+  background: linear-gradient(to right, #89cc52 , #b0d941);
+}
 @media (max-width:750px) {
-    .formbg {
+    .loginbg {
       margin-top: 5%;
     }
 }
