@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html>
 	<head>
+		<!--Compatibility, mobile-->
 		<meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-		<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,600,700,300' rel='stylesheet' type='text/css'>
 		<!--jQuery-->
 		<script src="deps/jquery/jquery.min.js"></script>
 		<!--Bootstrap-->
@@ -12,12 +12,17 @@
 		<!--Sweet Alert-->
 		<script src="deps/sweetalert/sweetalert.min.js"></script>
 		<link rel="stylesheet" type="text/css" href="deps/sweetalert/sweetalert.css">
+		<!--Universal Custom-->
+		<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,600,700,300' rel='stylesheet' type='text/css'>
+		<link rel="stylesheet" type="text/css" href="css/main.css">
+		<script src="js/main.js"></script>
+		<!--Signed In Custom-->
+		<script src="js/navbar.js"></script>
+		<!--Page Custom-->
 		<title>SigEp | Create Event</title>
-		<link rel="stylesheet" type="text/css" href="styles/styles.css">
 	</head>
 	<body>
 		<noscript>You need javascript!</noscript>
-
 		<!--Start Navbar-->
 		<nav id="navbar" class="navbar navbar-default">
 			<div class="container-fluid">
@@ -48,7 +53,6 @@
 			<div class="row">
 				<div class="col-xs-12 col-sm-6 col-sm-offset-3">
 					<h1 id="name"></h1><br>
-					<script src="main.js"></script>
 					<script type="text/javascript">
 						getAccount();
 					</script>
