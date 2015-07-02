@@ -56,8 +56,10 @@ body {
   color: #d0739a;
   border: none;
 }
-.loginLink:hover {
+.requestSuccessText {
   color: #ffffff;
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-size: 18px;
 }
 
 /*Login Pages*/
@@ -72,6 +74,7 @@ body#login,#createaccount {
 }
 body#successresponse {
   background: linear-gradient(to right, #89cc52 , #b0d941);
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
 @media (max-width:750px) {
     .loginbg {
