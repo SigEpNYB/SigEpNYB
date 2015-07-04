@@ -18,6 +18,7 @@
 		<script src="js/main.js"></script>
 		<!--Page Custom-->
 		<title>SigEp | Create Account</title>
+		<script type="text/javascript" src="js/createaccount.js"></script>
 	</head>
 	<body id="createaccount">
 		<noscript>You need javascript!</noscript>
@@ -26,15 +27,13 @@
 				<div class="col-xs-12 col-sm-6 col-sm-offset-3">
 					<div class="loginbg">
 						<a href="index.html"><img src="img/nyblogowhite.png" alt="SigEp NYB" height="78px" width="149px"></a><br><br>
-						<form onsubmit="addAccount(); return false;">
-							<input type="text" name="firstname" id="firstName" class="loginInput" placeholder="FIRST NAME"/><br>
-							<input type="text" name="lastname" id="lastName" class="loginInput" placeholder="LAST NAME"/><br>
-							<br><br>
-							<input type="text" name="netid" id="netid" class="loginInput" placeholder="NET ID"/><br>
-							<input type="password" name="password" id="password" class="loginInput" placeholder="PASSWORD"/><br>
-							<input type="password" name="passwordConfirm" id="passwordConfirm" class="loginInput" placeholder="RE-ENTER"/><br>
-							<input type="submit" class="loginButton" value="CREATE"/>
-						</form>
+						<input type="text" name="firstname" id="firstName" class="loginInput" placeholder="FIRST NAME"/><br>
+						<input type="text" name="lastname" id="lastName" class="loginInput" placeholder="LAST NAME"/><br>
+						<br><br>
+						<input type="text" name="netid" id="netid" class="loginInput" placeholder="NET ID"/><br>
+						<input type="password" name="password" id="password" class="loginInput" placeholder="PASSWORD"/><br>
+						<input type="password" name="passwordConfirm" id="passwordConfirm" class="loginInput" placeholder="RE-ENTER"/><br>
+						<input type="submit" class="loginButton" id="createAccountButton" value="CREATE"/>
 					</div>
 				</div>
 			</div>
