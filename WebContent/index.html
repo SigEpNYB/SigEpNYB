@@ -18,6 +18,7 @@
 		<script src="js/main.js"></script>
 		<!--Page Custom-->
 		<title>SigEp | Login</title>
+		<script type="text/javascript" src="js/login.js"></script>
 	</head>
 	<body id="login">
 		<noscript>You need javascript!</noscript>
@@ -27,11 +28,9 @@
 					<div class="loginbg">
 						<a href="index.html"><img src="img/nyblogowhite.png" alt="SigEp NYB" height="78px" width="149px"></a><br><br>
 						<img src="img/lock.png" alt="Login" height="52px" width="52px"><br><br>
-						<form onsubmit="login(); return false;">
-							<input type="text" name="netid" id="netid" class="loginInput" placeholder="NET ID"/><br>
-							<input type="password" name="password" id="password" class="loginInput" placeholder="PASSWORD"/><br>
-							<input type="submit" class="loginButton" value="LOGIN"/>
-						</form>
+						<input type="text" name="netid" id="netid" class="loginInput" placeholder="NET ID"/><br>
+						<input type="password" name="password" id="password" class="loginInput" placeholder="PASSWORD"/><br>
+						<input type="submit" class="loginButton" id="loginButton" value="LOGIN"/>
 						<a class="loginLink" href="createaccount.html">CREATE ACCOUNT</a>
 					</div>
 				</div>
