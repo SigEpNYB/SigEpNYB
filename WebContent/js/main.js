@@ -104,10 +104,18 @@ function getAccount() {
 
 function addAccount() {
 	var msg = buildObj('netid', 'password', 'firstName', 'lastName');
-	httpRequest('POST', 'AccountRequests', true, msg, null, function() {
-		window.location.href = "/Fratsite/successresponse.html";
+	httpRequest('POST', 'AccountRequests', true, msg, null, function(resp) {
+		if (resp.hasOwnProperty('typeText') {
+			if (resp['typeText'] == 'ACCOUNT_ALREADY_EXISTS') {
+				swal({title: "Account Already Exists", text: "Please Login", type: "failure"});
+			} else if (resp['typeText'] == 'REQUEST_ALREADY_EXISTS') {
+				swal({title: "Request Already Exists", text: "Please try Again", type: "failure"});
+			}
+		} else {
+			window.location.href = "/Fratsite/successresponse.html";
+		}
 	}, function() { 
-		swal({title: "Account Creation Failed", text: "Please try again", type: "failure"});
+		swal({title: "Server Error", text: "Please try again", type: "failure"});
 	});
 }
 
