@@ -111,6 +111,7 @@ function addAccount() {
 				document.getElementById('passwordConfirm').value = '';
 			} else if (resp['typeText'] == 'REQUEST_ALREADY_EXISTS') {
 				swal({title: "Request Already ", text: "Please try again", type: "error"});
+				document.getElementById('passwordConfirm').value = '';
 			} else {
 				swal("Code Not Handled, please try again")
 			}
