@@ -107,11 +107,9 @@ function addAccount() {
 	httpRequest('POST', 'AccountRequests', true, msg, null, function(resp) {
 		if ((resp != null ) && (resp.hasOwnProperty('typeText'))) {
 			if (resp['typeText'] == 'ACCOUNT_ALREADY_EXISTS') {
-				swal({title: "Account Already Exists", text: "Please try again", type: "error"});
-				document.getElementById('passwordConfirm').value = '';
+				window.location.href = "/Fratsite"
 			} else if (resp['typeText'] == 'REQUEST_ALREADY_EXISTS') {
-				swal({title: "Request Already ", text: "Please try again", type: "error"});
-				document.getElementById('passwordConfirm').value = '';
+				window.location.href = "/Fratsite/successresponse.html"
 			} else {
 				swal("Code Not Handled, please try again")
 			}
