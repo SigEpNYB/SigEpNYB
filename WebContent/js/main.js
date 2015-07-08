@@ -112,6 +112,7 @@ function addAccount() {
 				});
 			} else if (resp['typeText'] == 'REQUEST_ALREADY_EXISTS') {
 				swal({title: "Request Pending", text: "Somebody already requested an account under this NetID", type: "error"});
+				document.getElementById('passwordConfirm').value = ''
 			} else {
 				swal("Code Not Handled, please try again")
 			}
