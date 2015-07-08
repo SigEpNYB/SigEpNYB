@@ -107,9 +107,11 @@ function addAccount() {
 	httpRequest('POST', 'AccountRequests', true, msg, null, function(resp) {
 		if ((resp != null ) && (resp.hasOwnProperty('typeText'))) {
 			if (resp['typeText'] == 'ACCOUNT_ALREADY_EXISTS') {
-				window.location.href = "/Fratsite"
+				swal({title: "Account Already Exists", text: "An account with this NetID already exists, please try logging in", type: "error"}, function() {
+					window.location.href = "/Fratsite";
+				});
 			} else if (resp['typeText'] == 'REQUEST_ALREADY_EXISTS') {
-				window.location.href = "/Fratsite/successresponse.html"
+				swal({title: "Request Pending", text: "Somebody already requested an account under this NetID", type: "error"});
 			} else {
 				swal("Code Not Handled, please try again")
 			}
