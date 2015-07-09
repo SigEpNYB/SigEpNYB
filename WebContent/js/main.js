@@ -13,7 +13,7 @@ function httpRequest(mthd, url, useToken, msg, urlParams, success, error, server
 			if (status == 200) {
 				if (success != null) success(resp);
 			} else if (status == 401) {
-				Cookies.set('lastPage', window.location.href);
+				Cookies.set('lastPage', window.location.href, {expires: 600});
 				window.location.href = '/Fratsite/index.html';
 			} else if (status == 400) {
 				if (error != null) error();
@@ -74,7 +74,7 @@ function login() {
     	if (Cookies.get("lastPage") !== undefined) {
     		var lastPage = Cookies.get("lastPage");
     		Cookies.expire("lastPage")
-    		window.location.href = lastPage
+    		window.location.href = lastPage;
     	} else {
     		window.location.href = '/Fratsite/dashboard.html';
     	}
