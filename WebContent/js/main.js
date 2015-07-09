@@ -1,14 +1,3 @@
-function getCookie(cname) {
-    var name = cname + "=";
-    var ca = document.cookie.split(';');
-    for(var i=0; i<ca.length; i++) {
-        var c = ca[i];
-        while (c.charAt(0)==' ') c = c.substring(1);
-        if (c.indexOf(name) == 0) return c.substring(name.length,c.length);
-    }
-    return "";
-}
-
 function httpRequest(mthd, url, useToken, msg, urlParams, success, error, serverError) {
 	var xhr = new XMLHttpRequest();
 	xhr.onreadystatechange = function() {
@@ -24,6 +13,7 @@ function httpRequest(mthd, url, useToken, msg, urlParams, success, error, server
 			if (status == 200) {
 				if (success != null) success(resp);
 			} else if (status == 401) {
+				Cookies.set('lastPage', window.location.href);
 				window.location.href = '/Fratsite/index.html';
 			} else if (status == 400) {
 				if (error != null) error();
@@ -55,7 +45,7 @@ function httpRequest(mthd, url, useToken, msg, urlParams, success, error, server
 	
 	xhr.open(mthd, url + urlExt, true);
 	if (useToken) {
-		var token = getCookie('token');
+		var token = Cookies.get('token');
 		xhr.setRequestHeader('Auth', token);
 	}
 	if (msg == null) {
@@ -80,8 +70,14 @@ function buildObj() {
 function login() {
 	var msg = buildObj('netid', 'password');
 	httpRequest('POST', 'Login', false, msg, null, function(resp) {
-    	document.cookie = 'token=' + resp.token;
-    	window.location.href = '/Fratsite/dashboard.html';
+    	Cookies.set('token', resp.token);
+    	if (Cookies.get("lastPage") !== undefined) {
+    		var lastPage = Cookies.get("lastPage");
+    		Cookies.expire("lastPage")
+    		window.location.href = lastPage
+    	} else {
+    		window.location.href = '/Fratsite/dashboard.html';
+    	}
 	}, function() {
 		swal("Login Failed", "Please check your NetID and Password", "error")
 	});
@@ -91,7 +87,7 @@ function logout() {
 	console.log("FAILED")
 	httpRequest('DELETE', 'Login', true, null, null, function() {
 		window.location.href = '/Fratsite/index.html';
-		document.cookie = "token=; expires=Thu, 01 Jan 1970 00:00:00 UTC";
+		Cookies.expire("token");
 	});
 }
 
