@@ -61,7 +61,6 @@ function buildObj() {
 		var id = arguments[i];
 		var element = document.getElementById(id);
 		obj[id] = element.value;
-		element.value = '';
 	}
 	
 	return obj;
@@ -79,6 +78,8 @@ function login() {
     		window.location.href = '/Fratsite/dashboard.html';
     	}
 	}, function() {
+		document.getElementById('netid').value = ''
+		document.getElementById('password').value = ''
 		swal("Login Failed", "Please check your NetID and Password", "error")
 	});
 }
@@ -94,7 +95,6 @@ function logout() {
 function getAccount() {
 	httpRequest('GET', 'Account', true, null, null, function(resp) {
 		document.getElementById('name').innerHTML = resp.firstName + ' ' + resp.lastName;
-		$("#navbar-username a").text(resp.firstName + " " + resp.lastName + " (" + resp.netid + ")");
 	});
 }
 
@@ -108,7 +108,11 @@ function addAccount() {
 				});
 			} else if (resp['typeText'] == 'REQUEST_ALREADY_EXISTS') {
 				swal({title: "Request Pending", text: "Somebody already requested an account under this NetID", type: "error"});
-				document.getElementById('passwordConfirm').value = ''
+				document.getElementById('netid').value = '';
+				document.getElementById('firstName').value = '';
+				document.getElementById('lastName').value = '';
+				document.getElementById('password').value = '';
+				document.getElementById('passwordConfirm').value = '';
 			} else {
 				swal("Code Not Handled, please try again")
 			}
@@ -183,4 +187,10 @@ function getRoles() {
 		}
 		document.getElementById('roles').innerHTML = rolesHTML;
 	});
+}
+
+function getRequests() {
+	httpRequest('GET', 'AccountRequest', true, null, null, function(resp) {
+		console.log(resp)
+	})
 }
