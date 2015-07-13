@@ -1,11 +1,11 @@
-/*General Styles*/
+/* General Styles */
 body {
   text-align: center;
   font-family: 'Open Sans', sans-serif;
   margin: 0;
 }
 
-/*Login Forms*/
+/* Login Forms */
 .loginInput {
     width: 250px;
     padding: 10px 0px 5px 0px;
@@ -65,7 +65,7 @@ body {
   font-size: 18px;
 }
 
-/*Login Pages*/
+/* Login Pages */
 .loginbg {
   margin-top: 8%;
   width: 100%;
@@ -83,6 +83,20 @@ body#successresponse {
     .loginbg {
       margin-top: 5%;
     }
+}
+
+/* Tables */
+.table .text-center {
+  text-align: center;
+  vertical-align: middle;
+}
+.requestbutton {
+  width: 40%;
+  max-width: 150px;
+}
+.buttons {
+  margin: auto
+  display: block;
 }
 
 /* Navbar */

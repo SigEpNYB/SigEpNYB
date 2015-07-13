@@ -1,5 +1,5 @@
 $(document).ready(function() {
-	$('#loginButton').click(function() {
+	$('#loginButton').on('click', function() {
 		login();
 	})
 	$(".loginInput").keyup(function(event){

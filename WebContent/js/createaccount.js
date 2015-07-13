@@ -1,5 +1,5 @@
 $(document).ready(function() {
-	$('#createAccountButton').click(function() {
+	$('#createAccountButton').on('click', function() {
 		if ($('#password').val() != $('#passwordConfirm').val()) {
 			swal({title: "Oops", text: "Your passwords didn't match", type: "error"});
 			document.getElementById('password').value = '';
