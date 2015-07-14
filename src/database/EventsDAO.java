@@ -33,7 +33,7 @@ public class EventsDAO {
 	
 	/** Gets the events that occur between the given start and end dates */
 	public Event[] get(Date start, Date end) throws SQLException {
-		return database.buildArray(Event.class, GET_EVENTS_SQL, Database.dateToString(start), Database.dateToString(start));
+		return database.buildArray(Event.class, GET_EVENTS_SQL, Database.dateToString(end), Database.dateToString(start));
 	}
 	
 	/** Cancels the event with the given idEvent */
