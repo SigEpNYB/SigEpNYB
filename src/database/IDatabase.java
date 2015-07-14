@@ -3,11 +3,21 @@
  */
 package database;
 
+import java.io.IOException;
+import java.sql.SQLException;
+
 /**
  * Defines the interface for a database
  */
 public interface IDatabase extends AutoCloseable {
 
+	/** Creates a database with the main schema with the given name */
+	public void createSchema(String name) throws SQLException, IOException;
+	
+	/** Drops the database with the given name */
+	public void dropSchema(String name) throws SQLException;
+	
+	
 	/** Gets the TokenDAO */
 	public TokenDAO getTokenDAO();
 	
