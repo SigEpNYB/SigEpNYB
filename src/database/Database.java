@@ -27,7 +27,7 @@ public class Database implements IDatabase {
 	private static final DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 	private static final String CREATE_DATABASE_SQL = "CREATE DATABASE %s";
 	private static final String USE_DATABASE_SQL = "USE %s";
-	private static final String DROP_DATABASE_SQL = "DROP DATABASE %s";
+	private static final String DROP_DATABASE_SQL = "DROP DATABASE IF EXISTS %s";
 	
 	/** Takes a date and formats it to a string */
 	public static String dateToString(Date date) {
