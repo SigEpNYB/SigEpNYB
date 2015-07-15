@@ -1,0 +1,5 @@
+mrp456,secret,${idAccount[0]}
+jmb123,password,${idAccount[1]}
+mrp456,badpass,-1
+badnet,badpass,-1
+badnet,secret,-1

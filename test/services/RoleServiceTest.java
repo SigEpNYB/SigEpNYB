@@ -4,10 +4,14 @@ import static org.junit.Assert.*;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+
+import com.treetest.junit.TreeTestRunner;
 
 import data.Role;
 import exceptions.InternalServerException;
 
+@RunWith(TreeTestRunner.class)
 public class RoleServiceTest {
 	RoleService service;
 	

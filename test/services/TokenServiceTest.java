@@ -10,12 +10,16 @@ import java.util.Date;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+
+import com.treetest.junit.TreeTestRunner;
 
 import data.Token;
 import exceptions.InternalServerException;
 import exceptions.InvalidCredentialsException;
 import exceptions.TokenNotFoundException;
 
+@RunWith(TreeTestRunner.class)
 public class TokenServiceTest {
 	TokenService service;
 	

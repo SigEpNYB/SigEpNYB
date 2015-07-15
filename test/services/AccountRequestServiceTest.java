@@ -7,6 +7,9 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+
+import com.treetest.junit.TreeTestRunner;
 
 import data.AccountData;
 import data.AccountRequest;
@@ -19,6 +22,7 @@ import exceptions.InvalidTokenException;
 import exceptions.PermissionDeniedException;
 import exceptions.RequestExistsException;
 
+@RunWith(TreeTestRunner.class)
 public class AccountRequestServiceTest {
 	AccountRequestService service;
 	

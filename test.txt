@@ -1,0 +1,26 @@
+import database
+
+EventsDAOTest {
+	get
+	DutiesDAOTest {
+		assign: AccountsDAOTest.start
+	}
+}
+
+AccountsDAOTest {
+	get
+	getAll
+	
+	TodoDAOTest {
+		assign
+		AccountRequestDAOTest {}
+	}
+	
+	GroupDAOTest {}
+	
+	TokenDAOTest {
+		update
+	}
+	
+	end: DutiesDAOTest.end
+}

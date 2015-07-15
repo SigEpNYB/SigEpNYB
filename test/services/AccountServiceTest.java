@@ -8,6 +8,9 @@ import static org.junit.Assert.fail;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+
+import com.treetest.junit.TreeTestRunner;
 
 import data.AccountData;
 import data.Role;
@@ -17,6 +20,7 @@ import exceptions.InvalidCredentialsException;
 import exceptions.InvalidTokenException;
 import exceptions.PermissionDeniedException;
 
+@RunWith(TreeTestRunner.class)
 public class AccountServiceTest {
 	AccountsService service;
 	

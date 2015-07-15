@@ -1,0 +1,6 @@
+test title,6/18/1996 12:23:07,6/18/1996 12:55:34,My birth.  Not sure on the exact times so I made them up
+some other title,6/19/1996 12:23:07,6/20/1996 12:55:34,Event that spans a day
+Instant,6/21/1996 12:23:07,6/21/1996 12:23:07,This event lasts just one instant
+A,7/1/2015 01:01:01,7/3/2015 01:01:01,bla
+B,7/2/2015 01:01:01,7/4/2015 01:01:01,bla
+C,6/3/2015 01:01:01,8/3/2015 01:01:01,bla

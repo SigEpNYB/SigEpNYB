@@ -1,103 +1,76 @@
 package database;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 import java.sql.SQLException;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.runner.RunWith;
 
-import util.Settings;
+import com.treetest.junit.DataFile;
+import com.treetest.junit.ParameterVariables;
+import com.treetest.junit.ReturnVariable;
+import com.treetest.junit.TreeTestRunner;
+
 import data.AccountRequest;
 import data.FullAccountRequest;
 
+@RunWith(TreeTestRunner.class)
 public class AccountRequestDAOTest {
-	Database db;
-	AccountRequestDAO dao;
-	TodoDAO todoDao;
-
-	@Before
-	public void setUp() throws Exception {
-		Settings settings = Settings.getInstance();
-		db = new Database(settings.getDatabaseUser(), settings.getDatabasePassword(), settings.getDatabase());
-		dao = db.getAccountRequestDAO();
-		todoDao = db.getTodoDAO();
+	private final AccountRequestDAO dao;
+	
+	@ParameterVariables("database")
+	public AccountRequestDAOTest(IDatabase database) {
+		dao = database.getAccountRequestDAO();
 	}
 	
-	@After
-	public void tearDown() throws Exception {
-		db.close();
-	}
-
-	@Test
-	public void testCreate() throws SQLException {
-		assertEquals(dao.getAll().length, 0);
-		
-		int idTodo = todoDao.create("bla bla");
-		
-		dao.create("bla", "adfwdf", "wgwf", "Wgww", idTodo);
-		dao.create("fjwfekh", "sfdkwjf", "wfw", "wwwg", idTodo);
-		
+	@DataFile("testdata/accountrequests.txt")
+	@ReturnVariable("idRequest")
+	public int start(String netid, String password, String firstName, String lastName, int idTodo) throws SQLException {
+		int numRequests = dao.getAll().length;
+		dao.create(netid, password, firstName, lastName, idTodo);
 		AccountRequest[] requests = dao.getAll();
-		assertEquals(requests.length, 2);
-		assertEquals(requests[0].getNetid(), "bla");
-		assertEquals(requests[0].getFirstName(), "wgwf");
-		assertEquals(requests[0].getLastName(), "Wgww");
-		assertEquals(requests[1].getNetid(), "fjwfekh");
-		assertEquals(requests[1].getFirstName(), "wfw");
-		assertEquals(requests[1].getLastName(), "wwwg");
+		assertEquals(numRequests + 1, requests.length);
 		
-		dao.delete(requests[0].getId());
-		dao.delete(requests[1].getId());
+		int idRequest = -1;
+		for (AccountRequest request : requests) {
+			if (request.getNetid().equals(netid)) {
+				assertEquals(firstName, request.getFirstName());
+				assertEquals(lastName, request.getLastName());
+				assertEquals(idTodo, request.getIdTodo());
+				idRequest = request.getId();
+				break;
+			}
+		}
+		assertTrue(idRequest > 0);
 		
-		todoDao.delete(idTodo);
+		FullAccountRequest request = dao.get(idRequest);
+		assertNotNull(request);
+		assertEquals(netid, request.getData().getNetid());
+		assertEquals(password, request.getPassword());
+		assertEquals(firstName, request.getData().getFirstName());
+		assertEquals(lastName, request.getData().getLastName());
+		assertEquals(idTodo, request.getData().getIdTodo());
+		
+		return idRequest;
 	}
 	
-	@Test
-	public void testGet() throws SQLException {
-		int idTodo = todoDao.create("bla bla");
-		
-		dao.create("a", "b", "c", "d", idTodo);
-		AccountRequest[] accounts = dao.getAll();
-		FullAccountRequest request = dao.get(accounts[0].getId());
-		
-		assertEquals(request.getData().getNetid(), "a");
-		assertEquals(request.getPassword(), "b");
-		assertEquals(request.getData().getFirstName(), "c");
-		assertEquals(request.getData().getLastName(), "d");
-		
-		dao.delete(request.getData().getId());
-		
-		todoDao.delete(idTodo);
-	}
-
-	@Test
-	public void testDelete() throws SQLException {
-		assertEquals(dao.getAll().length, 0);
-		
-		int idTodo = todoDao.create("bla bla");
-		
-		dao.create("a", "b", "c", "d", idTodo);
-		
-		assertEquals(dao.getAll().length, 1);
-		
-		dao.create("e", "f", "g", "h", idTodo);
+	@ParameterVariables("idRequest")
+	public void end(int idRequest) throws SQLException {
+		int numRequests = dao.getAll().length;
+		dao.delete(idRequest);
 		AccountRequest[] requests = dao.getAll();
+		assertEquals(numRequests - 1, requests.length);
 		
-		assertEquals(requests.length, 2);
+		for (AccountRequest request : requests) {
+			if (request.getId() == idRequest) fail();
+		}
 		
-		dao.delete(requests[0].getId());
-		AccountRequest[] requests2 = dao.getAll();
-		
-		assertEquals(requests2.length, 1);
-		assertEquals(requests2[0].getNetid(), requests[1].getNetid());
-		
-		dao.delete(requests[1].getId());
-		
-		assertEquals(dao.getAll().length, 0);
-		
-		todoDao.delete(idTodo);
+		FullAccountRequest request = dao.get(idRequest);
+		assertNull(request);
 	}
 
 }

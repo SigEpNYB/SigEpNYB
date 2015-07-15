@@ -7,6 +7,9 @@ import java.util.Date;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+
+import com.treetest.junit.TreeTestRunner;
 
 import data.Event;
 import exceptions.InternalServerException;
@@ -14,6 +17,7 @@ import exceptions.InvalidCredentialsException;
 import exceptions.InvalidTokenException;
 import exceptions.PermissionDeniedException;
 
+@RunWith(TreeTestRunner.class)
 public class EventServiceTest {
 	EventService service;
 	

@@ -1,36 +1,67 @@
 package database;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
 
 import java.sql.SQLException;
 
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.runner.RunWith;
 
-import util.Settings;
+import com.treetest.junit.DataFile;
+import com.treetest.junit.ParameterVariables;
+import com.treetest.junit.TreeTestRunner;
+
+import data.AccountData;
 import data.Group;
 
+@RunWith(TreeTestRunner.class)
 public class GroupDAOTest {
-	Database db;
-	GroupsDAO dao;
+	private final GroupsDAO dao;
 
-	@Before
-	public void setUp() throws Exception {
-		Settings settings = Settings.getInstance();
-		db = new Database(settings.getDatabaseUser(), settings.getDatabasePassword(), settings.getDatabase());
-		dao = db.getGroupsDAO();
+	@ParameterVariables("database")
+	public GroupDAOTest(IDatabase database) {
+		dao = database.getGroupsDAO();
 	}
-
-	@Test
-	public void test() throws SQLException {
-		int length = dao.getMembers(Group.ACCOUNT_REQUEST_REVIEWERS).length;
-		dao.add(Group.ACCOUNT_REQUEST_REVIEWERS, 2);
-		dao.add(Group.ACCOUNT_REQUEST_REVIEWERS, 3);
-		assertEquals(dao.getMembers(Group.ACCOUNT_REQUEST_REVIEWERS).length, length + 2);
-		dao.remove(Group.ACCOUNT_REQUEST_REVIEWERS, 3);
-		assertEquals(dao.getMembers(Group.ACCOUNT_REQUEST_REVIEWERS).length, length + 1);
-		dao.remove(Group.ACCOUNT_REQUEST_REVIEWERS, 2);
-		assertEquals(dao.getMembers(Group.ACCOUNT_REQUEST_REVIEWERS).length, length);
+	
+	@DataFile("testdata/groupmembers.txt")
+	public void start(Group group, int idAccount) throws SQLException {
+		AccountData[] members = dao.getMembers(group);
+		for (AccountData account : members) {
+			if (account.getId() == idAccount) fail();
+		}
+		
+		int numMembers = members.length;
+		dao.add(group, idAccount);
+		members = dao.getMembers(group);
+		assertEquals(numMembers + 1, members.length);
+		
+		for (AccountData account : members) {
+			if (account.getId() == idAccount) return;
+		}
+		
+		fail();
+	}
+	
+	@DataFile("testdata/groupmembers.txt")
+	public void end(Group group, int idAccount) throws SQLException {
+		AccountData[] members = dao.getMembers(group);
+		boolean found = false;
+		for (AccountData account : members) {
+			if (account.getId() == idAccount) {
+				found = true;
+				break;
+			}
+		}
+		if (!found) fail();
+		
+		int numMembers = members.length;
+		dao.remove(group, idAccount);
+		members = dao.getMembers(group);
+		assertEquals(numMembers - 1, members.length);
+		
+		for (AccountData account : members) {
+			if (account.getId() == idAccount) fail();
+		}
 	}
 
 }

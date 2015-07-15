@@ -1,0 +1,6 @@
+${idTodo[0]},${idAccount[0]}
+${idTodo[1]},${idAccount[0]}
+${idTodo[1]},${idAccount[1]}
+${idTodo[1]},${idAccount[2]}
+${idTodo[2]},${idAccount[0]}
+${idTodo[3]},${idAccount[0]}
