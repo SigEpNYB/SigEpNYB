@@ -23,7 +23,7 @@ source create-role_permissions.sql;
 source create-user_roles.sql;
 source create-events.sql;
 source create-pages.sql;
-source create-role_pages.sql
+source create-role_pages.sql;
 source create-todos.sql;
 source create-user_todos.sql;
 source create-account_requests.sql;

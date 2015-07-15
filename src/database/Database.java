@@ -3,6 +3,9 @@
  */
 package database;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 import java.lang.reflect.Array;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -22,6 +25,9 @@ import java.util.Properties;
  */
 public class Database implements IDatabase {
 	private static final DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+	private static final String CREATE_DATABASE_SQL = "CREATE DATABASE %s";
+	private static final String USE_DATABASE_SQL = "USE %s";
+	private static final String DROP_DATABASE_SQL = "DROP DATABASE IF EXISTS %s";
 	
 	/** Takes a date and formats it to a string */
 	public static String dateToString(Date date) {
@@ -48,6 +54,7 @@ public class Database implements IDatabase {
 		Properties properties = new Properties();
 		properties.put("user", user);
 		properties.put("password", password);
+		properties.put("allowMultiQueries", "true");
 		
 		Class.forName("com.mysql.jdbc.Driver");
 		connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/" + database, properties);
@@ -101,6 +108,50 @@ public class Database implements IDatabase {
 				new LinkedList<R>(), sql, args);
 		return list.toArray((R[]) Array.newInstance(type, list.size()));
 	}
+	
+	/** Reads in a SQL script file */
+	private String readFile(String fileName) throws IOException {
+		BufferedReader reader = new BufferedReader(new FileReader(fileName));
+		
+		StringBuilder contents = new StringBuilder();
+		String line;
+		while ((line = reader.readLine()) != null) {
+			if (line.contains("source")) {
+				contents.append(readFile("sql-scripts/" + line.substring(7, line.length() - 1)));
+			} else {
+				contents.append(line);
+			}
+			contents.append('\n');
+		}
+		
+		reader.close();
+		
+		return contents.toString();
+	}
+	
+	/** Executes the given script */
+	private void execScript(String fileName) throws IOException, SQLException {
+		execute(readFile(fileName));
+	}
+	
+	/* (non-Javadoc)
+	 * @see database.IDatabase#createSchema(java.lang.String)
+	 */
+	@Override
+	public void createSchema(String name) throws SQLException, IOException {
+		execute(CREATE_DATABASE_SQL, name);
+		execute(USE_DATABASE_SQL, name);
+		execScript("sql-scripts/reset-all.sql");
+	}
+	
+	/* (non-Javadoc)
+	 * @see database.IDatabase#dropSchema(java.lang.String)
+	 */
+	@Override
+	public void dropSchema(String name) throws SQLException {
+		execute(DROP_DATABASE_SQL, name);
+	}
+	
 	
 	/* (non-Javadoc)
 	 * @see database.IDatabase#getTokenDAO()
