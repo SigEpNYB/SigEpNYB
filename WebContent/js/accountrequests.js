@@ -1,7 +1,6 @@
 $(document).ready(function() {
 	function displayRequests() {
 		httpRequest('GET', 'AccountRequests', true, null, null, function(resp){
-			console.log(resp)
 			for (i=0; i<resp.length; i++) {
 				$('#requests-body').prepend('<tr id="' + resp[i].id + '"><td class="text-center">' + resp[i]["firstName"] + ' ' + resp[i]["lastName"] + '</td>' +
 											'<td class="text-center">' + resp[i]["netid"] + '</td>' + 
@@ -14,14 +13,14 @@ $(document).ready(function() {
 
 	function approveRequest(id) {
 		msg = {idRequest: id}
-		httpRequest('POST', 'AccountRequests', true, msg, null, function(resp) {
-			$('#request' + id).hide('slow')
+		httpRequest('PUT', 'AccountRequests', true, msg, null, function(resp) {
+			$('#' + id).hide('slow')
 		})
 	}
 	function rejectRequest(id) {
 		msg = {idRequest: id}
 		httpRequest('DELETE', 'AccountRequests', true, msg, null, function(resp) {
-			$('#request' + id).hide('slow')
+			$('#' + id).hide('slow')
 		})
 	}
 	function noResults() {
