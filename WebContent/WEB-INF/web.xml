@@ -9,4 +9,52 @@
     <welcome-file>default.htm</welcome-file>
     <welcome-file>default.jsp</welcome-file>
   </welcome-file-list>
+  <servlet>
+    <servlet-name>Account</servlet-name>
+    <servlet-class>servlets.Account</servlet-class>
+  </servlet>
+  <servlet>
+    <servlet-name>AccountRequests</servlet-name>
+    <servlet-class>servlets.AccountRequests</servlet-class>
+  </servlet>
+  <servlet>
+    <servlet-name>Accounts</servlet-name>
+    <servlet-class>servlets.Accounts</servlet-class>
+  </servlet>
+  <servlet>
+    <servlet-name>Events</servlet-name>
+    <servlet-class>servlets.Events</servlet-class>
+  </servlet>
+  <servlet>
+    <servlet-name>Login</servlet-name>
+    <servlet-class>servlets.Login</servlet-class>
+  </servlet>
+  <servlet>
+    <servlet-name>Roles</servlet-name>
+    <servlet-class>servlets.Roles</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>Account</servlet-name>
+    <url-pattern>/Account/*</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>AccountRequests</servlet-name>
+    <url-pattern>/AccountRequests/*</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>Accounts</servlet-name>
+    <url-pattern>/Accounts/*</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>Events</servlet-name>
+    <url-pattern>/Events/*</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>Login</servlet-name>
+    <url-pattern>/Login/*</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>Roles</servlet-name>
+    <url-pattern>/Roles/*</url-pattern>
+  </servlet-mapping>
 </web-app>

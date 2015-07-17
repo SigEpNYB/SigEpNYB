@@ -1,0 +1,42 @@
+defaultTasks 'clean', 'build', 'jettyRun'
+
+apply plugin: 'java'
+archivesBaseName = "Fratsite"
+
+apply plugin: 'war'
+webAppDirName = "WebContent"
+
+apply plugin: 'jetty'
+httpPort = 8080
+stopPort = 9080
+stopKey = "stopKey"
+
+sourceSets {
+	main {
+		java {
+			srcDir 'src/'
+		}
+	}
+	
+	test {
+		java {
+			srcDir 'test/'
+		}
+	}
+}
+
+repositories {
+	flatDir {
+		dirs 'localjars'
+	}
+	
+    mavenCentral()
+}
+
+dependencies {
+	compile 'javax.servlet:javax.servlet-api:3.0.1'
+    compile 'org.json:json:20090211'
+    compile 'mysql:mysql-connector-java:5.1.35'
+    testCompile 'junit:junit:4.+'
+    testCompile 'com.treetest:TreeTest:0.0.1'
+}
