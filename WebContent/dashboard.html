@@ -14,6 +14,12 @@
 		<link rel="stylesheet" type="text/css" href="deps/sweetalert/sweetalert.css">
 		<!--Cookies-->
 		<script src="deps/cookies/cookies.min.js"></script>
+		<!--Moment-->
+		<script src='deps/moment/moment.min.js'></script>
+		<!--FullCalendar-->
+		<script src='deps/fullcalendar/fullcalendar.js'></script>
+		<link rel='stylesheet' href='deps/fullcalendar/fullcalendar.css'>
+		<link href='deps/fullcalendar/fullcalendar.print.css' rel='stylesheet' media='print'>
 		<!--Universal Custom-->
 		<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,600,700,300' rel='stylesheet' type='text/css'>
 		<link rel="stylesheet" type="text/css" href="css/main.css">
@@ -55,6 +61,16 @@
 		  	</div>
 		</nav>
 		<!--End Navbar-->
+		<!--Start Calendar-->
+		<div class="container">
+			<div class="row">
+				<div class="col-xs-12 col-sm-offset-2 col-sm-8">
+					<div id="calendar"></div>
+				</div>
+			</div>
+		</div>
+		<!--End Calendar-->
+		<!--
 		<h1 id="name"></h1>
 		<div id="roles"></div>
 
@@ -65,5 +81,6 @@
 		
 		<br><br>
 		<input type="submit" value="Logout" onclick="logout()"/>
+		-->
 	</body>
 </html>

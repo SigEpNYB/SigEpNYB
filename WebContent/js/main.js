@@ -194,3 +194,31 @@ function getRequests() {
 		console.log(resp)
 	})
 }
+
+function monthToNumber(name) {
+	if (name == "Jan") {
+		return "01"
+	} else if (name == "Feb") {
+		return "02"
+	} else if (name == "Mar") {
+		return "03"
+	} else if (name == "Apr") {
+		return "04"
+	} else if (name == "May") {
+		return "05"
+	} else if (name == "Jun") {
+		return "06"
+	} else if (name == "Jul") {
+		return "07"
+	} else if (name == "Aug") {
+		return "08"
+	} else if (name == "Sep") {
+		return "09"
+	} else if (name == "Oct") {
+		return "10"
+	} else if (name == "Nov") {
+		return "11"
+	} else {
+		return "12"
+	}
+}

@@ -1,0 +1,14 @@
+database/TokenDAOTest.class
+services/EventServiceTest.class
+services/PermissionServiceTest.class
+database/EventsDAOTest.class
+services/AccountServiceTest.class
+database/DutiesDAOTest.class
+services/AccountRequestServiceTest.class
+database/AccountsDAOTest.class
+database/TodoDAOTest.class
+services/TokenServiceTest.class
+database/AccountRequestDAOTest.class
+services/RoleServiceTest.class
+test/Main.class
+database/GroupDAOTest.class
