@@ -62,25 +62,18 @@
 		</nav>
 		<!--End Navbar-->
 		<!--Start Calendar-->
-		<div class="container">
+		<div class="container-fluid">
 			<div class="row">
-				<div class="col-xs-12 col-sm-offset-2 col-sm-8">
+				<div class="col-xs-12 col-sm-3" id="userInfo">
+						<h1 id="name"></h1>
+						<div id="roles"></div>
+						<br><br>
+						<input type="submit" value="Logout" onclick="logout()"/>
+				</div>
+				<div class="col-xs-12 col-sm-6">
 					<div id="calendar"></div>
 				</div>
 			</div>
 		</div>
-		<!--End Calendar-->
-		<!--
-		<h1 id="name"></h1>
-		<div id="roles"></div>
-
-		<script type="text/javascript">
-			getRoles();
-			getEvents();
-		</script>
-		
-		<br><br>
-		<input type="submit" value="Logout" onclick="logout()"/>
-		-->
 	</body>
 </html>

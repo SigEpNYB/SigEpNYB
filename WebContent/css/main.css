@@ -99,6 +99,13 @@ body#successresponse {
   display: block;
 }
 
+/* Dashboard */
+@media (max-width: 768px) {
+  #userInfo {
+    margin-bottom: 40px;
+  }
+}
+
 /* Navbar */
 #navbar-signout {
     cursor: pointer;

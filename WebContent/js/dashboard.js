@@ -1,4 +1,8 @@
 $(document).ready(function() {
+	getAccount();
+	getRoles();
+	getEvents();
+
 	var today = new Date();
 	var startDay = today.getDate();
 	startDay = (startDay < 10 ? '0' + startDay : startDay);
@@ -17,6 +21,7 @@ $(document).ready(function() {
 		"endTime": endTime
 	}
 	httpRequest('GET', 'Events', true, null, msg, function(resp) {
+		console.log(resp)
 		displayableEvents = []
 		for (i=0; i < resp.length; i++) {
 			var eventResp = resp[i]
