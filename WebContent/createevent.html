@@ -14,6 +14,9 @@
 		<link rel="stylesheet" type="text/css" href="deps/sweetalert/sweetalert.css">
 		<!--Cookies-->
 		<script src="deps/cookies/cookies.min.js"></script>
+		<!--Bootstrap Datepicker-->
+		<link rel="stylesheet" type="text/css" href="deps/bootstrap-datepicker/bootstrap-datepicker.min.css">
+		<script src="deps/bootstrap-datepicker/bootstrap-datepicker.min.js"></script>
 		<!--Universal Custom-->
 		<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,600,700,300' rel='stylesheet' type='text/css'>
 		<link rel="stylesheet" type="text/css" href="css/main.css">
@@ -25,6 +28,7 @@
 		<script src="js/navbar.js"></script>
 		<!--Page Custom-->
 		<title>SigEp | Create Event</title>
+		<script src="js/createevent.js"></script>
 	</head>
 	<body>
 		<noscript>You need javascript!</noscript>
@@ -57,19 +61,18 @@
 		<div class="container-fluid">
 			<div class="row">
 				<div class="col-xs-12 col-sm-6 col-sm-offset-3">
-					<h1 id="name"></h1><br>
-					<script type="text/javascript">
-						getAccount();
-					</script>
-					
-					<h2>New Event</h2>
-					<form onsubmit="addEvent(); return false;">
-						Title: <input type="text" id="title"/><br>
-						Start Time: <input type="datetime-local" id="startTime"/><br>
-						End Time: <input type="datetime-local" id="endTime"/><br>
-						Description:<input type="text" id="description"/><br>
-						<input type="submit" value="Create"/>
-					</form>
+					<h2>New Event</h2><br>
+					<input type="text" placeholder="Title" class="form-control eventInput" id="title"><br>
+					<div class="input-group eventInput">
+						<input type="datetime-local" class="form-control" placeholder="Start Time" aria-describedby="startTimeButton" id="startTime">
+						<span class="input-group-addon datepickerButton" id="startTimeButton"><i class="glyphicon glyphicon-calendar"></i></span>
+					</div><br>
+					<div class="input-group eventInput">
+						<input type="datetime-local" class="form-control" placeholder="Start Time" aria-describedby="endTimeButton" id="endTime">
+						<span class="input-group-addon datepickerButton" id="endTimeButton"><i class="glyphicon glyphicon-calendar"></i></span>
+					</div><br>
+					<input type="text" placeholder="Description" class="form-control eventInput" id="description"><br>
+					<input type="submit" class="btn btn-success eventInput" id="eventSubmit" value="Create">
 					<div id="status"></div>	
 				</div>
 			</div>

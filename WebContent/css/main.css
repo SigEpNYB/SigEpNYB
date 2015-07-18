@@ -3,6 +3,11 @@ body {
   text-align: center;
   font-family: 'Open Sans', sans-serif;
   margin: 0;
+  margin-bottom: 20px;
+}
+
+.footer {
+  
 }
 
 /* Login Forms */
@@ -33,19 +38,19 @@ body {
 .loginButton:hover {
   background: #d0739a;
 }
-::-webkit-input-placeholder {
+.loginInput::-webkit-input-placeholder {
    color: #ffffff;
    letter-spacing: 7px;
 }
-:-moz-placeholder { /* Firefox 18- */
+.loginInput:-moz-placeholder { /* Firefox 18- */
    color: #ffffff;
    letter-spacing: 7px;
 }
-::-moz-placeholder {  /* Firefox 19+ */
+.loginInput::-moz-placeholder {  /* Firefox 19+ */
    color: #ffffff;
    letter-spacing: 7px;
 }
-:-ms-input-placeholder {
+.loginInput:-ms-input-placeholder {
    color: #ffffff;
    letter-spacing: 7px;
 }
@@ -104,6 +109,22 @@ body#successresponse {
   #userInfo {
     margin-bottom: 40px;
   }
+}
+
+/* Create Event */
+@media (min-width: 768px) {
+  .eventInput {
+    width: 50%;
+    min-width:300px;
+    vertical-align: middle;
+    margin: auto;
+  }
+  .datepickerButton {
+    cursor: pointer;
+  }
+}
+::-webkit-calendar-picker-indicator{
+    display: none;
 }
 
 /* Navbar */

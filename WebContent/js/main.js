@@ -147,7 +147,13 @@ function removeAccount() {
 function addEvent() {
 	var msg = buildObj('title', 'startTime', 'endTime', 'description');
 	httpRequest('POST', 'Events', true, msg, null, function() {
-		document.getElementById("status").innerHTML = "Successfully created event";
+		swal({title: "Event Created!", text: "Check your dashboard to see it on the calendar", type: "success", closeOnConfirm: true},
+			function() {
+				document.getElementById("title").value = "";
+				document.getElementById("description").value = "";
+				document.getElementById("startTime").value = "";
+				document.getElementById("endTime").value = "";
+			})
 	}, function() {
 		document.getElementById("status").innerHTML = "Event creation failed";
 	});
@@ -160,6 +166,19 @@ function dateToString(date) {
 	var hour = date.getHours();
 	var minute = date.getMinutes();
 	return year + "-" + month + "-" + day + "T" + hour + ":" + minute;
+}
+
+function dateToPaddedString(date) {
+	var year = date.getFullYear();
+	var month = date.getMonth();
+	var day = date.getDate();
+	var hour = date.getHours();
+	var minute = date.getMinutes();
+    return (date.getFullYear() + '-'
+    		 + ('0' + date.getMonth()).slice(-2) + '-'
+    		 + ('0' + date.getDate()).slice(-2) + 'T'
+    		 + ('0' + date.getHours()).slice(-2) + ':' 
+    		 + ('0' + date.getMinutes()).slice(-2))
 }
 
 function getEvents() {
