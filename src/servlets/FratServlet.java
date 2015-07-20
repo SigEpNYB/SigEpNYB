@@ -146,7 +146,6 @@ public abstract class FratServlet extends HttpServlet {
 		JSONObject ret = new JSONObject();
 		for (Method method : obj.getClass().getMethods()) {
 			String name = method.getName();
-			System.out.println(name);
 			if (method.getParameterCount() == 0 && name.matches("get.+") && !Modifier.isStatic(method.getModifiers()) && !name.equals("getClass")) {
 				String fieldName = Character.toLowerCase(name.charAt(3)) + name.substring(4);
 				Object fieldValue = method.invoke(obj);

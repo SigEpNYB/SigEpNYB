@@ -1,8 +1,5 @@
 package servlets;
 
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Map;
 
@@ -28,15 +25,8 @@ public class Events extends FratServlet {
 	@Override
 	protected Object post(String token, Map<String, String> urlParams, JSONObject data) throws ClientBoundException, JSONException {
 		String title = data.getString("title"); 
-		Date startTime;
-		Date endTime;
-		try {
-			DateFormat dateFormat = new SimpleDateFormat("YYYY-MM-dd'T'HH:mm");
-			startTime = dateFormat.parse(data.getString("startTime"));
-			endTime = dateFormat.parse(data.getString("endTime"));
-		} catch (ParseException e) {
-			throw new MalformedRequestException("Dates must be in format: YYYY-MM-dd'T'HH:mm");
-		}
+		Date startTime = new Date(data.getLong("startTime"));
+		Date endTime = new Date(data.getLong("endTime"));
 		String description = data.getString("description");
 		Services.getEventService().create(token, title, startTime, endTime, description);
 		return null;
@@ -47,16 +37,25 @@ public class Events extends FratServlet {
 	 */
 	@Override
 	protected Object get(String token, Map<String, String> urlParams) throws ClientBoundException {
-		Date startTime;
-		Date endTime;
+		String startStr = urlParams.get("startTime");
+		if (startStr == null) throw new MalformedRequestException("Expected url parameter: startTime");
+		long start;
 		try {
-			DateFormat dateFormat = new SimpleDateFormat("YYYY-MM-dd'T'HH:mm");
-			startTime = dateFormat.parse(urlParams.get("startTime"));
-			endTime = dateFormat.parse(urlParams.get("endTime"));
-		} catch (ParseException e) {
-			throw new MalformedRequestException("Dates must be in format: YYYY-MM-dd'T'HH:mm");
+			start = Long.parseLong(startStr);
+		} catch (NumberFormatException e) {
+			throw new MalformedRequestException("startTime must be an integer");
 		}
-		return Services.getEventService().get(token, startTime, endTime);
+		
+		String endStr = urlParams.get("endTime");
+		if (endStr == null) throw new MalformedRequestException("Expected url parameter: endTime");
+		long end;
+		try {
+			end = Long.parseLong(endStr);
+		} catch (NumberFormatException e) {
+			throw new MalformedRequestException("endTime must be an integer");
+		}
+		
+		return Services.getEventService().get(token, new Date(start), new Date(end));
 	}
 	
 	
