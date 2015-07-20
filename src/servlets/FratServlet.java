@@ -6,6 +6,10 @@ package servlets;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.Writer;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.lang.reflect.Modifier;
+import java.sql.Date;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;
@@ -104,10 +108,10 @@ public abstract class FratServlet extends HttpServlet {
 				Object result = method.exec(token, urlParams, data);
 				if (result != null) {
 					if (result.getClass().isArray()) {
-						JSONArray json = new JSONArray(result, false);
+						JSONArray json = serializeArr((Object[]) result);
 						json.write(writer);
 					} else {
-						JSONObject json = new JSONObject(result, false);
+						JSONObject json = serializeObj(result);
 						json.write(writer);
 					}
 				}
@@ -135,6 +139,49 @@ public abstract class FratServlet extends HttpServlet {
 				e.printStackTrace();
 			}
 		}
+	}
+	
+	/** Serializes an object to a json object */
+	private JSONObject serializeObj(Object obj) throws IllegalAccessException, IllegalArgumentException, InvocationTargetException, JSONException {
+		JSONObject ret = new JSONObject();
+		for (Method method : obj.getClass().getMethods()) {
+			String name = method.getName();
+			System.out.println(name);
+			if (method.getParameterCount() == 0 && name.matches("get.+") && !Modifier.isStatic(method.getModifiers()) && !name.equals("getClass")) {
+				String fieldName = Character.toLowerCase(name.charAt(3)) + name.substring(4);
+				Object fieldValue = method.invoke(obj);
+				if (fieldValue == null) {
+					ret.put(fieldName, fieldValue);
+				} else {
+					Class<?> valueType = fieldValue.getClass();
+					if (Integer.class.equals(valueType)) {
+						ret.put(fieldName, (Integer) fieldValue);
+					} else if (Double.class.equals(valueType)) {
+						ret.put(fieldName, (Double) fieldValue);
+					} else if (Boolean.class.equals(valueType)) {
+						ret.put(fieldName, (Boolean) fieldValue);
+					} else if (String.class.equals(valueType)) {
+						ret.put(fieldName, (String) fieldValue);
+					} else if (Date.class.equals(valueType)) {
+						ret.put(fieldName, ((Date) fieldValue).getTime());
+					} else if (valueType.isEnum()) {
+						ret.put(fieldName, fieldValue.toString());
+					} else {
+						ret.put(fieldName, serializeObj(fieldValue));
+					}
+				}
+			}
+		}
+		return ret;
+	}
+	
+	/** Serializes an object array to a json array */
+	private JSONArray serializeArr(Object[] arr) throws IllegalAccessException, IllegalArgumentException, InvocationTargetException, JSONException {
+		JSONArray ret = new JSONArray();
+		for (Object obj : arr) {
+			ret.put(serializeObj(obj));
+		}
+		return ret;
 	}
 	
 	/** 
