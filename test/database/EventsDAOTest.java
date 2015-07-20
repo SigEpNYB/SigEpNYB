@@ -1,6 +1,7 @@
 package database;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
@@ -62,7 +63,16 @@ public class EventsDAOTest {
 		
 		Event event = getEvent(events, title, start, end, description);
 		assertNotNull(event);
-		return event.getId();
+		int idEvent = event.getId();
+		assertTrue(dao.exists(idEvent));
+		
+		assertTrue(idEvent > 0);
+		assertEquals(title, event.getTitle());
+		assertEquals(start, event.getStartTime());
+		assertEquals(end, event.getEndTime());
+		assertEquals(description, event.getDescription());
+		
+		return idEvent;
 	}
 	
 	@DataFile("testdata/getevents.txt")
@@ -87,5 +97,6 @@ public class EventsDAOTest {
 		events = getAllEvents();
 		assertEquals(numEvents - 1, events.length);
 		assertNull(getEvent(events, idEvent));
+		assertFalse(dao.exists(idEvent));
 	}
 }
