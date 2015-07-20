@@ -33,6 +33,14 @@ public class EventService extends RestrictedService<EventsDAO> {
 		.unwrap();
 	}
 	
+	/** Checks if an event with the given id exists */
+	boolean exists(int idEvent) throws InternalServerException {
+		return run(dao -> {
+			return dao.exists(idEvent);
+		})
+		.unwrap();
+	}
+	
 	/** Gets the events occurring between the start and end date */
 	public Event[] get(String token, Date start, Date end) throws InternalServerException, PermissionDeniedException, InvalidTokenException {
 		return run(token, Permission.GETEVENTS, dao -> {

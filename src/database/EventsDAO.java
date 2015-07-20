@@ -13,6 +13,7 @@ import data.Event;
  */
 public class EventsDAO {
 	private static final String CREATE_EVENT_SQL = "INSERT INTO events (title, startTime, endTime, description) VALUES ('%s', '%s', '%s', '%s')";
+	private static final String EVENT_EXISTS_SQL = "SELECT idEvent FROM events WHERE idEvent = %d";
 	private static final String GET_EVENTS_SQL = "SELECT idEvent, title, startTime, endTime, description FROM events "
 			+ "WHERE NOT (startTime > '%s' OR endTime < '%s')";
 	private static final String DELETE_EVENT_SQL = "DELETE FROM events WHERE idEvent = %d";
@@ -29,6 +30,11 @@ public class EventsDAO {
 		String startStr = Database.dateToString(start);
 		String endStr = Database.dateToString(end);
 		database.execute(CREATE_EVENT_SQL, title, startStr, endStr, description);
+	}
+	
+	/** Checks if an event with the given id exists */
+	public boolean exists(int idEvent) throws SQLException {
+		return database.execute((row, t) -> true, false, EVENT_EXISTS_SQL, idEvent);
 	}
 	
 	/** Gets the events that occur between the given start and end dates */
