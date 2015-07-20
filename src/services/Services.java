@@ -24,6 +24,7 @@ public class Services {
 	private final AccountRequestService accountRequestService;
 	private final TodoService todoService;
 	private final GroupService groupService;
+	private final DutyService dutyService;
 	
 	/** This class is a singleton */
 	private Services() throws InternalServerException {
@@ -40,6 +41,7 @@ public class Services {
 			accountRequestService = new AccountRequestService(database.getAccountRequestDAO(), tokenService, permissionService, accountsService, todoService, groupService);
 			eventService = new EventService(database.getEventsDAO(), tokenService, permissionService);
 			pageService = new PageService(database.getPagesDAO(), tokenService, permissionService);
+			dutyService = new DutyService(database.getDutiesDAO(), tokenService, permissionService, eventService);
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new InternalServerException();
@@ -86,8 +88,13 @@ public class Services {
 		return getInstance().accountRequestService;
 	}
 	
-	/** gets a TodoService */
+	/** Gets a TodoService */
 	public static TodoService getTodoService() throws InternalServerException {
 		return getInstance().todoService;
+	}
+	
+	/** Gets a DutyService */
+	public static DutyService getDutyService() throws InternalServerException {
+		return getInstance().dutyService;
 	}
 }

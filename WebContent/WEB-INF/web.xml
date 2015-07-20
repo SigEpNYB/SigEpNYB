@@ -33,6 +33,10 @@
     <servlet-name>Roles</servlet-name>
     <servlet-class>servlets.Roles</servlet-class>
   </servlet>
+  <servlet>
+    <servlet-name>Duties</servlet-name>
+    <servlet-class>servlets.Duties</servlet-class>
+  </servlet>
   <servlet-mapping>
     <servlet-name>Account</servlet-name>
     <url-pattern>/Account/*</url-pattern>
@@ -56,5 +60,9 @@
   <servlet-mapping>
     <servlet-name>Roles</servlet-name>
     <url-pattern>/Roles/*</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>Duties</servlet-name>
+    <url-pattern>/Duties/*</url-pattern>
   </servlet-mapping>
 </web-app>
