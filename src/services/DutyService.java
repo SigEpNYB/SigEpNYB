@@ -58,6 +58,14 @@ public class DutyService extends RestrictedService<DutiesDAO> {
 		.unwrap();
 	}
 	
+	/** Gets all of the unassigned duties */
+	public Duty[] getUnassigned(String token) throws InternalServerException, PermissionDeniedException, InvalidTokenException {
+		return run(token, Permission.VIEWDUTIES, dao -> {
+			return dao.getUnassigned();
+		})
+		.unwrap();
+	}
+	
 	/** Removes the given duty */
 	public void remove(String token, int idDuty) throws InternalServerException, PermissionDeniedException, InvalidTokenException {
 		run(token, Permission.REMOVEDUTY, dao -> {

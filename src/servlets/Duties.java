@@ -55,18 +55,20 @@ public class Duties extends FratServlet {
 	@Override
 	protected Object get(String token, Map<String, String> urlParams) throws ClientBoundException, JSONException {
 		String idEventStr = urlParams.get("idEvent");
-		if (idEventStr == null) throw new MalformedRequestException("Expected url param: idEvent");
-		
-		int idEvent;
-		try {
-			idEvent = Integer.parseInt(idEventStr);
-		} catch (NumberFormatException e) {
-			throw new MalformedRequestException("url param idEvent must be an integer, got '" + idEventStr + "' instead");
-		}
-		try {
-			return Services.getDutyService().getForEvent(token, idEvent);
-		} catch (EventNotFoundException e) {
-			throw new MalformedRequestException("Event with id: " + idEvent + " not found");
+		if (idEventStr == null) {
+			return Services.getDutyService().getUnassigned(token);
+		} else {
+			int idEvent;
+			try {
+				idEvent = Integer.parseInt(idEventStr);
+			} catch (NumberFormatException e) {
+				throw new MalformedRequestException("url param idEvent must be an integer, got '" + idEventStr + "' instead");
+			}
+			try {
+				return Services.getDutyService().getForEvent(token, idEvent);
+			} catch (EventNotFoundException e) {
+				throw new MalformedRequestException("Event with id: " + idEvent + " not found");
+			}
 		}
 	}
 
