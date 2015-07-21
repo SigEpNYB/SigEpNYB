@@ -8,6 +8,7 @@ import data.Duty;
 import data.DutyType;
 import data.Permission;
 import database.DutiesDAO;
+import exceptions.AccountNotFoundException;
 import exceptions.EventNotFoundException;
 import exceptions.InternalServerException;
 import exceptions.InvalidTokenException;
@@ -17,11 +18,13 @@ import exceptions.PermissionDeniedException;
  * The logic behind duties
  */
 public class DutyService extends RestrictedService<DutiesDAO> {
+	private final AccountsService accountsService;
 	private final EventService eventService;
 	
 	/** Creates a new duty service */
-	protected DutyService(DutiesDAO dao, TokenService tokenService, PermissionService permissionService, EventService eventService) {
+	protected DutyService(DutiesDAO dao, TokenService tokenService, PermissionService permissionService, AccountsService accountsService, EventService eventService) {
 		super(dao, tokenService, permissionService);
+		this.accountsService = accountsService;
 		this.eventService = eventService;
 	}
 	
@@ -32,6 +35,16 @@ public class DutyService extends RestrictedService<DutiesDAO> {
 			dao.create(idEvent, type);
 		})
 		.process(EventNotFoundException.class)
+		.unwrap();
+	}
+	
+	/** Assigns the given duty to the given user */
+	public void assign(String token, int idDuty, int idAccount) throws InternalServerException, PermissionDeniedException, InvalidTokenException, AccountNotFoundException {
+		run(token, Permission.ASSIGNDUTY, dao -> {
+			if (!accountsService.exists(idAccount)) throw new AccountNotFoundException();
+			dao.assign(idDuty, idAccount);
+		})
+		.process(AccountNotFoundException.class)
 		.unwrap();
 	}
 	

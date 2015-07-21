@@ -41,7 +41,7 @@ public class Services {
 			accountRequestService = new AccountRequestService(database.getAccountRequestDAO(), tokenService, permissionService, accountsService, todoService, groupService);
 			eventService = new EventService(database.getEventsDAO(), tokenService, permissionService);
 			pageService = new PageService(database.getPagesDAO(), tokenService, permissionService);
-			dutyService = new DutyService(database.getDutiesDAO(), tokenService, permissionService, eventService);
+			dutyService = new DutyService(database.getDutiesDAO(), tokenService, permissionService, accountsService, eventService);
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new InternalServerException();

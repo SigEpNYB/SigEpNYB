@@ -10,6 +10,7 @@ import org.json.JSONObject;
 
 import services.Services;
 import data.DutyType;
+import exceptions.AccountNotFoundException;
 import exceptions.ClientBoundException;
 import exceptions.EventNotFoundException;
 import exceptions.MalformedRequestException;
@@ -67,6 +68,21 @@ public class Duties extends FratServlet {
 		} catch (EventNotFoundException e) {
 			throw new MalformedRequestException("Event with id: " + idEvent + " not found");
 		}
+	}
+
+	/* (non-Javadoc)
+	 * @see servlets.FratServlet#put(java.lang.String, java.util.Map, org.json.JSONObject)
+	 */
+	@Override
+	protected Object put(String token, Map<String, String> urlParams, JSONObject data) throws ClientBoundException, JSONException {
+		int idDuty = data.getInt("idDuty");
+		int idAccount = data.getInt("idAccount");
+		try {
+			Services.getDutyService().assign(token, idDuty, idAccount);
+		} catch (AccountNotFoundException e) {
+			throw new MalformedRequestException("Cannot find account with id: " + idAccount);
+		}
+		return null;
 	}
 
 	/* (non-Javadoc)
