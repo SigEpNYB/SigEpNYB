@@ -35,6 +35,14 @@ public class AccountsService extends RestrictedService<AccountsDAO> {
 		.unwrap();
 	}
 	
+	/** Checks if the given account exists */
+	boolean exists(int idAccount) throws InternalServerException {
+		return run(dao -> {
+			return dao.get(idAccount) != null;
+		})
+		.unwrap();
+	}
+	
 	/** Gets the account id for the given netid and password */
 	public int getId(String netid, String password) throws InternalServerException, AccountNotFoundException {
 		return run(dao -> {
