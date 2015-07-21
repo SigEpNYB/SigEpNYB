@@ -1,27 +1,21 @@
 $(document).ready(function() {
 	getAccount();
 	getRoles();
-	getEvents();
+	//getEvents();
 
 	var today = new Date();
-	var startDay = today.getDate();
-	startDay = (startDay < 10 ? '0' + startDay : startDay);
-	var startMonth = today.getMonth();
-	startMonth = (startMonth < 10 ? '0' + startMonth : startMonth);
-	var startYear = today.getFullYear() - 1;
-	var startTime = startYear + '-' + startMonth + '-' + startDay + "T01:01";
-
-	var endDay = startDay;
-	var endMonth = startMonth;
-	var endYear = startYear + 2;
-	var endTime = endYear + '-' + endMonth + '-' + endDay + "T01:01";
+	var startCalendar = new Date();
+	startCalendar.setYear(today.getFullYear() - 1)
+	startCalendar = startCalendar.getTime()
+	var endCalendar = new Date();
+	endCalendar.setYear(today.getFullYear() + 1)
+	endCalendar = endCalendar.getTime()
 
 	var msg = {
-		"startTime": startTime,
-		"endTime": endTime
+		"startTime": startCalendar,
+		"endTime": endCalendar
 	}
 	httpRequest('GET', 'Events', true, null, msg, function(resp) {
-		console.log(resp)
 		displayableEvents = []
 		for (i=0; i < resp.length; i++) {
 			var eventResp = resp[i]
@@ -29,10 +23,8 @@ $(document).ready(function() {
 				"id": parseInt(eventResp["id"]),
 				"title": eventResp["title"],
 				"description": eventResp["description"],
-				"start": eventResp["startTime"].substring(24,28) + "-" + monthToNumber(eventResp["startTime"].substring(4,7)) + "-" + eventResp["startTime"].substring(8,10) + "T" +
-						 eventResp["startTime"].substring(11,13) + ":" + eventResp["startTime"].substring(14,16) + ":" +  eventResp["startTime"].substring(17,19),
-				"end": eventResp["endTime"].substring(24,28) + "-" + monthToNumber(eventResp["endTime"].substring(4,7)) + "-" + eventResp["endTime"].substring(8,10) + "T" +
-						 eventResp["endTime"].substring(11,13) + ":" + eventResp["endTime"].substring(14,16) + ":" +  eventResp["endTime"].substring(17,19)
+				"start": new Date(eventResp["startTime"]).toISOString().slice(0,-8),
+				"end": new Date(eventResp["endTime"]).toISOString().slice(0,-8)		
 			}
 			displayableEvents.push(eventObj)
 		}

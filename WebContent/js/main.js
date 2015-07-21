@@ -146,6 +146,14 @@ function removeAccount() {
 
 function addEvent() {
 	var msg = buildObj('title', 'startTime', 'endTime', 'description');
+
+	var startTime = new Date(msg['startTime'])
+	startTime.setHours(startTime.getHours() + (new Date().getTimezoneOffset()/60))
+	msg['startTime'] = startTime.getTime()
+	var endTime = new Date(msg['endTime'])
+	endTime.setHours(endTime.getHours() + (new Date().getTimezoneOffset()/60))
+	msg['endTime'] = endTime.getTime()
+
 	httpRequest('POST', 'Events', true, msg, null, function() {
 		swal({title: "Event Created!", text: "Check your dashboard to see it on the calendar", type: "success", closeOnConfirm: true},
 			function() {
@@ -175,7 +183,7 @@ function dateToPaddedString(date) {
 	var hour = date.getHours();
 	var minute = date.getMinutes();
     return (date.getFullYear() + '-'
-    		 + ('0' + date.getMonth()).slice(-2) + '-'
+    		 + ('0' + (1+date.getMonth())).slice(-2) + '-'
     		 + ('0' + date.getDate()).slice(-2) + 'T'
     		 + ('0' + date.getHours()).slice(-2) + ':' 
     		 + ('0' + date.getMinutes()).slice(-2))
