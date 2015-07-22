@@ -47,7 +47,9 @@ let version=$version+1
 for v in `seq $version $maxVersion`
 do
     echo "Updating to version $v..."
+    mysqldump -u builder fratdata > ../backups/beforeV$v.sql
     mysql -u builder -D fratdata < to$v.sql
+    mysqldump -u builder fratdata > ../backups/afterV$v.sql
     status=$?
     if [ $status != "0" ]
     then
