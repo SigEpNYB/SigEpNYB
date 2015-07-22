@@ -53,7 +53,9 @@ public class Database implements IDatabase {
 	public Database(String user, String password, String database) throws SQLException, InstantiationException, IllegalAccessException, ClassNotFoundException {
 		Properties properties = new Properties();
 		properties.put("user", user);
-		properties.put("password", password);
+		if (password != null) {
+			properties.put("password", password);
+		}
 		properties.put("allowMultiQueries", "true");
 		
 		Class.forName("com.mysql.jdbc.Driver");
