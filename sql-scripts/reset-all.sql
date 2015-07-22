@@ -1,4 +1,31 @@
-source clear-all.sql;
+DROP DATABASE IF EXISTS fratdata;
+
+CREATE DATABASE fratdata;
+USE fratdata;
+
+CREATE TABLE version (
+version INT NOT NULL
+);
+
+INSERT INTO version (version) VALUES (2);
+
+source create-accounts.sql;
+source create-tokens.sql;
+source create-permissions.sql;
+source create-roles.sql;
+source create-role_permissions.sql;
+source create-user_roles.sql;
+source create-events.sql;
+source create-pages.sql;
+source create-role_pages.sql;
+source create-todos.sql;
+source create-user_todos.sql;
+source create-account_requests.sql;
+source create-duty_types.sql;
+source create-duties.sql;
+source create-groups.sql;
+source create-group_members.sql;
+source create-duty_switches.sql;
 
 source populate-accounts.sql;
 source populate-permissions.sql;

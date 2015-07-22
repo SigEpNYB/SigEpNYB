@@ -1,4 +1,4 @@
-defaultTasks 'clean', 'build', 'jettyRun'
+defaultTasks 'dbUpdate', 'build', 'jettyRun'
 
 apply plugin: 'java'
 archivesBaseName = "Fratsite"
@@ -10,6 +10,10 @@ apply plugin: 'jetty'
 httpPort = 8080
 stopPort = 9080
 stopKey = "stopKey"
+
+task dbUpdate(type: Exec) {
+    commandLine 'sql-scripts/updates/update.sh'
+}
 
 sourceSets {
 	main {
