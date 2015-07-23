@@ -43,6 +43,8 @@ then
     exit 0
 fi
 
+mkdir -p ../backups
+
 let version=$version+1
 for v in `seq $version $maxVersion`
 do
