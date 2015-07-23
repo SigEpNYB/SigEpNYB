@@ -26,6 +26,7 @@ import java.util.Properties;
 public class Database implements IDatabase {
 	private static final DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 	private static final String CREATE_DATABASE_SQL = "CREATE DATABASE %s";
+	private static final String CREATE_ALL_SCRIPT = "sql-scripts/create-all.sql";
 	private static final String USE_DATABASE_SQL = "USE %s";
 	private static final String DROP_DATABASE_SQL = "DROP DATABASE IF EXISTS %s";
 	
@@ -143,7 +144,7 @@ public class Database implements IDatabase {
 	public void createSchema(String name) throws SQLException, IOException {
 		execute(CREATE_DATABASE_SQL, name);
 		execute(USE_DATABASE_SQL, name);
-		execScript("sql-scripts/reset-all.sql");
+		execScript(CREATE_ALL_SCRIPT);
 	}
 	
 	/* (non-Javadoc)
