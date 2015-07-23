@@ -4,6 +4,7 @@
 package services;
 
 import iservice.RestrictedService;
+import services.EmailService.EmailType;
 import data.AccountData;
 import data.AccountRequest;
 import data.FullAccountRequest;
@@ -46,8 +47,7 @@ public class AccountRequestService extends RestrictedService<AccountRequestDAO> 
 			if (accountsService.hasAccount(netid)) throw new AccountExistsException();
 			dao.create(netid, password, firstName, lastName, idTodo);
 			
-			emailService.send(netid, "SigEp Account Requested", "Your Sigma Phi Epsilon account was requested.  "
-					+ "The details will be reviewed and you will be notified when a decision is made.");
+			emailService.send(netid, EmailType.ACCOUNT_REQUESTED);
 		})
 		.process(RequestExistsException.class)
 		.process(AccountExistsException.class)
@@ -78,8 +78,7 @@ public class AccountRequestService extends RestrictedService<AccountRequestDAO> 
 			
 			todoService.done(request.getData().getIdTodo());
 			
-			emailService.send(netid, "SigEp Fratsite Account Accepted", 
-					"Congradulations, your account request has been accepted.  May your journey be one of unfathomable something.");
+			emailService.send(netid, EmailType.ACCOUNT_ACCEPTED);
 		})
 		.process(AccountNotFoundException.class)
 		.unwrap();
@@ -93,8 +92,7 @@ public class AccountRequestService extends RestrictedService<AccountRequestDAO> 
 			dao.delete(idRequest);
 			todoService.done(request.getData().getIdTodo());
 			
-			emailService.send(request.getData().getNetid(), "Sorry, SigEp Fratsite Account Rejected", 
-					"We're sorry, you do not appear to be a member of Sigma Phi Epsilon New York Beta chapter, and because of this, your account request was rejected.");
+			emailService.send(request.getData().getNetid(), EmailType.ACCOUNT_REJECTED);
 		})
 		.process(AccountNotFoundException.class)
 		.unwrap();

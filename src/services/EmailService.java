@@ -3,7 +3,11 @@
  */
 package services;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
 import java.util.concurrent.ArrayBlockingQueue;
@@ -22,21 +26,65 @@ import javax.mail.internet.MimeMessage;
  * Sends emails
  */
 class EmailService {
+	private static final String EMAIL_TYPES_FILE = "conf/email-types.conf";
+	private static final String EMAILS_DIRECTORY = "conf/emails/";
 	private static final int QUEUE_CAPACITY = 100;
 	
 	private final String userName;
 	private final String password;
 	
+	private final Map<EmailType, String> emailSubjects;
+	private final Map<EmailType, String> emailBodies;
+	
 	private final BlockingQueue<Email> emailQueue;
 	
 	/** Creates a new EmailService */
-	public EmailService(String userName, String password) {
+	public EmailService(String userName, String password) throws IOException {
 		this.userName = userName;
 		this.password = password;
+		
+		emailSubjects = new HashMap<>();
+		emailBodies = new HashMap<>();
+		loadEmailTypes();
+		
 		emailQueue = new ArrayBlockingQueue<>(QUEUE_CAPACITY);
 		
 		Thread thread = new Thread(() -> run());
 		thread.start();
+	}
+	
+	/** Loads the email types from files */
+	private void loadEmailTypes() throws IOException {
+		BufferedReader reader = new BufferedReader(new FileReader(EMAIL_TYPES_FILE));
+		
+		String line;
+		while ((line = reader.readLine()) != null) {
+			String[] tokens = line.split(",");
+			int index = 0;
+			
+			EmailType type = EmailType.valueOf(tokens[index++]);
+			if (tokens.length == 3) {
+				emailSubjects.put(type, tokens[index++]);
+			}
+			emailBodies.put(type, readFile(new File(EMAILS_DIRECTORY + tokens[index++])));
+		}
+		
+		reader.close();
+	}
+	
+	/** Reads the contents of a file into a String */
+	private String readFile(File file) throws IOException {
+		BufferedReader reader = new BufferedReader(new FileReader(file));
+		StringBuilder sb = new StringBuilder();
+		
+		String line;
+		while ((line = reader.readLine()) != null) {
+			sb.append(line + "\n");
+		}
+		
+		reader.close();
+		
+		return sb.toString();
 	}
 	
 	/** Internal method the continuously processes and sends emails */
@@ -83,18 +131,17 @@ class EmailService {
 	}
 	
 	/** Sends an email to the given person with the subject and message */
-	void send(String toNetid, String subject, String content) throws InterruptedException {
-		emailQueue.put(new Email(toNetid + "@cornell.edu", subject, content));
+	void send(String toNetid, EmailType type) throws InterruptedException {
+		String subject = emailSubjects.get(type);
+		String body = emailBodies.get(type);
+		emailQueue.put(new Email(toNetid + "@cornell.edu", subject, body));
 	}
 	
-	/** Sends an email to the given person with the subject and body file */
-	void send(String toNetid, String subject, File bodyFile) {
-		
-	}
-	
-	/** Sends an email to the given person with the subject, template file, and parameters */
-	void send(String toNetid, String subject, File templateFile, Map<String, Object> params) {
-		
+	/** The different types of emails */
+	public enum EmailType {
+		ACCOUNT_REQUESTED,
+		ACCOUNT_ACCEPTED,
+		ACCOUNT_REJECTED
 	}
 	
 	/** Stores information about an email */
