@@ -14,6 +14,8 @@ import exceptions.InternalServerException;
 public class Services {
 	private static Services uniqueInstance;
 	
+	private final EmailService emailService;
+	
 	private final IDatabase database;
 	private final TokenService tokenService;
 	private final AccountsService accountsService;
@@ -31,6 +33,8 @@ public class Services {
 		try {
 			Settings settings = Settings.getInstance();
 			
+			emailService = new EmailService(settings.getEmailUser(), settings.getEmailPassword());
+			
 			database = new Database(settings.getDatabaseUser(), settings.getDatabasePassword(), settings.getDatabase());
 			tokenService = new TokenService(database.getTokenDAO());
 			permissionService = new PermissionService(database.getPermissionDAO());
@@ -38,7 +42,8 @@ public class Services {
 			todoService = new TodoService(database.getTodoDAO());
 			groupService = new GroupService(database.getGroupsDAO());
 			accountsService = new AccountsService(database.getAccountsDAO(), tokenService, permissionService, roleService);
-			accountRequestService = new AccountRequestService(database.getAccountRequestDAO(), tokenService, permissionService, accountsService, todoService, groupService);
+			accountRequestService = new AccountRequestService(database.getAccountRequestDAO(), tokenService, permissionService, 
+					accountsService, todoService, groupService, emailService);
 			eventService = new EventService(database.getEventsDAO(), tokenService, permissionService);
 			pageService = new PageService(database.getPagesDAO(), tokenService, permissionService);
 			dutyService = new DutyService(database.getDutiesDAO(), tokenService, permissionService, accountsService, eventService);

@@ -34,4 +34,14 @@ public class Settings {
 	public String getDatabase() {
 		return "fratdata";
 	}
+	
+	/** Gets the user name for the email account */
+	public String getEmailUser() {
+		return "sigepfratsite";
+	}
+	
+	/** Gets the password for the email account */
+	public String getEmailPassword() {
+		return "fuckphisig";
+	}
 }
