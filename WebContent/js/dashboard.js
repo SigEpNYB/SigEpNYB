@@ -1,7 +1,6 @@
 $(document).ready(function() {
 	getAccount();
 	getRoles();
-	//getEvents();
 
 	var today = new Date();
 	var startCalendar = new Date();
@@ -34,6 +33,7 @@ $(document).ready(function() {
 	    		center: 'title',
 	    		right: 'month,agendaWeek,agendaDay'
 	    	},
+	    	defaultView: 'agendaWeek',
 	    	events: displayableEvents,
 	    	editable: false
 	    });
