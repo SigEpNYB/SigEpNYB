@@ -36,6 +36,7 @@ public class TodoService extends Service<TodoDAO> {
 	int create(String description, Date dueDate, int idAccount) throws InternalServerException {
 		return run(dao -> {
 			int idTodo = dao.create(description, dueDate);
+			if (idTodo == TodoDAO.CREATE_FAILED) throw new InternalServerException();
 			dao.assign(idAccount, idTodo);
 			return idTodo;
 		})
