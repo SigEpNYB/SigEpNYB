@@ -10,3 +10,4 @@ INSERT INTO permissions (name) VALUES ('dutues.create');
 INSERT INTO permissions (name) VALUES ('duties.assign');
 INSERT INTO permissions (name) VALUES ('duties.delete');
 INSERT INTO permissions (name) VALUES ('duties.view');
+INSERT INTO permissions (name) VALUES ('duties.viewstats');

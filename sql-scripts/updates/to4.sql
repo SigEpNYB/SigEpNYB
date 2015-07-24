@@ -1,0 +1,1 @@
+INSERT INTO permissions (name) VALUES ('duties.viewstats');

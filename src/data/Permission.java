@@ -15,7 +15,8 @@ public enum Permission {
 	CREATEDUTY(9),
 	ASSIGNDUTY(10),
 	REMOVEDUTY(11),
-	VIEWDUTIES(12);
+	VIEWDUTIES(12),
+	VIEWDUTYSTATS(13);
 	
 	public final int id;
 	
