@@ -55,9 +55,8 @@ public class Duties extends FratServlet {
 	@Override
 	protected Object get(String token, Map<String, String> urlParams) throws ClientBoundException, JSONException {
 		String idEventStr = urlParams.get("idEvent");
-		if (idEventStr == null) {
-			return Services.getDutyService().getUnassigned(token);
-		} else {
+		String idAccountStr = urlParams.get("idAccount");
+		if (idEventStr != null) {
 			int idEvent;
 			try {
 				idEvent = Integer.parseInt(idEventStr);
@@ -69,6 +68,34 @@ public class Duties extends FratServlet {
 			} catch (EventNotFoundException e) {
 				throw new MalformedRequestException("Event with id: " + idEvent + " not found");
 			}
+		} else if (idAccountStr != null) {
+			int idAccount;
+			try {
+				idAccount = Integer.parseInt(idAccountStr);
+			} catch (NumberFormatException e) {
+				throw new MalformedRequestException("url param idAccount must be an integer, got '" + idAccountStr + "' instead");
+			}
+			String typeStr = urlParams.get("type");
+			if (typeStr == null) throw new MalformedRequestException("Expected url param: type");
+			DutyType type;
+			try {
+				type = DutyType.valueOf(typeStr);
+			} catch (Throwable t) {
+				String acceptableTypes = "";
+				for (DutyType dutyType : DutyType.values()) {
+					acceptableTypes += dutyType.name() + ", ";
+				}
+				acceptableTypes = acceptableTypes.substring(0, acceptableTypes.length() - 2);
+				throw new MalformedRequestException("There is no duty type: " + typeStr + ". Acceptable types are: " + acceptableTypes);
+			}
+			try {
+				int count = Services.getDutyService().getCount(token, idAccount, type);
+				return new Count(count);
+			} catch (AccountNotFoundException e) {
+				throw new MalformedRequestException("Account with id: " + idAccount + " not found");
+			}
+		} else{
+			return Services.getDutyService().getUnassigned(token);
 		}
 	}
 
@@ -97,4 +124,14 @@ public class Duties extends FratServlet {
 		return null;
 	}
 	
+	/** A wrapper class for sending a count */
+	public class Count {
+		private final int count;
+		Count(int count) {
+			this.count = count;
+		}
+		public int getCount() {
+			return count;
+		}
+	}
 }
