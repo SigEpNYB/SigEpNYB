@@ -1,0 +1,1 @@
+INSERT INTO role_permissions (idRole, idPermission) VALUES (2, 13);
