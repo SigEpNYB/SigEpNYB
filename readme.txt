@@ -42,7 +42,10 @@ Input:
     endTime: "YYYY-MM-dd'T'HH:mm",
     description: "description"
 }
-Output: nothing
+Output:
+{
+    idEvent: id
+}
 
 GET Gets all the events which intersect with a given range
 Input:
