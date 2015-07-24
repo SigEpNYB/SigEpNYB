@@ -13,7 +13,7 @@ import data.DutyType;
  */
 public class DutiesDAO {
 	private static final String CREATE_DUTY_SQL = "INSERT INTO duties (idEvent, idType) VALUES (%d, %d)";
-	private static final String ASSIGN_DUTY_SQL = "UPDATE duties SET idAccount = %d WHERE idDuty = %d";
+	private static final String ASSIGN_DUTY_SQL = "UPDATE duties SET idOriginal = IFNULL(idOriginal, %d), idAccount = %d WHERE idDuty = %d";
 	private static final String GET_UNASSIGNED_SQL = "SELECT idDuty, idEvent, idType, idAccount FROM duties WHERE idAccount IS NULL";
 	private static final String GET_FOR_EVENT_SQL = "SELECT idDuty, idEvent, idType, idAccount FROM duties WHERE idEvent = %d";
 	private static final String DELETE_DUTY_SQL = "DELETE FROM duties WHERE idDuty = %d";
@@ -32,7 +32,7 @@ public class DutiesDAO {
 	
 	/** Assigns the given duty to the guven user */
 	public void assign(int idDuty, int idAccount) throws SQLException {
-		database.execute(ASSIGN_DUTY_SQL, idAccount, idDuty);
+		database.execute(ASSIGN_DUTY_SQL, idAccount, idAccount, idDuty);
 	}
 	
 	/** Gets the unassigned duties */
