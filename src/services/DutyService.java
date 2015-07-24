@@ -66,6 +66,16 @@ public class DutyService extends RestrictedService<DutiesDAO> {
 		.unwrap();
 	}
 	
+	/** Gets the number of duties of the given type originally assigned to the given user */
+	public int getCount(String token, int idAccount, DutyType type) throws InternalServerException, PermissionDeniedException, InvalidTokenException, AccountNotFoundException {
+		return run(token, Permission.VIEWDUTYSTATS, dao -> {
+			if (!accountsService.exists(idAccount)) throw new AccountNotFoundException();
+			return dao.getCount(idAccount, type);
+		})
+		.process(AccountNotFoundException.class)
+		.unwrap();
+	}
+	
 	/** Removes the given duty */
 	public void remove(String token, int idDuty) throws InternalServerException, PermissionDeniedException, InvalidTokenException {
 		run(token, Permission.REMOVEDUTY, dao -> {
