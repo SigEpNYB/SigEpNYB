@@ -75,6 +75,9 @@ Output: nothing
 
 GET Gets all of the unassigned events
 if the url parameter idEvent is included, it gets all of the duties for the event with that id
+ex: ?idEvent=2
+if the url parameters idAccount and type are included, it gets the number of duties of that type originally assigned to the user with the given id
+ex: ?idAccount=3&type=SOBER
 
 PUT Assigns a duty
 Input:
