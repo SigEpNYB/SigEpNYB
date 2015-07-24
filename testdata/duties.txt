@@ -1,5 +1,12 @@
 ${idEvent[0]},DRIVER
 ${idEvent[0]},DRIVER
+${idEvent[0]},SOBER
+${idEvent[0]},SOBER
+${idEvent[0]},SOBER
+${idEvent[0]},SOBER
+${idEvent[0]},SETCLEAN
+${idEvent[0]},SETCLEAN
+${idEvent[0]},SETCLEAN
 ${idEvent[0]},RISKMANAGER
 ${idEvent[1]},SOBER
 ${idEvent[2]},SETCLEAN

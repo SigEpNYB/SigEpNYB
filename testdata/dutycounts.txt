@@ -1,0 +1,12 @@
+${idAccount[0]},DRIVER,1
+${idAccount[0]},SOBER,1
+${idAccount[0]},SETCLEAN,2
+${idAccount[0]},RISKMANAGER,0
+${idAccount[1]},DRIVER,1
+${idAccount[1]},SOBER,0
+${idAccount[1]},SETCLEAN,1
+${idAccount[1]},RISKMANAGER,0
+${idAccount[2]},DRIVER,0
+${idAccount[2]},SOBER,2
+${idAccount[2]},SETCLEAN,1
+${idAccount[2]},RISKMANAGER,1

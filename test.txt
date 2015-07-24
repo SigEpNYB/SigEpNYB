@@ -3,7 +3,7 @@ import database
 EventsDAOTest {
 	get
 	DutiesDAOTest {
-		assign: AccountsDAOTest.start
+		assign: AccountsDAOTest.start -> reAssign -> getCount
 	}
 }
 

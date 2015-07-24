@@ -1,0 +1,6 @@
+${duty[0]},${idAccount[1]}
+${duty[2]},${idAccount[2]}
+${duty[1]},${idAccount[0]}
+${duty[4]},${idAccount[1]}
+${duty[6]},${idAccount[2]}
+${duty[8]},${idAccount[0]}

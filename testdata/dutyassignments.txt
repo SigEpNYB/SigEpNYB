@@ -3,3 +3,8 @@ ${duty[2]},${idAccount[0]}
 ${duty[1]},${idAccount[1]}
 ${duty[3]},${idAccount[2]}
 ${duty[4]},${idAccount[2]}
+${duty[6]},${idAccount[0]}
+${duty[7]},${idAccount[0]}
+${duty[8]},${idAccount[1]}
+${duty[9]},${idAccount[2]}
+${duty[11]},${idAccount[2]}
