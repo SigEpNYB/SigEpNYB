@@ -12,6 +12,8 @@ import data.Event;
  * Manages Events
  */
 public class EventsDAO {
+	public static final int CREATE_FAILED = -1;
+	
 	private static final String CREATE_EVENT_SQL = "INSERT INTO events (title, startTime, endTime, description) VALUES ('%s', '%s', '%s', '%s')";
 	private static final String EVENT_EXISTS_SQL = "SELECT idEvent FROM events WHERE idEvent = %d";
 	private static final String GET_EVENTS_SQL = "SELECT idEvent, title, startTime, endTime, description FROM events "
@@ -26,10 +28,10 @@ public class EventsDAO {
 	}
 	
 	/** Creates a new Event */
-	public void create(String title, Date start, Date end, String description) throws SQLException {
+	public int create(String title, Date start, Date end, String description) throws SQLException {
 		String startStr = Database.dateToString(start);
 		String endStr = Database.dateToString(end);
-		database.execute(CREATE_EVENT_SQL, title, startStr, endStr, description);
+		return database.execute((row, t) -> row.getInt(1), CREATE_FAILED, CREATE_EVENT_SQL, title, startStr, endStr, description);
 	}
 	
 	/** Checks if an event with the given id exists */

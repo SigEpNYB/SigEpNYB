@@ -28,8 +28,8 @@ public class Events extends FratServlet {
 		Date startTime = new Date(data.getLong("startTime"));
 		Date endTime = new Date(data.getLong("endTime"));
 		String description = data.getString("description");
-		Services.getEventService().create(token, title, startTime, endTime, description);
-		return null;
+		int idEvent = Services.getEventService().create(token, title, startTime, endTime, description);
+		return new IdEvent(idEvent);
 	}
 
 	/* (non-Javadoc)
@@ -58,6 +58,16 @@ public class Events extends FratServlet {
 		return Services.getEventService().get(token, new Date(start), new Date(end));
 	}
 	
-	
+	/** A wrapper class for an event id */
+	private class IdEvent {
+		private final int idEvent;
+		public IdEvent(int idEvent) {
+			this.idEvent = idEvent;
+		}
+		@SuppressWarnings("unused")
+		public int getIdEvent() {
+			return idEvent;
+		}
+	}
 
 }

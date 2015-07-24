@@ -25,10 +25,12 @@ public class EventService extends RestrictedService<EventsDAO> {
 	}
 
 	/** Creates an event */
-	public void create(String token, String title, Date startTime, Date endTime, String description) 
+	public int create(String token, String title, Date startTime, Date endTime, String description) 
 			throws InternalServerException, PermissionDeniedException, InvalidTokenException {
-		run(token, Permission.POSTEVENTS, dao -> {
-			dao.create(title, startTime, endTime, description);
+		return run(token, Permission.POSTEVENTS, dao -> {
+			int idEvent = dao.create(title, startTime, endTime, description);
+			if (idEvent == EventsDAO.CREATE_FAILED) throw new InternalServerException();
+			return idEvent;
 		})
 		.unwrap();
 	}
