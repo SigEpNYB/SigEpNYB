@@ -118,14 +118,14 @@ class EmailService {
 				}
 			});
 
-		Message message = new MimeMessage(session);
+		MimeMessage message = new MimeMessage(session);
 		message.setFrom(new InternetAddress(userName + "@gmail.com"));
 		message.setRecipients(Message.RecipientType.TO,
 				InternetAddress.parse(email.to));
 		if (email.sbj != null) {
 			message.setSubject(email.sbj);
 		}
-		message.setText(email.msg);
+		message.setText(email.msg, "utf-8", "html");
 
 		Transport.send(message);
 	}
