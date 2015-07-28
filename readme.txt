@@ -30,6 +30,14 @@ SET UP
 REST API
 ==========================================
 
+Accounts (/Accounts):
+------------------------
+GET Gets the list of accounts and details on those accounts
+Input: none
+if the url parameter idAccount is included, it gets only the details on the account with the given id
+ex: ?idAccount=2
+
+
 Events (/Events):
 ------------------------
 POST Creates an Event
