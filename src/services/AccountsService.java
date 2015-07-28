@@ -75,6 +75,17 @@ public class AccountsService extends RestrictedService<AccountsDAO> {
 		.unwrap();
 	}
 	
+	/** Gets the account data for the given id */
+	public AccountData getAccount(String token, int idAccount) throws InternalServerException, PermissionDeniedException, InvalidTokenException, AccountNotFoundException {
+		return run(token, Permission.GETACCOUNTS, dao -> {
+			AccountData account = dao.get(idAccount);
+			if (account == null) throw new AccountNotFoundException();
+			return account;
+		})
+		.process(AccountNotFoundException.class)
+		.unwrap();
+	}
+	
 	/** Gets all the accounts */
 	public AccountData[] getAccounts(String token) throws InternalServerException, InvalidTokenException, PermissionDeniedException {
 		return run(token, Permission.GETACCOUNTS, dao -> {

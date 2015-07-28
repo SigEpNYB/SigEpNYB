@@ -24,7 +24,21 @@ public class Accounts extends FratServlet {
 	 */
 	@Override
 	protected Object get(String token, Map<String, String> urlParams) throws ClientBoundException {
-		return Services.getAccountService().getAccounts(token);
+		String idAccountStr = urlParams.get("idAccount");
+		if (idAccountStr == null) {
+			return Services.getAccountService().getAccounts(token);
+		} else {
+			try {
+				int idAccount = Integer.parseInt(idAccountStr);
+				try {
+					return Services.getAccountService().getAccount(token, idAccount);
+				} catch (AccountNotFoundException e) {
+					throw new MalformedRequestException("No account with id: " + idAccount);
+				}
+			} catch (NumberFormatException e) {
+				throw new MalformedRequestException("idAccount must be an integer, got: '" + idAccountStr + "' instead");
+			}
+		}
 	}
 
 	/* (non-Javadoc)
