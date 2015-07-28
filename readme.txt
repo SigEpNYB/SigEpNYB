@@ -30,16 +30,14 @@ SET UP
 REST API
 ==========================================
 
-*See http://docs.oracle.com/javase/7/docs/api/java/text/SimpleDateFormat.html for information about date formatting
-
 Events (/Events):
 ------------------------
 POST Creates an Event
 Input:
 {
     title: "title",
-    startTime: "YYYY-MM-dd'T'HH:mm",
-    endTime: "YYYY-MM-dd'T'HH:mm",
+    startTime: utctimestamp,
+    endTime: utctimestamp,
     description: "description"
 }
 Output:
@@ -49,7 +47,7 @@ Output:
 
 GET Gets all the events which intersect with a given range
 Input:
-/Events?startTime=YYYY-MM-dd'T'HH:mm&endTime=YYYY-MM-dd'T'HH:mm
+/Events?startTime=utctimestamp&endTime=utctimestamp
 *No body*
 
 Output:
@@ -57,8 +55,8 @@ Output:
     {
         id: id,
         title: "title",
-        startTime: "EEE MMM dd HH:mm:ss z",
-        endTime: "EEE MMM dd HH:mm:ss z",
+        startTime: utctimestamp,
+        endTime: utctimestamp,
         description: "description"
     },
     ... etc ...
