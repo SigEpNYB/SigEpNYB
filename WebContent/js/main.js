@@ -1,4 +1,4 @@
-function httpRequest(mthd, url, useToken, msg, urlParams, success, error, serverError) {
+function httpRequest(mthd, url, useToken, msg, urlParams, success, error, serverError, passThrough) {
 	var xhr = new XMLHttpRequest();
 	xhr.onreadystatechange = function() {
 		if (xhr.readyState == 4) {
@@ -11,7 +11,7 @@ function httpRequest(mthd, url, useToken, msg, urlParams, success, error, server
 			
 			var status = xhr.status;
 			if (status == 200) {
-				if (success != null) success(resp);
+				if (success != null) success(resp, passThrough);
 			} else if (status == 401) {
 				Cookies.set('lastPage', window.location.href, {expires: 600});
 				window.location.href = '/Fratsite/index.html';
@@ -98,6 +98,10 @@ function getAccount() {
 	});
 }
 
+function getAccountInfo(callback) {
+	httpRequest('GET', 'Account', true, null, null, callback)
+}
+
 function addAccount() {
 	var msg = buildObj('netid', 'password', 'firstName', 'lastName');
 	httpRequest('POST', 'AccountRequests', true, msg, null, function(resp) {
@@ -165,15 +169,6 @@ function addEvent() {
 	}, function() {
 		document.getElementById("status").innerHTML = "Event creation failed";
 	});
-}
-
-function dateToString(date) {
-	var year = date.getFullYear();
-	var month = date.getMonth();
-	var day = date.getDate();
-	var hour = date.getHours();
-	var minute = date.getMinutes();
-	return year + "-" + month + "-" + day + "T" + hour + ":" + minute;
 }
 
 function dateToPaddedString(date) {
@@ -249,3 +244,42 @@ function monthToNumber(name) {
 		return "12"
 	}
 }
+
+function getAdjustedDate(yearAdjustment, monthAdjustment, outputType) {
+	return changeDateFormat(adjustDate(new Date(), yearAdjustment, monthAdjustment, 0), 'UTC');
+}
+
+function adjustDate(date, year, month, day) {
+	var adjustedDate = date;
+	adjustedDate.setYear(adjustedDate.getFullYear() + year)
+	adjustedDate.setMonth(adjustedDate.getMonth() + month)
+	adjustedDate.setDate(adjustedDate.getDate() + day)
+	return adjustedDate
+}
+
+function changeDateFormat(date, outputType) {
+	if (outputType == 'UTC') {
+		return date.getTime();
+	} else if (outputType == 'ISOTZ') {
+		return date.toISOString();
+	} else if (outputType == 'ISO') {
+		return date.toISOString().slice(0,-8);
+	} else {
+		return date;
+	}
+}
+
+function dateToTZ(date) {
+	var adjustedDate = date;
+	adjustedDate.setHours(adjustedDate.getHours() - (new Date().getTimezoneOffset()/60));
+	return changeDateFormat(adjustedDate, 'ISO');
+}
+
+String.prototype.toProperCase = function () {
+    return this.replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();});
+};
+
+
+
+
+
