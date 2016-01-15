@@ -22,20 +22,20 @@ body {
 
 /* Login Forms */
 .loginInput {
-    width: 250px;
-    padding: 10px 0px 5px 0px;
-    margin-bottom: 25px;
-    border: none;
-    border-bottom: solid 2px #ffffff;
-    color: #ffffff;
-    font-size: 16px;
-    text-align: center;
-    background: none;
+  width: 250px;
+  padding: 10px 0 5px 0;
+  margin-bottom: 25px;
+  border: none;
+  border-bottom: solid 2px #ffffff;
+  color: #ffffff;
+  font-size: 20px;
+  text-align: center;
+  background: none;
 }
 .loginButton {
   border: 2px solid;
   border-radius: 30px;
-  padding: 15px 0px 15px 0px;
+  padding: 15px 0 15px 0;
   margin-top: 10px;
   margin-bottom: 25px;
   font-size: 16px;
@@ -124,7 +124,7 @@ body#successresponse {
 /* Create Event */
 @media (min-width: 768px) {
   .eventInput {
-    width: 50%;
+    width: 100%;
     min-width:300px;
     vertical-align: middle;
     margin: auto;

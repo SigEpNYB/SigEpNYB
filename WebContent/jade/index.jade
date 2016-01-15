@@ -1,0 +1,25 @@
+doctype html
+html(lang="en")
+  head
+    include ./components/deps.jade
+    title Login | SigEp NYB
+  body#login
+    include ./components/noscript.jade
+    .container-fluid
+      .row
+        .col-xs-12.col-sm-6.col-sm-offset-3
+          .loginbg
+            a(href='index.html')
+              img(alt='Login', height='52px', width='52px', src='img/lock.png')
+              br
+              br
+              img(alt='SigEp NYB', height='78px', width='149px', src='img/nyblogowhite.png')
+            br
+            br
+            input#netid.loginInput(type='text', placeholder='NET ID')
+            br
+            input#password.loginInput(type='text', placeholder='PASSWORD')
+            br
+            input#loginButton.loginButton(type='submit', value='LOGIN')
+            br
+            a.loginLink(href='createaccount.html') CREATE ACCOUNT
