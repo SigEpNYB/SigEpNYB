@@ -1,0 +1,32 @@
+// Navbar
+nav#navbar.navbar.navbar-default
+  div.container-fluid
+    div.navbar-header
+      button.navbar-toggle.collapsed(type='button', data-toggle='collapse', data-target='#navbar-collapse-1')
+        span.sr-only Toggle navigation
+        span.icon-bar
+        span.icon-bar
+        span.icon-bar
+      a#sigep-navbar.navbar-brand(href='dashboard.html')
+        img(src='img/navbarlogowhite.png', alt='SigEp', height='30px', width='90px')
+    div#navbar-collapse-1.collapse.navbar-collapse
+      ul.nav.navbar-nav
+        li.dashboard-navbar
+          a(href='dashboard.html') Dashboard
+        li.dropdown
+          a.dropdown-toggle(data-toggle='dropdown', href='viewmembers.html') Events
+            span.caret
+          ul.dropdown-menu
+            li
+              a(href='createevent.html') Create Event
+        li.dropdown
+          a.dropdown-toggle(data-toggle='dropdown', href='viewmembers.html') Members
+            span.caret
+          ul.dropdown-menu
+            li
+              a(href='viewmembers.html') View Members
+      ul.nav.navbar-nav.navbar-right
+        li#navbar-username
+          a
+        li#navbar-signout 
+          a(onclick='logout()') Sign Out

@@ -1,0 +1,18 @@
+doctype html
+html(lang="en")
+  head
+    include ../components/deps.jade
+    script(src='js/navbar.js')
+    script(src='js/dashboard.js')
+    title Dashboard | SigEp
+  body
+    include ../components/noscript.jade
+    include ../components/navbar.jade
+    .containter-fluid
+      .row
+        .col-xs-12.col-md-3#userInfo
+          h1#name
+          h5#roles
+        .col-xs-12.col-md-9
+          #calendar
+    include ../components/footer.jade

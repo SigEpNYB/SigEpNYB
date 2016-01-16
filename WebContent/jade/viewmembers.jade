@@ -1,0 +1,21 @@
+doctype html
+html(lang="en")
+  head
+    include ../components/deps.jade
+    script(src='js/navbar.js')
+    script(src='js/viewmembers.js')
+    title View Members | SigEp
+  body
+    include ../components/noscript.jade
+    include ../components/navbar.jade
+    .container-fluid
+      .row
+        .col-xs-12.col-sm-8.col-sm-offset-2
+          table.table.table-hover
+            thead
+              tr
+                th First Name
+                th Last Name
+                th NetID
+            tbody#members
+    include ../components/footer.jade
