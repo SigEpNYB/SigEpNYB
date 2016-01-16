@@ -3,15 +3,17 @@
  * @param {string} method - HTTP method
  * @param {string} url
  * @param {Object} data - Data to be sent
+ * @param {string} dataType - Datatype upon receival, default = json
  * @param {boolean} useToken - Whether to use token cookie in request
  * @param queryStringObj {Object} - Data to be included in query string
  * @param onSuccess {function} - Takes in data, textStatus, xhr
  * @param onFail {function} - Takes in xhr, textStatus, errorThrown
  * @returns {undefined}
  */
-function sendRequest(method, url, data, useToken, queryStringObj, onSuccess, onFail) {
+function sendRequest(method, url, data, dataType, useToken, queryStringObj, onSuccess, onFail) {
   if (typeof onSuccess !== 'function') onSuccess = $.noop;
-  if (typeof onFail !== 'function') onFail = $.noop; //function() { logout(); };
+  if (typeof onFail !== 'function') onFail = $.noop;
+  if (typeof dataType !== 'string') dataType = 'json';
 
   var queryString = '?';
   if ((queryStringObj !== null) && (typeof queryStringObj === 'object')) {
@@ -33,6 +35,7 @@ function sendRequest(method, url, data, useToken, queryStringObj, onSuccess, onF
     method: method,
     url: url + queryString,
     data: dataString,
+    dataType: dataType,
     headers: headers,
     success: onSuccess,
     error: onFail

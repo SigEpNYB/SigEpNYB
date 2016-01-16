@@ -4,8 +4,8 @@ $(document).ready(function() {
     'startTime': changeDateFormat(adjustDate(date, -1), 'UTC'),
     'endTime': changeDateFormat(adjustDate(date, 1), 'UTC')
   };
-  sendRequest('GET', 'Events', null, true, eventData, function(events) {
-    sendRequest('GET', 'Account', null, true, null, function(account) {
+  sendRequest('GET', 'Events', null, 'json', true, eventData, function(events) {
+    sendRequest('GET', 'Account', null, 'json', true, null, function(account) {
       events.map(function(event) {
         var eventObj = {
           eventName: event.title,
@@ -14,7 +14,7 @@ $(document).ready(function() {
           end: dateToTZ(new Date(event.endTime))
         };
         var eventId = {idEvent: parseInt(event.id, 10)}
-        sendRequest('GET', 'Duties', null, true, eventId, function(duties) {
+        sendRequest('GET', 'Duties', null, 'json', true, eventId, function(duties) {
           var hasDuty = duties.hasMatch(function(duty) {
             return duty.idAccount === account.id;
           });
@@ -54,12 +54,12 @@ $(document).ready(function() {
     editable: false
   });
 
-  sendRequest('GET', 'Account', null, true, null, function(account) {
+  sendRequest('GET', 'Account', null, 'json', true, null, function(account) {
     document.getElementById('name').innerHTML = 
       account.firstName + ' ' + account.lastName;
   });
 
-  sendRequest('GET', 'Roles', null, true, null, function(roles) {
+  sendRequest('GET', 'Roles', null, 'json', true, null, function(roles) {
     var roleString = roles.map(function(role) {
       return '<h3>' + role.role + '</h3>';
     }).reduce(function(s1, s2) {

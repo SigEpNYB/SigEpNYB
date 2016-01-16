@@ -4,7 +4,7 @@
  */
 function login() {
   var data = buildObj(['netid', 'password']);
-  sendRequest('POST', 'Login', data, false, null, 
+  sendRequest('POST', 'Login', data, 'json', false, null, 
     function(data) {
       Cookies.set('token', data.token);
       window.location.href = '/Fratsite/dashboard.html'
