@@ -1,7 +1,7 @@
 sendRequest('GET', 'Roles', null, 'json', true, null, function(roles) {
   sendRequest('GET', 'Accounts', null, 'json', true, null, function(accounts) {
     var removePermission = roles.hasMatch(function(role) {
-      return role.role === 'President';
+      return role.role === 'System Admin';
     });
     var table = accounts.map(function(account) {
       var buttonString = '';
@@ -23,7 +23,7 @@ sendRequest('GET', 'Roles', null, 'json', true, null, function(roles) {
 
 function removeMember(netid) {
   var data = {netid: netid};
-  sendRequest('DELETE', 'Accounts', data, 'json', true, null, function() {
+  sendRequest('DELETE', 'Accounts', data, 'text', true, null, function() {
     swal({
       title: 'User Deleted!',
       type: 'success',

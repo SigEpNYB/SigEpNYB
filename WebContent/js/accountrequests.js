@@ -1,5 +1,5 @@
 sendRequest('GET', 'AccountRequests', null, 'json', true, null, function(requests) {
-  var requestBody = requests.map(function() {
+  var requestBody = requests.map(function(request) {
     return '<tr>' +
       '<td>' + request.firstName + '</td>' +
       '<td>' + request.lastName + '</td>' +
@@ -14,7 +14,7 @@ sendRequest('GET', 'AccountRequests', null, 'json', true, null, function(request
 }, function() {
   swal({
     title: "Sorry, you don't have permission to approve account requests",
-    text: 'Click OK to go back to your dashboard'
+    text: 'Click OK to go back to your dashboard',
     type: 'error',
     closeOnConfirm: true
   }, function() {
@@ -22,30 +22,66 @@ sendRequest('GET', 'AccountRequests', null, 'json', true, null, function(request
   })
 });
 
-function approveRequest() {
-  
+function approveRequest(event, idRequest) {
+  var data = {idRequest: idRequest};
+  sendRequest('PUT', 'AccountRequests', data, 'text', true, null, function() {
+    swal({
+      title: 'Account Approved',
+      type: 'success',
+      closeOnConfirm: true
+    }, function() {
+      event.target.parentNode.parentNode.parentNode.removeChild(event.target.parentNode.parentNode);
+    });
+   }, function() {
+    swal({
+      title: 'Failed To Approve Account :(',
+      text: 'Please Try again later',
+      type: 'error',
+      closeOnConfirm: true
+    });
+  });
+}
+
+function rejectRequest(event, idRequest) {
+  var data = {idRequest: id};
+  sendRequest('DELETE', 'AccountRequests', data, 'text', true, null, function() {
+    swal({
+      title: 'Account Reject',
+      type: 'success',
+      closeOnConfirm: true
+    }, function() {
+      event.target.parentNode.parentNode.parentNode.removeChild(event.target.parentNode.parentNode);
+    });
+  }, function() {
+    swal({
+      title: 'Failed To Reject Account :(',
+      text: 'Please try again later',
+      type: 'error',
+      closeOnConfirm: true
+    });
+  });
 }
 
 /**
  * Creates a button td element for approving requests
- * @param {string} id
+ * @param {string} idRequest
  * @returns {string}
  */
-function approveString(id) {
+function approveString(idRequest) {
   return '<button type="button" ' +
   'class="btn btn-success" ' + 
-  'onclick="approveRequest(\'' + id + '\')">' +
+  'onclick="approveRequest(event, \'' + idRequest + '\')">' +
   'Approve</button>';
 }
 
 /**
  * Creates a button td element for rejecting requests
- * @param {string} id
+ * @param {string} idRequest
  * @returns {string}
  */
-function rejectString(id) {
+function rejectString(idRequest) {
   return '<button type="button" ' +
-  'class="btn btn-success" ' + 
-  'onclick="rejectRequest(\'' + id + '\')">' +
-  'Approve</button>';
+  'class="btn btn-danger" ' + 
+  'onclick="rejectRequest(event, \'' + idRequest + '\')">' +
+  'Reject</button>';
 }

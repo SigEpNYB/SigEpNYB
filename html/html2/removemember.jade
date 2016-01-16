@@ -1,0 +1,21 @@
+doctype html
+html(lang="en")
+  head
+    include ./includes/head.jade
+    title Remove Member | SigEp
+  body
+    include ./includes/noscript.jade
+    include ./includes/navbar.jade
+    .container-fluid
+      .row
+        .col-xs-12.col-sm-6.col-sm-offset-3
+          h1#name
+          br
+          script.
+            getAccount();
+          h2 Remove Member
+          form(onsubmit='removeAccount(); return false;') NetID:
+            input(type='text', id='netid')
+            input(type='submit', value='Remove')
+          #status
+    include ./includes/footer.jade

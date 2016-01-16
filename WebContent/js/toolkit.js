@@ -28,7 +28,6 @@ function sendRequest(method, url, data, dataType, useToken, queryStringObj, onSu
 
   var headers = {};
   if (useToken) {
-    console.log()
     headers['Auth'] = Cookies.get('token');
   }
   $.ajax({

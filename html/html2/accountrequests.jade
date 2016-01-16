@@ -1,13 +1,12 @@
 doctype html
 html(lang="en")
   head
-    include ../components/deps.jade
+    include ./includes/head.jade
     title Account Requests | SigEp
-    script(src='js/navbar.js')
     script(src='js/accountrequests.js')
   body
-    include ../components/noscript.jade
-    include ../components/navbar.jade
+    include ./includes/noscript.jade
+    include ./includes/navbar.jade
     .container-fluid
       .row
         .col-xs-12.col-sm-8.col-sm-offset-2
@@ -17,5 +16,4 @@ html(lang="en")
                 th.text-center Name
                 th.text-center NetID
                 th.text-center Respond
-            tbody#requests
-    include ../components/footer.jade
+    include ./includes/footer.jade
