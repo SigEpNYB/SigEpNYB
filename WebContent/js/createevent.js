@@ -21,7 +21,8 @@ $(document).ready(function() {
  * Sends a new event to the server
  */
 function addEvent() {
-  var data = buildObj(['title', 'description', 'startTime', 'endTime']);
+  var data = buildObj(['title', 'description', 'startTime', 
+    'endTime', 'riskManagers', 'setClean', 'sobers', 'drivers']);
   var startTime = new Date(data['startTime']);
   var endTime = new Date(data['endTime']);
   var offset = (new Date()).getTimezoneOffset() / 60;

@@ -20,10 +20,10 @@
     <script src="deps/moment/moment.min.js"></script>
     <!-- qTip-->
     <script src="deps/qtip/jquery.qtip.min.js"></script>
-    <link rel="stylesheet" type="text/css" href="deps/qtip/jquery.qtip.css">
+    <link rel="stylesheet" type="text/css" href="deps/qtip/jquery.qtip.min.css">
     <!-- FullCalendar-->
-    <script src="deps/fullcalendar/fullcalendar.js"></script>
-    <link rel="stylesheet" type="text/css" href="deps/fullcalendar/fullcalendar.css">
+    <script src="deps/fullcalendar/fullcalendar.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="deps/fullcalendar/fullcalendar.min.css">
     <!-- Fonts-->
     <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Open+Sans:400,600,700,300">
     <!-- Favicon-->
@@ -79,6 +79,10 @@
             <input id="endTime" type="datetime-local" class="form-control"><span id="endTimeButton" class="input-group-addon datepickerButton"><i class="glyphicon glyphicon-calendar"></i></span>
           </div><br>
           <input id="description" type="text" placeholder="Description" class="form-control eventInput"><br>
+          <input id="riskManagers" type="number" placeholder="# of Risk Managers" min="0" class="form-control eventInput"><br>
+          <input id="setClean" type="number" placeholder="# of Set/Clean" min="0" class="form-control eventInput"><br>
+          <input id="sobers" type="number" placeholder="# of Sobers" min="0" class="form-control eventInput"><br>
+          <input id="drivers" type="number" placeholder="# of Drivers" min="0" class="form-control eventInput"><br>
           <input id="eventSubmit" type="submit" value="Create" onclick="addEvent()" class="btn btn-success eventInput">
         </div>
       </div>
