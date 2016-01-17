@@ -1,3 +1,7 @@
+$(document).ready(function() {
+  $('#phoneNumber').formance('format_phone_number');
+});
+
 function submitAccount() {
   var password = document.getElementById('password').value;
   var passwordConfirm = document.getElementById('passwordConfirm').value;
@@ -11,7 +15,7 @@ function submitAccount() {
       clearIds(['password', 'passwordConfirm']);
     });
   } else {
-    var data = buildObj(['firstName', 'lastName', 'netid','password']);
+    var data = buildObj(['firstName', 'lastName', 'netid','password', 'phoneNumber']);
     sendRequest('POST', 'AccountRequests', data, 'text', false, null, function() {
       swal({
         title: "Account Request Sent",
@@ -21,15 +25,13 @@ function submitAccount() {
       }, function() {
         window.location.href = '/Fratsite'
       });
-    }, function(xhr, textStatus, error) {
-      console.log(error);
-      console.log(xhr.responseText)
+    }, function() {
       swal({
         title: "Account Request Failed",
         text: "Sorry, we couldn't process your request",
         type: "error",
         closeOnConfirm: true
-      })
+      });
     });
   }
 }

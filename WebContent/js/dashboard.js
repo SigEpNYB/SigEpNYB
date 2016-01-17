@@ -56,7 +56,7 @@ $(document).ready(function() {
 
   sendRequest('GET', 'Account', null, 'json', true, null, function(account) {
     document.getElementById('name').innerHTML = 
-      account.firstName + ' ' + account.lastName;
+      '<h1>' + account.firstName + ' ' + account.lastName + '</h1>';
   });
 
   sendRequest('GET', 'Roles', null, 'json', true, null, function(roles) {

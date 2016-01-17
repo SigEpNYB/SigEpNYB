@@ -12,6 +12,7 @@ sendRequest('GET', 'Roles', null, 'json', true, null, function(roles) {
         '<td>' + account.firstName + '</td>' +
         '<td>' + account.lastName + '</td>' +
         '<td>' + account.netid + '</td>' +
+        '<td>' + account.phoneNumber + '</td>' +
         buttonString + 
         '</tr>';
     }).reduce(function(s1, s2) {

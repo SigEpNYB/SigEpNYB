@@ -9,6 +9,8 @@
     <!-- Bootstrap Datepicker-->
     <script src="deps/bootstrap-datepicker/bootstrap-datepicker.min.js"></script>
     <link rel="stylesheet" type="text/css" href="deps/bootstrap-datepicker/bootstrap-datepicker.min.css">
+    <!-- Formance-->
+    <script src="deps/formance/formance.min.js"></script>
     <!-- Sweet Alert-->
     <script src="deps/sweetalert/sweetalert.min.js"></script>
     <link rel="stylesheet" type="text/css" href="deps/sweetalert/sweetalert.css">
@@ -38,7 +40,6 @@
   </head>
   <body>
     <noscript>You need javascript!</noscript>
-    <!-- Navbar-->
     <nav id="navbar" class="navbar navbar-default">
       <div class="container-fluid">
         <div class="navbar-header">
@@ -60,7 +61,7 @@
             </li>
           </ul>
           <ul class="nav navbar-nav navbar-right">
-            <li id="navbar-username"><a></a></li>
+            <li id="navbar-username"><a href="profile.html"></a></li>
             <li id="navbar-signout"> <a onclick="logout()">Sign Out</a></li>
           </ul>
         </div>
@@ -68,13 +69,12 @@
     </nav>
     <div class="container-fluid">
       <div class="row">
-        <div class="col-xs-12 col-sm-8 col-sm-offset-2">
+        <div class="col-xs-12 col-md-8 col-md-offset-2">
           <table class="table table-hover">
             <thead>
               <tr>
                 <th class="text-center">Name</th>
                 <th class="text-center">NetID</th>
-                <th class="text-center">Respond</th>
               </tr>
             </thead>
             <tbody id="requests"></tbody>

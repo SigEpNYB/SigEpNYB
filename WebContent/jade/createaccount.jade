@@ -19,12 +19,14 @@ html(lang="en")
             br
             input#lastName.loginInput(type='text', name='lastname', placeholder='LAST NAME')
             br
+            input#phoneNumber.loginInput(type='text', name='phonenumber', placeholder='PHONE NUMBER')
+            br
             br
             br
             input#netid.loginInput(type='text', name='netid', placeholder='NET ID')
             br
-            input#password.loginInput(type='password', placeholder='PASSWORD')
+            input#password.loginInput(type='password', placeholder='PASSWORD', name='password')
             br
-            input#passwordConfirm.loginInput(type='password', placeholder='RE-ENTER')
+            input#passwordConfirm.loginInput(type='password', placeholder='RE-ENTER', name='reenter')
             br
             input#createAccountButton.loginButton(type='submit', value='CREATE', onclick='submitAccount()')

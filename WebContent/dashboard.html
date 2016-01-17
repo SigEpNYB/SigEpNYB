@@ -9,6 +9,8 @@
     <!-- Bootstrap Datepicker-->
     <script src="deps/bootstrap-datepicker/bootstrap-datepicker.min.js"></script>
     <link rel="stylesheet" type="text/css" href="deps/bootstrap-datepicker/bootstrap-datepicker.min.css">
+    <!-- Formance-->
+    <script src="deps/formance/formance.min.js"></script>
     <!-- Sweet Alert-->
     <script src="deps/sweetalert/sweetalert.min.js"></script>
     <link rel="stylesheet" type="text/css" href="deps/sweetalert/sweetalert.css">
@@ -38,7 +40,6 @@
   </head>
   <body>
     <noscript>You need javascript!</noscript>
-    <!-- Navbar-->
     <nav id="navbar" class="navbar navbar-default">
       <div class="container-fluid">
         <div class="navbar-header">
@@ -60,7 +61,7 @@
             </li>
           </ul>
           <ul class="nav navbar-nav navbar-right">
-            <li id="navbar-username"><a></a></li>
+            <li id="navbar-username"><a href="profile.html"></a></li>
             <li id="navbar-signout"> <a onclick="logout()">Sign Out</a></li>
           </ul>
         </div>
@@ -69,8 +70,8 @@
     <div class="containter-fluid">
       <div class="row">
         <div id="userInfo" class="col-xs-12 col-md-3">
-          <h1 id="name"></h1>
-          <h5 id="roles"></h5>
+          <div id="name"></div>
+          <div id="roles"></div>
         </div>
         <div class="col-xs-12 col-md-6">
           <div id="calendar"></div>

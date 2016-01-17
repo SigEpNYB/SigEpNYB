@@ -1,0 +1,17 @@
+doctype html
+html(lang="en")
+  head
+    include ../components/deps.jade
+    title Profile | SigEp
+    script(src='js/navbar.js')
+    script(src='js/profile.js')
+  body
+    include ../components/noscript.jade
+    include ../components/navbar.jade
+    .container-fluid
+      .row
+        .col-xs-12.col-sm-8.col-md-offset-2
+          #name
+          #netid
+          #phoneNumber
+          #roles

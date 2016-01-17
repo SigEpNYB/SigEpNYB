@@ -1,9 +1,6 @@
 #navbar-signout {
     cursor: pointer;
 }
-#navbar-username {
-    cursor: default;
-}
 
 .navbar-default {
   background-color: #dd2920;

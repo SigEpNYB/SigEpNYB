@@ -9,5 +9,5 @@ function logout() {
 
 sendRequest('GET', 'Account', null, 'json', true, null, function(account) {
   document.getElementById('navbar-username').innerHTML = 
-    '<a>' + account.firstName + ' ' + account.lastName + '</a>';
+    '<a href="profile.html">' + account.firstName + ' ' + account.lastName + '</a>';
 });
