@@ -1,3 +1,19 @@
+sendRequest('GET', 'Roles', null, 'json', true, null, function(roles) {
+  var hasPermission = roles.hasMatch(function(role) {
+    return role.role === 'VP of Communication';
+  });
+  if (!hasPermission) {
+    swal({
+      title: "Sorry, you don't haver permission to assign duties",
+      text: "Check the calendar to see your upcoming duties",
+      type: 'error',
+      closeOnConfirm: true
+    }, function() {
+      window.location.href = '/Fratsite/dashboard.html';
+    });
+  }
+});
+
 function getEvent() {
   var eventId = document.getElementById('eventId').value;
   var data = {eventId: eventId};

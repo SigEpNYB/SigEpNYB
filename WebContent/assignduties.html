@@ -53,6 +53,7 @@
             <li class="dropdown"><a data-toggle="dropdown" href="viewmembers.html" class="dropdown-toggle">Events<span class="caret"></span></a>
               <ul class="dropdown-menu">
                 <li><a href="createevent.html">Create Event</a></li>
+                <li><a href="assignduties.html">Assign Duties</a></li>
               </ul>
             </li>
             <li class="dropdown"><a data-toggle="dropdown" href="viewmembers.html" class="dropdown-toggle">Members<span class="caret"></span></a>
@@ -73,8 +74,8 @@
       <div class="row">
         <div class="col-xs-12 col-md-6 col-md-offset-3">
           <div class="input-group">
-            <input id="eventId" type="number" name="eventId" placeholder="Event ID" class="form-control"><span class="input-group-btn">
-              <button id="getEvent" type="submit" onclick="getEvent()" class="btn btn-primary">Get Event</button></span>
+            <input id="eventId" type="number" name="eventId" min="0" placeholder="Event ID" class="form-control"><span class="input-group-btn">
+              <button id="getEvent" type="submit" onclick="getEvent()" class="btn btn-primary">Get Duties</button></span>
           </div><br><br>
           <div id="riskManagers"></div>
           <div id="setClean"></div>

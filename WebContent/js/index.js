@@ -5,12 +5,16 @@
 function login() {
   var data = buildObj(['netid', 'password']);
   sendRequest('POST', 'Login', data, 'json', false, null, 
-    function(data) {
-      Cookies.set('token', data.token);
-      window.location.href = '/Fratsite/dashboard.html'
-    },
-    function(xhr) {
-      console.log('Login Failed: ' + xhr.status)
+    function(response) {
+      Cookies.set('token', response.token);
+      window.location.href = '/Fratsite/dashboard.html';
+    }, function() {
+      swal({
+        title: 'Login Failed :(',
+        text: 'Please make sure your NetID and Password are correct',
+        type: 'error',
+        closeOnConfirm: true
+      });
     }
   );
 }
@@ -20,3 +24,7 @@ $(document).ready(function() {
     if (event.keyCode === 13) login();
   });
 });
+
+if (Cookies.get('token') !== undefined) {
+  window.location.href = '/Fratsite/dashboard.html';
+}
