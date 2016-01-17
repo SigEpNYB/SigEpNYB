@@ -1,8 +1,7 @@
 sendRequest('GET', 'AccountRequests', null, 'json', true, null, function(requests) {
   var requestBody = requests.map(function(request) {
     return '<tr>' +
-      '<td>' + request.firstName + '</td>' +
-      '<td>' + request.lastName + '</td>' +
+      '<td>' + request.firstName + ' ' + request.lastName + '</td>' +
       '<td>' + request.netid + '</td>' +
       '<td>' + approveString(request.id) + '</td>' +
       '<td>' + rejectString(request.id) + '</td>' +
@@ -43,10 +42,10 @@ function approveRequest(event, idRequest) {
 }
 
 function rejectRequest(event, idRequest) {
-  var data = {idRequest: id};
+  var data = {idRequest: idRequest};
   sendRequest('DELETE', 'AccountRequests', data, 'text', true, null, function() {
     swal({
-      title: 'Account Reject',
+      title: 'Account Rejected',
       type: 'success',
       closeOnConfirm: true
     }, function() {
