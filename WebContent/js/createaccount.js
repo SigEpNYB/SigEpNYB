@@ -5,32 +5,36 @@ $(document).ready(function() {
 function submitAccount() {
   var password = document.getElementById('password').value;
   var passwordConfirm = document.getElementById('passwordConfirm').value;
+  var phoneNumber = document.getElementById('phoneNumber').value;
   var data = buildObj(['firstName', 'lastName', 'netid','password', 'phoneNumber']);
   var empty = Object.keys(data).hasMatch(function(key) {
     return data[key] === '';
   });
   if (password.length < 6) {
     swal({
-      title: 'Your password is too short'
+      title: 'Your password is too short',
       text: 'It needs to be at least 6 characters',
       type: 'warning',
       closeOnConfirm: true
     });
   } else if (password.search(/\d/) === -1) {
     swal({
-      title: 'Your password must contain at least 1 number',
+      title: 'Password missing number',
+      text: 'Your password must contain at least 1 number',
       type: 'warning',
       closeOnConfirm: true
     });
   } else if (password.search(/[a-z]/) === -1) {
     swal({
-      title: 'Your password must contain at least 1 lowercase letter',
+      title: 'Password missing lowercase letter',
+      text: 'Your password must contain at least 1 lowercase letter',
       type: 'warning',
       closeOnConfirm: true
     });
   } else if (password.search(/[A-Z]/) === -1) {
     swal({
-      title: 'Your password must contain at least 1 uppercase letter',
+      title: 'Password missing uppercase letter',
+      text: 'Your password must contain at least 1 uppercase letter',
       type: 'warning',
       closeOnConfirm: true
     });
@@ -41,6 +45,13 @@ function submitAccount() {
       type: 'warning',
       closeOnConfirm: true
     });
+  } else if (phoneNumber.length < 16) {
+    swal({
+      title: 'Incomplete Phone Number',
+      text: 'Please make sure to enter your area code too (+1 not necessary)',
+      type: 'warning',
+      closeOnConfirm: true
+    })
   } else if (password !== passwordConfirm) {
     swal({
       title: "Your passwords don't match :(",
