@@ -17,7 +17,7 @@ $(document).ready(function() {
     });
 });
 
-sendRequest('GET', 'Roles', null, true, null, function() {
+sendRequest('GET', 'Roles', null, 'json', true, null, function() {
   var createPermission = roles.hasMatch(function(role) {
     return role.role === 'VP of Programming';
   });

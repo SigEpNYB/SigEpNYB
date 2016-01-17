@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lange="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <!-- jQuery-->
+    <script src="deps/jquery/jquery.min.js"></script>
+    <!-- Bootstrap-->
+    <script src="deps/bootstrap/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="deps/bootstrap/css/bootstrap.min.css">
+    <!-- Bootstrap Datepicker-->
+    <script src="deps/bootstrap-datepicker/bootstrap-datepicker.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="deps/bootstrap-datepicker/bootstrap-datepicker.min.css">
+    <!-- Formance-->
+    <script src="deps/formance/formance.min.js"></script>
+    <!-- Sweet Alert-->
+    <script src="deps/sweetalert/sweetalert.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="deps/sweetalert/sweetalert.css">
+    <!-- Cookies-->
+    <script src="deps/cookies/cookies.min.js"></script>
+    <!-- Moment-->
+    <script src="deps/moment/moment.min.js"></script>
+    <!-- qTip-->
+    <script src="deps/qtip/jquery.qtip.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="deps/qtip/jquery.qtip.min.css">
+    <!-- FullCalendar-->
+    <script src="deps/fullcalendar/fullcalendar.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="deps/fullcalendar/fullcalendar.min.css">
+    <!-- Fonts-->
+    <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Open+Sans:400,600,700,300">
+    <!-- Favicon-->
+    <link rel="icon" type="image/png" size="16x16" href="img/favicon-16x16.png">
+    <link rel="icon" type="image/png" size="32x32" href="img/favicon-32x32.png">
+    <link rel="shortcut icon" type="image/x-con" href="favicon.ico">
+    <!-- Universal-->
+    <link rel="stylesheet" type="text/css" href="css/main.css">
+    <link rel="stylesheet" type="text/css" href="css/navbar.css">
+    <script src="js/toolkit.js"></script>
+    <title>Assign Duties | SigEp</title>
+    <script src="js/navbar.js"></script>
+    <script src="js/assignduties.js"></script>
+  </head>
+  <body>
+    <noscript>You need javascript!</noscript>
+    <nav id="navbar" class="navbar navbar-default">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <button type="button" data-toggle="collapse" data-target="#navbar-collapse-1" class="navbar-toggle collapsed"><span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button><a id="sigep-navbar" href="dashboard.html" class="navbar-brand"><img src="img/navbarlogowhite.png" alt="SigEp" height="30px" width="90px"></a>
+        </div>
+        <div id="navbar-collapse-1" class="collapse navbar-collapse">
+          <ul class="nav navbar-nav">
+            <li class="dashboard-navbar"><a href="dashboard.html">Dashboard</a></li>
+            <li class="dropdown"><a data-toggle="dropdown" href="viewmembers.html" class="dropdown-toggle">Events<span class="caret"></span></a>
+              <ul class="dropdown-menu">
+                <li><a href="createevent.html">Create Event</a></li>
+              </ul>
+            </li>
+            <li class="dropdown"><a data-toggle="dropdown" href="viewmembers.html" class="dropdown-toggle">Members<span class="caret"></span></a>
+              <ul class="dropdown-menu">
+                <li><a href="viewmembers.html">View Members</a></li>
+                <li><a href="accountrequests.html">Account Requests</a></li>
+              </ul>
+            </li>
+          </ul>
+          <ul class="nav navbar-nav navbar-right">
+            <li id="navbar-username"><a href="profile.html"></a></li>
+            <li id="navbar-signout"> <a onclick="logout()">Sign Out</a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-xs-12 col-md-6 col-md-offset-3">
+          <div class="input-group">
+            <input id="eventId" type="number" name="eventId" placeholder="Event ID" class="form-control"><span class="input-group-btn">
+              <button id="getEvent" type="submit" onclick="getEvent()" class="btn btn-primary">Get Event</button></span>
+          </div><br><br>
+          <div id="riskManagers"></div>
+          <div id="setClean"></div>
+          <div id="sobers"></div>
+          <div id="drivers"></div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
