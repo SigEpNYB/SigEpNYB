@@ -17,6 +17,22 @@ $(document).ready(function() {
     });
 });
 
+sendRequest('GET', 'Roles', null, true, null, function() {
+  var createPermission = roles.hasMatch(function(role) {
+    return role.role === 'VP of Programming';
+  });
+  if (!createPermission) {
+    swal({
+      title: "Sorry, you don't have permission to create events",
+      text: "Talk to the VP of Programming to create an event",
+      type: 'error',
+      closeOnConfirm: true
+    }, function() {
+      window.location.href = '/Fratsite/dashboard.html';
+    })
+  }
+})
+
 /**
  * Sends a new event to the server
  */

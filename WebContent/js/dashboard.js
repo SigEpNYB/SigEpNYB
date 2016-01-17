@@ -9,6 +9,7 @@ $(document).ready(function() {
       events.map(function(event) {
         var eventObj = {
           eventName: event.title,
+          id: event.id,
           description: event.description,
           start: dateToTZ(new Date(event.startTime)),
           end: dateToTZ(new Date(event.endTime))
@@ -25,18 +26,19 @@ $(document).ready(function() {
             driver: dutyMapReduce(duties, 'DRIVER')
           };
           var eventColor = (hasDuty ? 'red' : 'blue');
-          var eventTitle = eventObj.eventName + '\n\n' +
-            'Risk Managers: ' + dutyObj.riskManager + '\n' +
-            'Set/Clean: ' + dutyObj.setClean + '\n' +
-            'Sobers: ' + dutyObj.sober + '\n' +
-            'Drivers: ' + dutyObj.driver;
+          var eventInfo = '<b>Risk Managers:</b> ' + dutyObj.riskManager + '\n' +
+            '<b>Set/Clean:</b> ' + dutyObj.setClean + '\n' +
+            '<b>Sobers:</b> ' + dutyObj.sober + '\n' +
+            '<b>Drivers:</b> ' + dutyObj.driver;
+          var eventTitle = event.title + '\n\n' + eventInfo;
           var dutyColors = {
             backgroundColor: eventColor,
             borderColor: eventColor,
             hasDuty: hasDuty,
-            title: eventTitle
+            title: eventTitle,
+            info: eventInfo
           };
-          var calendarObj = $.extend({}, eventObj, dutyColors)
+          var calendarObj = $.extend({}, eventObj, dutyColors, dutyObj);
           $('#calendar').fullCalendar('renderEvent', calendarObj, true);
         });
       });
@@ -51,7 +53,18 @@ $(document).ready(function() {
     },
     defaultView: 'agendaWeek',
     events: [],
-    editable: false
+    editable: false,
+    eventRender: function(event, element) {
+      element.qtip({
+        content: {
+          title: event.eventName,
+          text: event.info + '\n\n<b>ID:</b> ' + event.id
+        },
+        style: {
+          classes: 'qtip_fratsite'
+        }
+      });
+    }
   });
 
   sendRequest('GET', 'Account', null, 'json', true, null, function(account) {
@@ -81,8 +94,8 @@ function dutyMapReduce(duties, type) {
   return duties.filter(function(duty) {
     return duty.type === type;
   }).map(function(duty) {
-    return duty.firstName + ' ' + duty.lastName + ',';
+    return duty.firstName + ' ' + duty.lastName + ', ';
   }).reduce(function(s1,s2) {
     return s1 + s2;
-  }, '').trimLastChar();
+  }, '').trimLastChar().trimLastChar();
 }

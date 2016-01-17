@@ -20,6 +20,10 @@ body {
   margin-top: 0px;
 }
 
+.qtip_fratsite {
+  white-space: pre-line;
+}
+
 /* Login Forms */
 .loginInput {
   width: 250px;
