@@ -26,11 +26,13 @@ $(document).ready(function() {
             driver: dutyMapReduce(duties, 'DRIVER')
           };
           var eventColor = (hasDuty ? 'red' : 'blue');
-          var eventInfo = '<b>Risk Managers:</b> ' + dutyObj.riskManager + '\n' +
+          var eventInfo = event.description + '\n\n' +
+            '<b>Risk Managers:</b> ' + dutyObj.riskManager + '\n' +
             '<b>Set/Clean:</b> ' + dutyObj.setClean + '\n' +
             '<b>Sobers:</b> ' + dutyObj.sober + '\n' +
-            '<b>Drivers:</b> ' + dutyObj.driver;
-          var eventTitle = event.title + '\n\n' + eventInfo;
+            '<b>Drivers:</b> ' + dutyObj.driver + '\n\n' +
+            '<b>ID:</b> ' + event.id;       
+          var eventTitle = event.title + '\n' + event.description;
           var dutyColors = {
             backgroundColor: eventColor,
             borderColor: eventColor,
@@ -58,7 +60,7 @@ $(document).ready(function() {
       element.qtip({
         content: {
           title: event.eventName,
-          text: event.info + '\n\n<b>ID:</b> ' + event.id
+          text: event.info
         },
         style: {
           classes: 'qtip_fratsite'
