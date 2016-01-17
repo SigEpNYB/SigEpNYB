@@ -8,7 +8,7 @@ sendRequest('GET', 'Roles', null, 'json', true, null, function(roles) {
       text: "Check the calendar to see your upcoming duties",
       type: 'error',
       closeOnConfirm: true
-    }, function() {
+    }, function(isConfirm) {
       window.location.href = '/Fratsite/dashboard.html';
     });
   }

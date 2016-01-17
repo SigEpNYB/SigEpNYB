@@ -10,7 +10,7 @@ function logout() {
 sendRequest('GET', 'Account', null, 'json', true, null, function(account) {
   document.getElementById('navbar-username').innerHTML = 
     '<a href="profile.html">' + account.firstName + ' ' + account.lastName + '</a>';
-}, function() {
+  }, function() {
   Cookies.expire('token');
   window.location.href='/Fratsite';
 });

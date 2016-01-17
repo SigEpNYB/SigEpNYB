@@ -27,7 +27,7 @@ sendRequest('GET', 'Roles', null, 'json', true, null, function(roles) {
       text: "Talk to the VP of Programming to create an event",
       type: 'error',
       closeOnConfirm: true
-    }, function() {
+    }, function(isConfirm) {
       window.location.href = '/Fratsite/dashboard.html';
     })
   }

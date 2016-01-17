@@ -16,7 +16,7 @@ sendRequest('GET', 'AccountRequests', null, 'json', true, null, function(request
     text: 'Click OK to go back to your dashboard',
     type: 'error',
     closeOnConfirm: true
-  }, function() {
+  }, function(isConfirm) {
     window.location.href = '/Fratsite/dashboard.html';
   })
 });
