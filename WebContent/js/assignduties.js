@@ -4,7 +4,7 @@ sendRequest('GET', 'Roles', null, 'json', true, null, function(roles) {
   });
   if (!hasPermission) {
     swal({
-      title: "Sorry, you don't haver permission to assign duties",
+      title: "Sorry, you don't have permission to assign duties",
       text: "Check the calendar to see your upcoming duties",
       type: 'error',
       closeOnConfirm: true
@@ -13,6 +13,10 @@ sendRequest('GET', 'Roles', null, 'json', true, null, function(roles) {
     });
   }
 });
+
+$(document).ready(function() {
+  $('#submitDuties').hide();
+})
 
 function getEvent() {
   var eventId = document.getElementById('eventId').value;
@@ -70,8 +74,39 @@ function getEvent() {
       document.getElementById('drivers').innerHTML = driverString;
     });
   });
+  $('#submitDuties').show();
+}
+
+function submitDuties() {
+  var data = {
+    riskManagers: dutyGetter('riskManagers'),
+    setClean: dutyGetter('setClean'),
+    sobers: dutyGetter('sobers'),
+    drivers: dutyGetter('drivers')
+  };
+  sendRequest('PUT', 'Duties', data, 'text', true, null, function() {
+    swal({
+      title: 'Duties Assigned',
+      type: 'success',
+      closeOnConfirm: true
+    }, function(isConfirm) {
+      if (isConfirm)
+    });
+  }, function() {
+    swal({
+      title: 'Duty Assignment Failed',
+      text: 'Please make sure all the netIDs entered are valid',
+      closeOnConfirm: true
+    });
+  });
 }
 
 function dutyFilter(duties, type) {
   return duties.filter(function(duty) { return duty.type === type; });
+}
+
+function dutyGetter(parentId) {
+  return document.getElementById(parentId).childNodes.map(function (input) {
+    return input.value
+  });
 }
