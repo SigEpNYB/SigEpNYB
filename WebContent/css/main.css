@@ -8,6 +8,11 @@ body {
   font-family: 'Open Sans', sans-serif;
   margin-bottom: 60px;
 }
+.fullWidth {
+  width: 100%;
+}
+
+/* Footer */
 .footer {
   position: absolute;
   bottom: 0;
@@ -15,12 +20,11 @@ body {
   height: 60px;
   background-color: #f5f5f5;
 }
-
 .footer p {
   margin-top: 0px;
 }
 
-/* Login Forms */
+/* Login */
 .loginInput {
   width: 250px;
   padding: 10px 0 5px 0;
@@ -79,8 +83,6 @@ body {
   font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
   font-size: 18px;
 }
-
-/* Login Pages */
 .loginbg {
   margin-top: 8%;
   width: 100%;
@@ -122,17 +124,11 @@ body#successresponse {
     display: none;
   }
 }
-
 #crest {
   margin-left: 10px;
 }
-
 .qtip_fratsite {
   white-space: pre-line;
-}
-
-.fullWidth {
-  width: 100%;
 }
 
 /* Create Event */
