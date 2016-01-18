@@ -1,0 +1,38 @@
+doctype html
+html(lange="en")
+  head
+    include ../components/deps.jade
+    title Assign Fines | SigEp
+    script(src='js/navbar.js')
+    script(src='js/assignfines.js')
+  body
+    include ../components/noscript.jade
+    include ../components/navbar.jade
+    .container-fluid
+      .row
+        .col-xs-12.col-md-4.col-md-offset-4
+          input#netid.form-control(type='text', placeholder='NetID')
+          br
+          input#description.form-control(type='text', placeholder='Description')
+          br
+          .input-group
+            span.input-group-addon $
+            input#amount.form-control(type='number', placeholder='Amount')
+          br
+          input#fineSubmit.btn.btn-success.full-width(type='submit', value='Submit' onclick='submitFine()')
+          br
+          br
+          table.table.table-hover
+            thead
+              tr
+                th NetID
+                th Description
+                th Amount
+                th
+                th
+            tbody#fines
+          input#updateFines.btn.btn-success.full-width(type='submit', value='Update Fines', onclick='updateFines()')
+
+
+
+    include ../components/footer.jade

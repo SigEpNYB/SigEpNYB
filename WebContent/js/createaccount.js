@@ -1,5 +1,8 @@
 $(document).ready(function() {
   $('#phoneNumber').formance('format_phone_number');
+  $('.loginInput').keyup(function(event) {
+    if (event.keyCode === 13) submitAccount();
+  });
 });
 
 function submitAccount() {

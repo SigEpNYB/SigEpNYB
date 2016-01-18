@@ -13,7 +13,7 @@ nav#navbar.navbar.navbar-default
         li.dashboard-navbar
           a(href='dashboard.html') Dashboard
         li.dropdown
-          a.dropdown-toggle(data-toggle='dropdown', href='viewmembers.html') Events
+          a.dropdown-toggle(data-toggle='dropdown') Events
             span.caret
           ul.dropdown-menu
             li
@@ -21,13 +21,21 @@ nav#navbar.navbar.navbar-default
             li
               a(href='assignduties.html') Assign Duties
         li.dropdown
-          a.dropdown-toggle(data-toggle='dropdown', href='viewmembers.html') Members
+          a.dropdown-toggle(data-toggle='dropdown') Members
             span.caret
           ul.dropdown-menu
             li
               a(href='viewmembers.html') View Members
             li
               a(href='accountrequests.html') Account Requests
+        li.dropdown
+          a.dropdown-toggle(data-toggle='dropdown') Finance
+            span.caret
+          ul.dropdown-menu
+            li
+              a(href='assignfines.html') Assign Fines
+            li
+              a(href='viewfines.html') View My Fines
       ul.nav.navbar-nav.navbar-right
         li#navbar-username
           a(href='profile.html')

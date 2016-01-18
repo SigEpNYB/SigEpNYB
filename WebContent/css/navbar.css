@@ -1,5 +1,5 @@
-#navbar-signout {
-    cursor: pointer;
+li.dropdown > a, #navbar-signout {
+  cursor: pointer;
 }
 
 .navbar-default {

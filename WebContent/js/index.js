@@ -6,7 +6,7 @@ function login() {
   var data = buildObj(['netid', 'password']);
   sendRequest('POST', 'Login', data, 'json', false, null, function(response) {
       Cookies.set('token', response.token);
-      window.location.href = '/Fratsite/dashboard.html';
+      window.location.href = 'dashboard.html';
     }, function() {
       swal({
         title: 'Login Failed :(',
@@ -25,5 +25,5 @@ $(document).ready(function() {
 });
 
 if (Cookies.get('token') !== undefined) {
-  window.location.href = '/Fratsite/dashboard.html';
+  window.location.href = 'dashboard.html';
 }

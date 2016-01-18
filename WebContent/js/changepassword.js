@@ -19,7 +19,7 @@ function changePassword() {
         type: 'success',
         closeOnConfirm: true
       }, function() {
-        window.location.href = '/Fratsite/profile.html'
+        window.location.href = 'profile.html'
       });
     }, function() {
       swal({
@@ -31,3 +31,9 @@ function changePassword() {
     });
   }
 }
+
+$(document).ready(function() {
+  $('.form-control').keyup(function(event) {
+    if (event.keyCode === 13) changePassword();
+  });
+});

@@ -20,10 +20,6 @@ body {
   margin-top: 0px;
 }
 
-.qtip_fratsite {
-  white-space: pre-line;
-}
-
 /* Login Forms */
 .loginInput {
   width: 250px;
@@ -118,10 +114,25 @@ body#successresponse {
 }
 
 /* Dashboard */
-@media (max-width: 768px) {
+@media (max-width: 992px) {
   #userInfo {
     margin-bottom: 40px;
   }
+  #crest {
+    display: none;
+  }
+}
+
+#crest {
+  margin-left: 10px;
+}
+
+.qtip_fratsite {
+  white-space: pre-line;
+}
+
+.fullWidth {
+  width: 100%;
 }
 
 /* Create Event */

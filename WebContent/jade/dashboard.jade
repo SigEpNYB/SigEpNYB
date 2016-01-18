@@ -2,9 +2,9 @@ doctype html
 html(lang="en")
   head
     include ../components/deps.jade
+    title Dashboard | SigEp
     script(src='js/navbar.js')
     script(src='js/dashboard.js')
-    title Dashboard | SigEp
   body
     include ../components/noscript.jade
     include ../components/navbar.jade
@@ -13,6 +13,7 @@ html(lang="en")
         .col-xs-12.col-md-3#userInfo
           #name
           #roles
+          img#crest(src='img/crest.png')
         .col-xs-12.col-md-6
           #calendar
     include ../components/footer.jade

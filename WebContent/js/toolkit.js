@@ -83,7 +83,6 @@ function clearIds(ids) {
   ids.forEach(function(id) {
     document.getElementById(id).value = '';
   });
-  return;
 }
 
 /**

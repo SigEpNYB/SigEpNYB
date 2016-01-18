@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lange="en">
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -36,9 +36,9 @@
     <link rel="stylesheet" type="text/css" href="css/main.css">
     <link rel="stylesheet" type="text/css" href="css/navbar.css">
     <script src="js/toolkit.js"></script>
-    <title>Dashboard | SigEp</title>
+    <title>Assign Fines | SigEp</title>
     <script src="js/navbar.js"></script>
-    <script src="js/dashboard.js"></script>
+    <script src="js/assignfines.js"></script>
   </head>
   <body>
     <noscript>You need javascript!</noscript>
@@ -76,14 +76,28 @@
         </div>
       </div>
     </nav>
-    <div class="containter-fluid">
+    <div class="container-fluid">
       <div class="row">
-        <div id="userInfo" class="col-xs-12 col-md-3">
-          <div id="name"></div>
-          <div id="roles"></div><img id="crest" src="img/crest.png">
-        </div>
-        <div class="col-xs-12 col-md-6">
-          <div id="calendar"></div>
+        <div class="col-xs-12 col-md-4 col-md-offset-4">
+          <input id="netid" type="text" placeholder="NetID" class="form-control"><br>
+          <input id="description" type="text" placeholder="Description" class="form-control"><br>
+          <div class="input-group"><span class="input-group-addon">$</span>
+            <input id="amount" type="number" placeholder="Amount" class="form-control">
+          </div><br>
+          <input id="fineSubmit" type="submit" value="Submit" onclick="submitFine()" class="btn btn-success full-width"><br><br>
+          <table class="table table-hover">
+            <thead>
+              <tr>
+                <th>NetID</th>
+                <th>Description</th>
+                <th>Amount</th>
+                <th></th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody id="fines"></tbody>
+          </table>
+          <input id="updateFines" type="submit" value="Update Fines" onclick="updateFines()" class="btn btn-success full-width">
         </div>
       </div>
     </div>

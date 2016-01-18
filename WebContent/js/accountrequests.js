@@ -1,3 +1,19 @@
+sendRequest('GET', 'Roles', null, 'json', true, null, function(roles) {
+  var hasPermission = roles.hasMatch(function(role) {
+    return role.role === 'President';
+  });
+  if (!hasPermission) {
+    swal({
+      title: "Sorry, you don't have permission to approve accounts",
+      text: 'Go to "View Members" to see the list of brothers',
+      type: 'error',
+      closeOnConfirm: true
+    }, function(isConfirm) {
+      window.location.href = 'dashboard.html';
+    });
+  }
+});
+
 sendRequest('GET', 'AccountRequests', null, 'json', true, null, function(requests) {
   var requestBody = requests.map(function(request) {
     return '<tr>' +

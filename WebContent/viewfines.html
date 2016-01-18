@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lange="en">
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -36,9 +36,9 @@
     <link rel="stylesheet" type="text/css" href="css/main.css">
     <link rel="stylesheet" type="text/css" href="css/navbar.css">
     <script src="js/toolkit.js"></script>
-    <title>Dashboard | SigEp</title>
+    <title>View Fines | SigEp</title>
     <script src="js/navbar.js"></script>
-    <script src="js/dashboard.js"></script>
+    <script src="js/viewfines.js"></script>
   </head>
   <body>
     <noscript>You need javascript!</noscript>
@@ -76,14 +76,19 @@
         </div>
       </div>
     </nav>
-    <div class="containter-fluid">
+    <div class="container-fluid">
       <div class="row">
-        <div id="userInfo" class="col-xs-12 col-md-3">
-          <div id="name"></div>
-          <div id="roles"></div><img id="crest" src="img/crest.png">
-        </div>
-        <div class="col-xs-12 col-md-6">
-          <div id="calendar"></div>
+        <div class="col-xs-12 col-md-6 col-md-offset-3">
+          <table class="table table-hover">
+            <thead>
+              <tr>
+                <th>Description</th>
+                <th>Amount</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody id="fines"></tbody>
+          </table>
         </div>
       </div>
     </div>

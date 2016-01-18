@@ -32,7 +32,7 @@ $(document).ready(function() {
             '<b>Sobers:</b> ' + dutyObj.sober + '\n' +
             '<b>Drivers:</b> ' + dutyObj.driver + '\n\n' +
             '<b>ID:</b> ' + event.id;       
-          var eventTitle = event.title + '\n' + event.description;
+          var eventTitle = event.title + '\n\n' + event.description;
           var dutyColors = {
             backgroundColor: eventColor,
             borderColor: eventColor,

@@ -1,8 +1,6 @@
 $(document).ready(function() {
   $(".eventInput").keyup(function(event){
-    if (event.keyCode == 13){
-      addEvent();
-    }
+    if (event.keyCode == 13) addEvent();
   });
 
   $('#startTimeButton').datepicker({orientation: "top"})

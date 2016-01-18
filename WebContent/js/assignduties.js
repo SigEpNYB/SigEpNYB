@@ -9,13 +9,16 @@ sendRequest('GET', 'Roles', null, 'json', true, null, function(roles) {
       type: 'error',
       closeOnConfirm: true
     }, function(isConfirm) {
-      window.location.href = '/Fratsite/dashboard.html';
+      window.location.href = 'dashboard.html';
     });
   }
 });
 
 $(document).ready(function() {
   $('#submitDuties').hide();
+  $('#eventId').keyup(function(event) {
+    if (event.keyCode === 13) getEvent();
+  });
 })
 
 function getEvent() {
@@ -32,10 +35,10 @@ function getEvent() {
       var riskManagerString = '<h5>Risk Managers</h5>';
       for (i=0; i<event.riskManagerCount; i++) {
         if (dutyObj.riskManager[i] !== undefined) {
-          riskManagerString += "<input type='text' class='form-control' value='" + 
+          riskManagerString += "<input type='text' class='count form-control' value='" + 
             dutyObj.riskManager[i].netid + "'>";
         } else {
-          riskManagerString += "<input type='text' class='form-control'>";
+          riskManagerString += "<input type='text' class='count form-control'>";
         }
       }
       document.getElementById('riskManagers').innerHTML = riskManagerString;
@@ -43,10 +46,10 @@ function getEvent() {
       var setCleanString = '<h5>Set Clean</h5>';
       for (i=0; i<event.setCleanCount; i++) {
         if (dutyObj.setClean[i] !== undefined) {
-          setCleanString += "<input type='text' class='form-control' value='" + 
+          setCleanString += "<input type='text' class='count form-control' value='" + 
             dutyObj.setClean[i].netid + "'>";
         } else {
-          setCleanString += "<input type='text' class='form-control'>";
+          setCleanString += "<input type='text' class='count form-control'>";
         }
       }
       document.getElementById('setClean').innerHTML = setCleanString;
@@ -54,10 +57,10 @@ function getEvent() {
       var soberString = '<h5>Sobers</h5>';
       for (i=0; i<event.soberCount; i++) {
         if (dutyObj.sober[i] !== undefined) {
-          soberString += "<input type='text' class='form-control' value='" + 
+          soberString += "<input type='text' class='count form-control' value='" + 
             dutyObj.sober[i].netid + "'>";
         } else {
-          soberString += "<input type='text' class='form-control'>";
+          soberString += "<input type='text' class='count form-control'>";
         }
       }
       document.getElementById('sobers').innerHTML = soberString;
@@ -65,16 +68,20 @@ function getEvent() {
       var driverString = '<h5>Drivers</h5>';
       for (i=0; i<event.driverCount; i++) {
         if (dutyObj.driver[i] !== undefined) {
-          driverString += "<input type='text' class='form-control' value='" + 
+          driverString += "<input type='text' class='count form-control' value='" + 
             dutyObj.driver[i].netid + "'>";
         } else {
-          driverString += "<input type='text' class='form-control'>";
+          driverString += "<input type='text' class='count form-control'>";
         }
       }
       document.getElementById('drivers').innerHTML = driverString;
     });
   });
   $('#submitDuties').show();
+
+  $('.count').keyup(function(event) {
+    if (event.keyCode === 13) submitDuties();
+  });
 }
 
 function submitDuties() {
@@ -88,14 +95,20 @@ function submitDuties() {
     swal({
       title: 'Duties Assigned',
       type: 'success',
-      closeOnConfirm: true
+      confirmButtonText: 'Assign More Duties',
+      showCancelButton: true,
+      cancelButtonText: 'Go To Dashboard',
+      closeOnConfirm: true,
+      closeOnCancel: true
     }, function(isConfirm) {
-      if (isConfirm)
+      if (isConfirm) window.location.reload();
+      else window.location.href = 'dashboard.html';
     });
   }, function() {
     swal({
       title: 'Duty Assignment Failed',
       text: 'Please make sure all the netIDs entered are valid',
+      type: 'error',
       closeOnConfirm: true
     });
   });
