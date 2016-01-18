@@ -1,7 +1,22 @@
+$(document).ready(function() {
+  $('.form-control').keyup(function(event) {
+    if (event.keyCode === 13) changePassword();
+  });
+});
+
 function changePassword() {
-  var newPassword = document.getElementById('newPassword').value;
-  var passwordConfirm = document.getElementById('passwordConfirm').value;
-  if (newPassword !== passwordConfirm) {
+  var data = buildObj(['oldPassword', 'newPassword', 'passwordConfirm']);
+  return sendPassword(data);
+}
+
+/**
+ * Sends a password change request to the server
+ * @param {Object} data - Needs to contains oldPassword, newPassword
+ * and passwordConfirm
+ * @returns {undefined}
+ */
+function sendPassword(data) {
+  if (data.newPassword !== data.passwordConfirm) {
     swal({
       title: "Your passwords don't match :(",
       text: "Please try again",
@@ -11,14 +26,13 @@ function changePassword() {
       clearIds(['newPassword', 'passwordConfirm']);
     });
   } else {
-    var data = buildObj(['oldPassword', 'newPassword']);
     sendRequest('PUT', 'Account', data, 'text', true, null, function() {
       swal({
         title: 'Password Changed',
         text: 'Make sure to remember your password!',
         type: 'success',
         closeOnConfirm: true
-      }, function() {
+      }, function(isConfirm) {
         window.location.href = 'profile.html'
       });
     }, function() {
@@ -31,9 +45,3 @@ function changePassword() {
     });
   }
 }
-
-$(document).ready(function() {
-  $('.form-control').keyup(function(event) {
-    if (event.keyCode === 13) changePassword();
-  });
-});

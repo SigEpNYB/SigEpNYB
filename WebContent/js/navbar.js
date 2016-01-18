@@ -1,5 +1,6 @@
 /**
  * Logs the user out and retuns them to the login page
+ * @returns {undefined}
  */
 function logout() {
   sendRequest('DELETE', 'Login', null, 'json', true, null);

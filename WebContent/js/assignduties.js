@@ -23,6 +23,15 @@ $(document).ready(function() {
 
 function getEvent() {
   var eventId = document.getElementById('eventId').value;
+  return sendEvent(eventId);
+}
+
+/**
+ * Gets the event info for an event
+ * @param {number} eventId - The ID associated with the requested event
+ * @returns {undefined}
+ */
+function sendEvent(eventId) {
   var data = {eventId: eventId};
   sendRequest('GET', 'Event', null, 'json', true, data, function(event) {
     sendRequest('GET', 'Duties', null, 'json', true, data, function(duties) {
@@ -91,6 +100,15 @@ function submitDuties() {
     sobers: dutyGetter('sobers'),
     drivers: dutyGetter('drivers')
   };
+  return sendDuties(data);
+}
+
+/**
+ * Submits the duties to the server
+ * @param {Object} data - contains each type of duty and its associated netIds
+ * @returns {undefined}
+ */
+function sendDuties(data) {
   sendRequest('PUT', 'Duties', data, 'text', true, null, function() {
     swal({
       title: 'Duties Assigned',
@@ -114,12 +132,23 @@ function submitDuties() {
   });
 }
 
+/**
+ * Filters the duties by type
+ * @param {Object[]} duties
+ * @param {string} type - Usually all uppercase
+ * @returns {Object[]}
+ */
 function dutyFilter(duties, type) {
   return duties.filter(function(duty) { return duty.type === type; });
 }
 
+/**
+ * Gets the duties from the page
+ * @param {string} parentId - ID of parent section
+ * @returns {string[]}
+ */
 function dutyGetter(parentId) {
   return document.getElementById(parentId).childNodes.map(function (input) {
-    return input.value
+    return input.value;
   });
 }

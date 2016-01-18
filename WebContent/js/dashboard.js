@@ -8,11 +8,11 @@ $(document).ready(function() {
     sendRequest('GET', 'Account', null, 'json', true, null, function(account) {
       events.map(function(event) {
         var eventObj = {
-          eventName: event.title,
+          name: event.title,
           id: event.id,
           description: event.description,
-          start: dateToTZ(new Date(event.startTime)),
-          end: dateToTZ(new Date(event.endTime))
+          start: new Date(event.startTime),
+          end: new Date(event.endTime)
         };
         var eventId = {idEvent: parseInt(event.id, 10)}
         sendRequest('GET', 'Duties', null, 'json', true, eventId, function(duties) {
@@ -26,19 +26,19 @@ $(document).ready(function() {
             driver: dutyMapReduce(duties, 'DRIVER')
           };
           var eventColor = (hasDuty ? 'red' : 'blue');
-          var eventInfo = event.description + '\n\n' +
+          var dutyString = event.description + '\n\n' +
             '<b>Risk Managers:</b> ' + dutyObj.riskManager + '\n' +
             '<b>Set/Clean:</b> ' + dutyObj.setClean + '\n' +
             '<b>Sobers:</b> ' + dutyObj.sober + '\n' +
             '<b>Drivers:</b> ' + dutyObj.driver + '\n\n' +
             '<b>ID:</b> ' + event.id;       
-          var eventTitle = event.title + '\n\n' + event.description;
+          var overlayText = event.title + '\n\n' + event.description;
           var dutyColors = {
             backgroundColor: eventColor,
             borderColor: eventColor,
             hasDuty: hasDuty,
-            title: eventTitle,
-            info: eventInfo
+            title: overlayText,
+            dutyString: dutyString
           };
           var calendarObj = $.extend({}, eventObj, dutyColors, dutyObj);
           $('#calendar').fullCalendar('renderEvent', calendarObj, true);
@@ -59,8 +59,8 @@ $(document).ready(function() {
     eventRender: function(event, element) {
       element.qtip({
         content: {
-          title: event.eventName,
-          text: event.info
+          title: event.name,
+          text: event.dutyString
         },
         style: {
           classes: 'qtip_fratsite'
@@ -68,21 +68,20 @@ $(document).ready(function() {
       });
     }
   });
+});
 
-  sendRequest('GET', 'Account', null, 'json', true, null, function(account) {
-    document.getElementById('name').innerHTML = 
-      '<h1>' + account.firstName + ' ' + account.lastName + '</h1>';
-  });
+sendRequest('GET', 'Account', null, 'json', true, null, function(account) {
+  document.getElementById('name').innerHTML = 
+    '<h1>' + account.firstName + ' ' + account.lastName + '</h1>';
+});
 
-  sendRequest('GET', 'Roles', null, 'json', true, null, function(roles) {
-    var roleString = roles.map(function(role) {
-      return '<h3>' + role.role + '</h3>';
-    }).reduce(function(s1, s2) {
-      return s1 + s2;
-    }, '');
-
-    document.getElementById('roles').innerHTML = roleString;
-  });
+sendRequest('GET', 'Roles', null, 'json', true, null, function(roles) {
+  var roleString = roles.map(function(role) {
+    return '<h3>' + role.role + '</h3>';
+  }).reduce(function(s1, s2) {
+    return s1 + s2;
+  }, '');
+  document.getElementById('roles').innerHTML = roleString;
 });
 
 /**

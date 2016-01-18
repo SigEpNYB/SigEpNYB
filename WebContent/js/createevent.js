@@ -1,6 +1,6 @@
 $(document).ready(function() {
   $(".eventInput").keyup(function(event){
-    if (event.keyCode == 13) addEvent();
+    if (event.keyCode === 13) addEvent();
   });
 
   $('#startTimeButton').datepicker({orientation: "top"})
@@ -31,14 +31,21 @@ sendRequest('GET', 'Roles', null, 'json', true, null, function(roles) {
   }
 })
 
-/**
- * Sends a new event to the server
- */
 function addEvent() {
   var data = buildObj(['title', 'description', 'startTime', 
     'endTime', 'riskManagers', 'setClean', 'sobers', 'drivers']);
-  var startTime = new Date(data['startTime']);
-  var endTime = new Date(data['endTime']);
+  return sendEvent(data);
+}
+
+/**
+ * Sends a new event to the server
+ * @param {Object} data - Must contain title, description, startTime,
+ * endTime, riskManagers, setClean, sobers and drivers
+ * @returns {undefined}
+ */
+function sendEvent(data) {
+  var startTime = new Date(data.startTime);
+  var endTime = new Date(data.endTime);
   var offset = (new Date()).getTimezoneOffset() / 60;
   startTime.setHours(startTime.getHours() + offset);
   endTime.setHours(endTime.getHours() + offset);
@@ -52,7 +59,8 @@ function addEvent() {
       type: 'success', 
       closeOnConfirm: true
     }, function() {
-      clearIds(['title', 'description', 'startTime', 'endTime']);
+      clearIds(['title', 'description', 'startTime', 'endTime', 'endTime',
+        'riskManagers', 'setClean', 'sobers', 'drivers']);
     });
   }, function() {
     swal({

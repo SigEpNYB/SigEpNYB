@@ -6,56 +6,64 @@ $(document).ready(function() {
 });
 
 function submitAccount() {
-  var password = document.getElementById('password').value;
-  var passwordConfirm = document.getElementById('passwordConfirm').value;
-  var phoneNumber = document.getElementById('phoneNumber').value;
-  var data = buildObj(['firstName', 'lastName', 'netid','password', 'phoneNumber']);
+  var data = buildObj(['firstName', 'lastName', 'netid','password', 
+    'phoneNumber']);
+  return sendAccount(data);
+}
+
+/**
+ * Sends an account to the server
+ * @param {Object} data - must contain firstName, lastName, netid, password
+ * and phoneNumber
+ * @returns {undefined}
+ */
+function sendAccount(data) {
   var empty = Object.keys(data).hasMatch(function(key) {
     return data[key] === '';
   });
-  if (password.length < 6) {
+  if (data.password.length < 6) {
     swal({
       title: 'Your password is too short',
       text: 'It needs to be at least 6 characters',
       type: 'warning',
       closeOnConfirm: true
     });
-  } else if (password.search(/\d/) === -1) {
+  } else if (data.password.search(/\d/) === -1) {
     swal({
       title: 'Password missing number',
       text: 'Your password must contain at least 1 number',
       type: 'warning',
       closeOnConfirm: true
     });
-  } else if (password.search(/[a-z]/) === -1) {
+  } else if (data.password.search(/[a-z]/) === -1) {
     swal({
       title: 'Password missing lowercase letter',
       text: 'Your password must contain at least 1 lowercase letter',
       type: 'warning',
       closeOnConfirm: true
     });
-  } else if (password.search(/[A-Z]/) === -1) {
+  } else if (data.password.search(/[A-Z]/) === -1) {
     swal({
       title: 'Password missing uppercase letter',
       text: 'Your password must contain at least 1 uppercase letter',
       type: 'warning',
       closeOnConfirm: true
     });
-  } else if (empty) {
+  } else if (data.empty) {
     swal({
       title: 'Not all of the fields are filled out',
       text: 'All fields are required',
       type: 'warning',
       closeOnConfirm: true
     });
-  } else if (phoneNumber.length < 16) {
+  } else if (data.phoneNumber.length < 16) {
     swal({
       title: 'Incomplete Phone Number',
       text: 'Please make sure to enter your area code too (+1 not necessary)',
       type: 'warning',
       closeOnConfirm: true
     })
-  } else if (password !== passwordConfirm) {
+  } else if (data.password !== data.passwordConfirm) {
     swal({
       title: "Your passwords don't match :(",
       text: "Please try again",
@@ -72,12 +80,12 @@ function submitAccount() {
         type: "success",
         closeOnConfirm: true
       }, function() {
-        window.location.href = '/Fratsite'
+        window.location.href = '/'
       });
     }, function() {
       swal({
         title: "Account Request Failed",
-        text: "Sorry, we couldn't process your request :(",
+        text: "Please make sure you haven't already sent an account request",
         type: "error",
         closeOnConfirm: true
       });

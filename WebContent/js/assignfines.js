@@ -28,6 +28,15 @@ sendRequest('GET', 'FinesList', null, 'json', true, null, function(fines) {
 
 function submitFine() {
   var data = buildObj(['netid', 'description', 'amount']);
+  sendFine(data);
+}
+
+/**
+ * Sends a fine to the server
+ * @param {Object} data - Should contain netid, description and amount
+ * @returns {undefined}
+ */
+function sendFine(data) {
   sendRequest('POST', 'Fines', null, 'text', true, data, function() {
     swal({
       title: 'Fine Submitted',
@@ -51,7 +60,13 @@ function submitFine() {
   });
 }
 
-function closeFine(fineId) {
+/**
+ * Sends a close fine request to the server
+ * @param {ClickEvent} event
+ * @param {number} fineId - ID of actual fine
+ * @returns {undefined}
+ */
+function closeFine(event, fineId) {
   var data = {fineId: fineId};
   sendRequest('POST', 'FinesList', data, 'text', true, null, function() {
     swal({
@@ -70,7 +85,13 @@ function closeFine(fineId) {
   });
 }
 
-function deleteFine(fineId) {
+/**
+ * Sends a delete fine request to the server
+ * @param {ClickEvent} event
+ * @param {number} fineId - ID of actual fine
+ * @returns {undefined}
+ */
+function deleteFine(event, fineId) {
   var data = {fineId: fineId};
   sendRequest('DELETE', 'FinesList', data, 'text', true, null, function() {
     swal({
@@ -90,14 +111,23 @@ function deleteFine(fineId) {
 }
 
 function updateFines() {
-  var data = document.getElementById('fines').childNodes.map(function(row) {
-    var td = row.childNodes[0];
+  var data = document.getElementById('fines').childNodes.map(function(tr) {
+    var td = tr.childNodes[0];
     return {
       netid: td.childNodes[0].value,
       description: td.childNodes[1].value,
       amount: td.childNodes[2].value
     };
   });
+  return sendFinesUpdate(data);
+}
+
+/**
+ * Updates the fines list
+ * @param {Object[]} data - List of fine objects
+ * @returns {undefined}
+ */
+function sendFinesUpdate(data) {
   sendRequest('PUT', 'FinesList', data, 'text', true, null, function() {
     swal({
       title: 'Fines Updated',
