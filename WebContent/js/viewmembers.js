@@ -23,7 +23,7 @@ sendRequest('GET', 'Roles', null, 'json', true, null, function(roles) {
 });
 
 /**
- * Removes a site member
+ * Sends a request to the server to remove a brother from the site
  * @param {string} netid - netid of member
  * @returns {undefined}
  */
@@ -33,15 +33,15 @@ function removeMember(netid) {
   sendRequest('DELETE', 'Accounts', data, 'text', true, null, function() {
     swal({
       title: 'User Deleted!',
-      type: 'success',
-      closeOnConfirm: true
+      type: 'success'
+    }, function() {
+      window.location.reload();
     });
   }, function() {
     swal({
       title: 'User Deletion Failed :(',
       text: 'Please make sure you can delete this person',
-      type: 'error',
-      closeOnConfirm: true
+      type: 'error'
     }, function(isConfirm) {
       window.location.reload();
     });

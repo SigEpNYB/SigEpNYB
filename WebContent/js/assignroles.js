@@ -1,17 +1,11 @@
-sendRequest('GET', 'Roles', null, 'json', true, null, function(roles) {
-  var hasPermission = roles.hasMatch(function(role) {
-    return role.role === 'President';
-  });
-  if (!hasPermission) {
-    swal({
+checkPermissions(['AssignRoles'], function() {
+  swal({
       title: "Sorry, you don't have permission to assign roles",
       text: 'Go to "View Members" to see the list of brothers',
-      type: 'error',
-      closeOnConfirm: true
-    }, function(isConfirm) {
-      window.location.href = 'dashboard.html';
-    });
-  }
+      type: 'error'
+  }, function(isConfirm) {
+    window.location.href = 'dashboard.html';
+  });
 });
 
 function getRoles() {
@@ -40,8 +34,7 @@ function sendGetRoles(netid) {
     swal({
       title: "Looks like we couldn't find that user",
       text: "Please make sure you spelled the netid correctly",
-      type: 'error',
-      closeOnConfirm: true
+      type: 'error'
     });
   });
 }
@@ -61,15 +54,13 @@ function removeRole(netid, role) {
     swal({
       title: 'Role Removed',
       text: 'Refresh the page to see the chages'
-      type: 'success',
-      closeOnConfirm: true
+      type: 'success'
     });
   }, function() {
     swal({
       title: 'Role Removal Failed',
       text: 'Please try again later',
-      type: 'error',
-      closeOnConfirm: true
+      type: 'error'
     });
   });
 }
@@ -89,15 +80,13 @@ function sendNewRole(data) {
     swal({
       title: 'Role Added',
       text: 'Refresh the page to see the chages'
-      type: 'success',
-      closeOnConfirm: true
+      type: 'success'
     });
   }, function() {
     swal({
-      title: 'Role Removal Failed',
-      text: 'Please make sure the netid and role are spelled correctly',
-      type: 'error',
-      closeOnConfirm: true
+      title: 'Role Creation Failed',
+      text: 'Please make sure the role is spelled correctly',
+      type: 'error'
     });
   });
 }

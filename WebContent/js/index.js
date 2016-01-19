@@ -24,10 +24,9 @@ function sendLogin(data) {
       window.location.href = 'dashboard.html';
     }, function() {
       swal({
-        title: 'Login Failed :(',
+        title: 'Login Failed',
         text: 'Please make sure your NetID and Password are correct',
-        type: 'error',
-        closeOnConfirm: true
+        type: 'error'
       });
     }
   );

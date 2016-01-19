@@ -1,17 +1,11 @@
-sendRequest('GET', 'Roles', null, 'json', true, null, function(roles) {
-  var createPermission = roles.hasMatch(function(role) {
-    return role.role === 'VP of Programming';
-  });
-  if (!createPermission) {
-    swal({
+checkPermissions(['DeleteEvent'], function() {
+  swal({
       title: "Sorry, you don't have permission to delete events",
       text: "Talk to the VP of Programming to delete an event",
       type: 'error',
-      closeOnConfirm: true
-    }, function(isConfirm) {
-      window.location.href = '/Fratsite/dashboard.html';
-    })
-  }
+  }, function(isConfirm) {
+    window.location.href = 'dashboard.html';
+  });
 });
 
 function deleteEvent() {
@@ -43,8 +37,7 @@ function sendDelete(eventId) {
     swal({
       title: 'Event Deletion Failed',
       text: 'Please make sure the event ID is correct',
-      type: 'error',
-      closeOnConfirm: true
+      type: 'error'
     });
   });
 }

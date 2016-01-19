@@ -7,11 +7,10 @@ sendRequest('GET', 'Fines', null, true, null, function(fines) {
     '</tr>';
   });
   document.getElementById('fines').innerHTML = finesString;
-}, function() {
+}, function(xhr) {
   swal({
-    title: "Sorry, we couldn't get your fines :|",
-    text: 'Please try again later',
-    type: 'error',
-    closeOnConfirm: true
+    title: "Server Error",
+    text: 'Error Code: ' + xhr.status,
+    type: 'error'
   });
 });

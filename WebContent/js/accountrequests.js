@@ -1,17 +1,11 @@
-sendRequest('GET', 'Roles', null, 'json', true, null, function(roles) {
-  var hasPermission = roles.hasMatch(function(role) {
-    return role.role === 'President';
+checkPermissions(['AccountRequests'], function() {
+  swal({
+    title: "Sorry, you don't have permission to approve account requests",
+    text: 'Go to "View Members" to see the list of brothers',
+    type: 'error'
+  }, function(isConfirm) {
+    window.location.href = '/Fratsite/dashboard.html';
   });
-  if (!hasPermission) {
-    swal({
-      title: "Sorry, you don't have permission to approve accounts",
-      text: 'Go to "View Members" to see the list of brothers',
-      type: 'error',
-      closeOnConfirm: true
-    }, function(isConfirm) {
-      window.location.href = 'dashboard.html';
-    });
-  }
 });
 
 sendRequest('GET', 'AccountRequests', null, 'json', true, null, function(requests) {
@@ -26,15 +20,12 @@ sendRequest('GET', 'AccountRequests', null, 'json', true, null, function(request
     return s1 + s2;
   }, '');
   document.getElementById('requests').innerHTML = requestBody;
-}, function() {
+  }, function(xhr) {
   swal({
-    title: "Sorry, you don't have permission to approve account requests",
-    text: 'Click OK to go back to your dashboard',
-    type: 'error',
-    closeOnConfirm: true
-  }, function(isConfirm) {
-    window.location.href = '/Fratsite/dashboard.html';
-  })
+    title: "Server Error",
+    text: 'Error Code: ' + xhr.status,
+    type: 'error'
+  });
 });
 
 /**
@@ -47,17 +38,15 @@ function approveRequest(idRequest) {
   sendRequest('PUT', 'AccountRequests', data, 'text', true, null, function() {
     swal({
       title: 'Account Approved',
-      type: 'success',
-      closeOnConfirm: true
+      type: 'success'
     }, function() {
       event.target.parentNode.parentNode.parentNode.removeChild(event.target.parentNode.parentNode);
     });
    }, function() {
     swal({
-      title: 'Failed To Approve Account :(',
+      title: 'Failed To Approve Account',
       text: 'Please Try again later',
-      type: 'error',
-      closeOnConfirm: true
+      type: 'error'
     });
   });
 }
@@ -72,17 +61,15 @@ function rejectRequest(idRequest) {
   sendRequest('DELETE', 'AccountRequests', data, 'text', true, null, function() {
     swal({
       title: 'Account Rejected',
-      type: 'success',
-      closeOnConfirm: true
+      type: 'success'
     }, function() {
       event.target.parentNode.parentNode.parentNode.removeChild(event.target.parentNode.parentNode);
     });
   }, function() {
     swal({
-      title: 'Failed To Reject Account :(',
+      title: 'Failed To Reject Account',
       text: 'Please try again later',
-      type: 'error',
-      closeOnConfirm: true
+      type: 'error'
     });
   });
 }

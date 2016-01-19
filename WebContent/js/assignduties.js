@@ -1,17 +1,11 @@
-sendRequest('GET', 'Roles', null, 'json', true, null, function(roles) {
-  var hasPermission = roles.hasMatch(function(role) {
-    return role.role === 'VP of Communication';
+checkPermissions(['AssignDuties'], function() {
+  swal({
+    title: "Sorry, you don't have permission to assign duties",
+    text: "Check the calendar to see your upcoming duties",
+    type: 'error',
+  }, function(isConfirm) {
+    window.location.href = 'dashboard.html';
   });
-  if (!hasPermission) {
-    swal({
-      title: "Sorry, you don't have permission to assign duties",
-      text: "Check the calendar to see your upcoming duties",
-      type: 'error',
-      closeOnConfirm: true
-    }, function(isConfirm) {
-      window.location.href = 'dashboard.html';
-    });
-  }
 });
 
 $(document).ready(function() {
@@ -85,6 +79,12 @@ function sendEvent(eventId) {
       }
       document.getElementById('drivers').innerHTML = driverString;
     });
+  }, function(xhr) {
+    swal({
+      title: "Server Error",
+      text: 'Error Code: ' + xhr.status,
+      type: 'error'
+    });
   });
   $('#submitDuties').show();
 
@@ -122,12 +122,11 @@ function sendDuties(data) {
       if (isConfirm) window.location.reload();
       else window.location.href = 'dashboard.html';
     });
-  }, function() {
+  }, function(xhr) {
     swal({
-      title: 'Duty Assignment Failed',
-      text: 'Please make sure all the netIDs entered are valid',
-      type: 'error',
-      closeOnConfirm: true
+      title: "Server Error",
+      text: 'Error Code: ' + xhr.status,
+      type: 'error'
     });
   });
 }

@@ -38,8 +38,24 @@ function sendRequest(method, url, data, dataType, useToken, queryStringObj, onSu
     headers: headers,
     success: onSuccess,
     error: onFail
-  })
+  });
   return;
+}
+
+/**
+ * Checks that the user has the required permissions
+ * @param {string[]} necessary - list of necessary permission strings
+ * @param {function} onMissing - function to call when missing permissions
+ */
+function checkPermissions(necessary, onMissing) {
+  sendRequest('GET', 'Permissions', null, 'json', true, null, function(permissions) {
+    var hasPermission = permissions.reduce(function(b, p) {
+      return b && permissions[p];
+    }, true);
+    if (!hasPermission) {
+      onMissing();
+    }
+  });
 }
 
 /**

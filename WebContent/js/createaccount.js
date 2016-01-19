@@ -85,8 +85,7 @@ function sendAccount(data) {
       swal({
         title: "Account Request Sent",
         text: "You'll receive an email when you're account is received",
-        type: "success",
-        closeOnConfirm: true
+        type: "success"
       }, function() {
         window.location.href = 'index.html'
       });
@@ -94,8 +93,7 @@ function sendAccount(data) {
       swal({
         title: "Account Request Failed",
         text: "Please make sure you haven't already sent an account request",
-        type: "error",
-        closeOnConfirm: true
+        type: "error"
       });
     });
   }

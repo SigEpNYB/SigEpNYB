@@ -1,17 +1,11 @@
-sendRequest('GET', 'Roles', null, 'json', true, null, function(roles) {
-  var hasPermission = roles.hasMatch(function(role) {
-    return role.role === 'VP of Finance';
-  });
-  if (!hasPermission) {
-    swal({
+checkPermissions(['AssignFines'], function() {
+  swal({
       title: "Sorry, you don't have permission to give fines",
       text: 'Go to "View My Fines" to see your fines',
-      type: 'error',
-      closeOnConfirm: true
-    }, function(isConfirm) {
-      window.location.href = 'dashboard.html';
-    });
-  }
+      type: 'error'
+  }, function(isConfirm) {
+    window.location.href = 'dashboard.html';
+  });
 });
 
 sendRequest('GET', 'FinesList', null, 'json', true, null, function(fines) {
@@ -50,12 +44,11 @@ function sendFine(data) {
       if (isConfirm) window.location.reload();
       else window.location.href = 'dashboard.html';
     });
-  }, function() {
+  }, function(xhr) {
     swal({
-      title: 'Fine Submission Failed',
-      text: 'Please try again later',
-      type: 'error',
-      closeOnConfirm: true
+      title: "Server Error",
+      text: 'Error Code: ' + xhr.status,
+      type: 'error'
     });
   });
 }
@@ -70,16 +63,15 @@ function closeFine(fineId) {
   sendRequest('POST', 'FinesList', data, 'text', true, null, function() {
     swal({
       title: 'Fine Closed',
-      text: 'Refresh the page to see the updated fines list',
-      type: 'success',
-      closeOnConfirm: true
+      type: 'success'
+    }, function(isConfirm) {
+      window.location.reload();
     });
-  }, function() {
+  }, function(xhr) {
     swal({
-      title: 'Fine Failed To Close',
-      text: 'Please try again later',
-      type: 'error',
-      closeOnConfirm: true
+      title: "Server Error",
+      text: 'Error Code: ' + xhr.status,
+      type: 'error'
     });
   });
 }
@@ -94,16 +86,15 @@ function deleteFine(fineId) {
   sendRequest('DELETE', 'FinesList', data, 'text', true, null, function() {
     swal({
       title: 'Fine Deleted',
-      text: 'Refresh the page to see the updated fines list',
-      type: 'success',
-      closeOnConfirm: true
+      type: 'success'
+    }, function(isConfirm) {
+      window.location.reload();
     });
-  }, function() {
+  }, function(xhr) {
     swal({
-      title: 'Fine Failed To Delete',
-      text: 'Please try again later',
-      type: 'error',
-      closeOnConfirm: true
+      title: "Server Error",
+      text: 'Error Code: ' + xhr.status,
+      type: 'error'
     });
   });
 }
@@ -129,15 +120,13 @@ function sendFinesUpdate(data) {
   sendRequest('PUT', 'FinesList', data, 'text', true, null, function() {
     swal({
       title: 'Fines Updated',
-      type: 'success',
-      closeOnConfirm: true
+      type: 'success'
     });
-  }, function() {
+  }, function(xhr) {
     swal({
-      fitle: 'Fine Updated Failed',
-      text: 'Please try again later',
-      type: 'error',
-      closeOnConfirm: true
-    })
+      title: "Server Error",
+      text: 'Error Code: ' + xhr.status,
+      type: 'error'
+    });
   });
 }

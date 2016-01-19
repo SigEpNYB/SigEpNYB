@@ -15,20 +15,14 @@ $(document).ready(function() {
     });
 });
 
-sendRequest('GET', 'Roles', null, 'json', true, null, function(roles) {
-  var createPermission = roles.hasMatch(function(role) {
-    return role.role === 'VP of Programming';
-  });
-  if (!createPermission) {
-    swal({
+checkPermissions(['CreateEvent'], function() {
+  swal({
       title: "Sorry, you don't have permission to create events",
       text: "Talk to the VP of Programming to create an event",
-      type: 'error',
-      closeOnConfirm: true
-    }, function(isConfirm) {
-      window.location.href = '/Fratsite/dashboard.html';
-    })
-  }
+      type: 'error'
+  }, function(isConfirm) {
+    window.location.href = 'dashboard.html';
+  });
 });
 
 function addEvent() {
@@ -56,18 +50,16 @@ function sendEvent(data) {
     swal({
       title: 'Event Created!',
       text: 'Check your dashboard to see it on the calendar', 
-      type: 'success', 
-      closeOnConfirm: true
+      type: 'success'
     }, function() {
       clearIds(['title', 'description', 'startTime', 'endTime', 'endTime',
         'riskManagers', 'setClean', 'sobers', 'drivers']);
     });
   }, function() {
     swal({
-      title: 'Event Creation Failed :(',
+      title: 'Event Creation Failed',
       text: 'Please make sure all of the fields are filled out',
-      type: 'error',
-      closeOnConfirm: true
+      type: 'error'
     });
   });
 }
