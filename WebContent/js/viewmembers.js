@@ -27,7 +27,7 @@ sendRequest('GET', 'Roles', null, 'json', true, null, function(roles) {
  * @param {string} netid - netid of member
  * @returns {undefined}
  */
-function removeMember(netid) {
+function removeMember(event, netid) {
   var data = {netid: netid};
   sendRequest('DELETE', 'Accounts', data, 'text', true, null, function() {
     swal({

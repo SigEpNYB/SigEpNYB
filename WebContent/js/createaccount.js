@@ -49,7 +49,14 @@ function sendAccount(data) {
       type: 'warning',
       closeOnConfirm: true
     });
-  } else if (data.empty) {
+  } else if (data.netid.search(/[A-Z]!@#$%^&*/) !== -1) {
+    swal({
+      title: 'Invalid NetID',
+      text: 'Your NetID can only contain lowercase letters and numbers',
+      type: 'warning',
+      closeOnConfirm: true
+    })
+  } else if (empty) {
     swal({
       title: 'Not all of the fields are filled out',
       text: 'All fields are required',

@@ -37,9 +37,9 @@
     <link rel="stylesheet" type="text/css" href="css/navbar.css">
     <link rel="stylesheet" type="text/css" href="css/opensans.css">
     <script src="js/toolkit.js"></script>
-    <title>Delete Event | SigEp</title>
+    <title>Assign Roles | SigEp</title>
     <script src="js/navbar.js"></script>
-    <script src="js/deleteevent.js"></script>
+    <script src="js/accountrequests.js"></script>
   </head>
   <body>
     <noscript>You need javascript!</noscript>
@@ -79,11 +79,26 @@
         </div>
       </div>
     </nav>
-    <div class="container">
+    <div class="container-fluid">
       <div class="row">
         <div class="col-xs-12 col-md-4 col-md-offset-4">
-          <input id="eventId" type="number" name="eventId" min="0" placeholder="Event ID" class="form-control"><br>
-          <input type="submit" name="deleteEvent" onclick="deleteEvent()" value="Delete Event" class="btn btn-danger fullWidth">
+          <div class="input-group">
+            <input id="netid" type="text" name="netid" placeholder="Net ID" class="form-control"><span class="input-group-btn">
+              <button id="getRoles" type="submit" onclick="getRoles()" class="btn btn-primary">Get Roles</button></span>
+          </div><br>
+          <table class="table table-hover">
+            <thead>
+              <tr>
+                <th>Role</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody id="roles"></tbody>
+          </table><br><br><br><br>
+          <div class="input-group">
+            <input id="newRole" type="text" name="role" placeholder="New Role" class="form-control"><span class="input-group-btn">
+              <button id="submitNewRole" type="submit" onclick="submitNewRole()" class="btn btn-success">Add Role</button></span>
+          </div>
         </div>
       </div>
     </div><br><br>
