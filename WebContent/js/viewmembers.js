@@ -1,8 +1,7 @@
-sendRequest('GET', 'Roles', null, 'json', true, null, function(roles) {
+sendRequest('GET', 'Permissions', null, 'json', true, null, function(permissions) {
   sendRequest('GET', 'Accounts', null, 'json', true, null, function(accounts) {
-    var removePermission = roles.hasMatch(function(role) {
-      return role.role === 'President';
-    });
+    var removePermission = permissions['RemoveAccount'];
+
     var table = accounts.map(function(account) {
       var buttonString = '';
       if (removePermission) {
