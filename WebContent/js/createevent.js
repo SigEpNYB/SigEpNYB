@@ -29,7 +29,7 @@ sendRequest('GET', 'Roles', null, 'json', true, null, function(roles) {
       window.location.href = '/Fratsite/dashboard.html';
     })
   }
-})
+});
 
 function addEvent() {
   var data = buildObj(['title', 'description', 'startTime', 

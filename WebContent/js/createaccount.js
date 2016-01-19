@@ -7,7 +7,7 @@ $(document).ready(function() {
 
 function submitAccount() {
   var data = buildObj(['firstName', 'lastName', 'netid','password', 
-    'phoneNumber']);
+    'phoneNumber', 'passwordConfirm']);
   return sendAccount(data);
 }
 
@@ -62,8 +62,9 @@ function sendAccount(data) {
       text: 'Please make sure to enter your area code too (+1 not necessary)',
       type: 'warning',
       closeOnConfirm: true
-    })
+    });
   } else if (data.password !== data.passwordConfirm) {
+      console.log(data);
     swal({
       title: "Your passwords don't match :(",
       text: "Please try again",
@@ -80,7 +81,7 @@ function sendAccount(data) {
         type: "success",
         closeOnConfirm: true
       }, function() {
-        window.location.href = '/'
+        window.location.href = 'index.html'
       });
     }, function() {
       swal({
