@@ -62,11 +62,10 @@ function sendFine(data) {
 
 /**
  * Sends a close fine request to the server
- * @param {ClickEvent} event
  * @param {number} fineId - ID of actual fine
  * @returns {undefined}
  */
-function closeFine(event, fineId) {
+function closeFine(fineId) {
   var data = {fineId: fineId};
   sendRequest('POST', 'FinesList', data, 'text', true, null, function() {
     swal({
@@ -87,11 +86,10 @@ function closeFine(event, fineId) {
 
 /**
  * Sends a delete fine request to the server
- * @param {ClickEvent} event
  * @param {number} fineId - ID of actual fine
  * @returns {undefined}
  */
-function deleteFine(event, fineId) {
+function deleteFine(fineId) {
   var data = {fineId: fineId};
   sendRequest('DELETE', 'FinesList', data, 'text', true, null, function() {
     swal({

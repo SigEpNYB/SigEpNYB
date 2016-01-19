@@ -48,12 +48,11 @@ function sendGetRoles(netid) {
 
 /**
  * Sends a remove role request to the server
- * @param {ClickEvent} event
  * @param {string} netid
  * @param {string} role
  * @returns {undefined}
  */
-function removeRole(event, netid, role) {
+function removeRole(netid, role) {
   var data = {
     netid: netid,
     role: role

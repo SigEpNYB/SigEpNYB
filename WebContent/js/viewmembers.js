@@ -27,8 +27,9 @@ sendRequest('GET', 'Roles', null, 'json', true, null, function(roles) {
  * @param {string} netid - netid of member
  * @returns {undefined}
  */
-function removeMember(event, netid) {
+function removeMember(netid) {
   var data = {netid: netid};
+  console.log(netid);
   sendRequest('DELETE', 'Accounts', data, 'text', true, null, function() {
     swal({
       title: 'User Deleted!',
@@ -41,6 +42,8 @@ function removeMember(event, netid) {
       text: 'Please make sure you can delete this person',
       type: 'error',
       closeOnConfirm: true
+    }, function(isConfirm) {
+      window.location.reload();
     });
   });
 }

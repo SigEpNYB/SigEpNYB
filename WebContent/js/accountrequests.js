@@ -39,11 +39,10 @@ sendRequest('GET', 'AccountRequests', null, 'json', true, null, function(request
 
 /**
  * Sends an account approval request to the server
- * @param {ClickEvent} event
  * @param {number} idRequest - The request's ID number
  * @returns {undefined}
  */
-function approveRequest(event, idRequest) {
+function approveRequest(idRequest) {
   var data = {idRequest: idRequest};
   sendRequest('PUT', 'AccountRequests', data, 'text', true, null, function() {
     swal({
@@ -65,11 +64,10 @@ function approveRequest(event, idRequest) {
 
 /**
  * Sends an account reject request to the server
- * @param {ClickEvent} event
  * @param {number} idRequest - The request's ID number
  * @returns {undefined}
  */
-function rejectRequest(event, idRequest) {
+function rejectRequest(idRequest) {
   var data = {idRequest: idRequest};
   sendRequest('DELETE', 'AccountRequests', data, 'text', true, null, function() {
     swal({
