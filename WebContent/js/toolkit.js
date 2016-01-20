@@ -102,6 +102,18 @@ function clearIds(ids) {
 }
 
 /**
+ * Sets the values of a list of ids
+ * @param {string[]} ids - array of IDs
+ * @param {Object} data - object containing value for each id
+ * @returns {undefined}
+ */
+function setIds(ids, data) {
+  ids.forEach(function(id) {
+    document.getElementById(id).value = data[id];
+  });
+}
+
+/**
  * Changes a date to UTC or ISO format
  * @param {Date} date
  * @param {string} outputType - UTC or ISO

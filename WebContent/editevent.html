@@ -37,9 +37,9 @@
     <link rel="stylesheet" type="text/css" href="css/navbar.css">
     <link rel="stylesheet" type="text/css" href="css/opensans.css">
     <script src="js/toolkit.js"></script>
-    <title>Assign Fines | SigEp</title>
+    <title>Edit Event | SigEp</title>
     <script src="js/navbar.js"></script>
-    <script src="js/assignfines.js"></script>
+    <script src="js/editevent.js"></script>
   </head>
   <body>
     <noscript>You need javascript!</noscript>
@@ -83,34 +83,25 @@
     <div class="container-fluid">
       <div class="row">
         <div class="col-xs-12 col-md-4 col-md-offset-4">
-          <input id="netid" type="text" placeholder="NetID" class="form-control"><br>
-          <input id="description" type="text" placeholder="Description" class="form-control"><br>
-          <div class="input-group"><span class="input-group-addon">$</span>
-            <input id="amount" type="number" placeholder="Amount" class="form-control">
+          <div class="input-group">
+            <input id="eventId" type="number" placeholder="Event ID" class="form-control"><span class="input-group-btn">
+              <button id="getEvent" type="submit" onclick="getEvent()" class="btn btn-primary"></button></span>
           </div><br>
-          <input id="fineSubmit" type="submit" value="Submit" onclick="submitFine()" class="btn btn-success fullWidth"><br><br>
-          <table class="table table-hover">
-            <thead>
-              <tr>
-                <th>NetID</th>
-                <th>Description</th>
-                <th>Amount</th>
-                <th></th>
-                <th></th>
-              </tr>
-            </thead>
-            <tbody id="fines"></tbody>
-          </table>
-          <input id="updateFines" type="submit" value="Update Fines" onclick="updateFines()" class="btn btn-success fullWidth">
+          <input id="title" type="text" placeholder="Title" class="form-control eventInput"><br>
+          <div class="input-group eventInput">
+            <input id="startTime" type="datetime-local" class="form-control"><span id="startTimeButton" class="input-group-addon datepickerButton"><i class="glyphicon glyphicon-calendar"></i></span>
+          </div><br>
+          <div class="input-group eventInput">
+            <input id="endTime" type="datetime-local" class="form-control"><span id="endTimeButton" class="input-group-addon datepickerButton"><i class="glyphicon glyphicon-calendar"></i></span>
+          </div><br>
+          <input id="description" type="text" placeholder="Description" class="form-control eventInput"><br>
+          <input id="riskManagers" type="number" placeholder="# of Risk Managers" min="0" class="form-control eventInput"><br>
+          <input id="setClean" type="number" placeholder="# of Set/Clean" min="0" class="form-control eventInput"><br>
+          <input id="sobers" type="number" placeholder="# of Sobers" min="0" class="form-control eventInput"><br>
+          <input id="drivers" type="number" placeholder="# of Drivers" min="0" class="form-control eventInput"><br>
+          <input id="eventSubmit" type="submit" value="Create" onclick="updateEvent()" class="btn btn-success eventInput">
         </div>
       </div>
-    </div><br><br>
-    <footer class="footer">
-      <div class="containter-fluid">
-        <p class="text-muted">
-          <p style="margin-bottom: 0px">(c) 2015 Sigma Phi Epsilon, New York Beta Chapter | <a href='license.html'>License</a></p>sigepfratsite@gmail.com
-        </p>
-      </div>
-    </footer>
+    </div>
   </body>
 </html>
