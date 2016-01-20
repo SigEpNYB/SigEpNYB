@@ -2,15 +2,10 @@ $(document).ready(function() {
   $('.eventInput').hide();
 });
 
-checkPermissions(['EditEvent'], function() {
-  swal({
-      title: "Sorry, you don't have permission to edit events",
-      text: "Talk to the VP of Programming to edit an event",
-      type: 'error'
-  }, function(isConfirm) {
-    window.location.href = 'dashboard.html';
-  });
-});
+checkPermissions(['EditEvent'],
+  "Sorry, you don't have permission to edit events",
+  "Talk to the VP of Programming to edit an event",
+  true);
 
 function getEvent() {
   var eventId = document.getElementById('eventId').value;
@@ -43,6 +38,11 @@ function updateEvent() {
   return sendUpdateEvent(data);
 }
 
+/**
+ * Sends and update event request to the server
+ * @param {Object} data - Must contain title, startTime, endTime, description,
+ * riskmanagers, setClean, sobers, and drivers
+ */
 function sendUpdateEvent(data) {
   sendRequest('PUT', 'Events', data, 'text', null, function() {
     swal({

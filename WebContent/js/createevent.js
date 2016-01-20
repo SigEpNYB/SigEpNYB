@@ -15,15 +15,10 @@ $(document).ready(function() {
     });
 });
 
-checkPermissions(['CreateEvent'], function() {
-  swal({
-      title: "Sorry, you don't have permission to create events",
-      text: "Talk to the VP of Programming to create an event",
-      type: 'error'
-  }, function(isConfirm) {
-    window.location.href = 'dashboard.html';
-  });
-});
+checkPermissions(['CreateEvent'], 
+  "Sorry, you don't have permission to create events",
+  "Talk to the VP of Programming to create an event",
+  true);
 
 function addEvent() {
   var data = buildObj(['title', 'description', 'startTime', 

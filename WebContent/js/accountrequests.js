@@ -1,12 +1,7 @@
-checkPermissions(['AccountRequests'], function() {
-  swal({
-    title: "Sorry, you don't have permission to approve account requests",
-    text: 'Go to "View Members" to see the list of brothers',
-    type: 'error'
-  }, function(isConfirm) {
-    window.location.href = '/Fratsite/dashboard.html';
-  });
-});
+checkPermissions(['AccountRequests'], 
+  "Sorry, you don't have permission to approve account requests",
+  'Go to "View Members" to see the list of brothers',
+   true);
 
 sendRequest('GET', 'AccountRequests', null, 'json', true, null, function(requests) {
   var requestBody = requests.map(function(request) {

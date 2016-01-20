@@ -45,15 +45,27 @@ function sendRequest(method, url, data, dataType, useToken, queryStringObj, onSu
 /**
  * Checks that the user has the required permissions
  * @param {string[]} necessary - list of necessary permission strings
- * @param {function} onMissing - function to call when missing permissions
+ * @param {string} title - Sweetalert Title
+ * @param {string} text - Sweetalert Text
+ * @param {boolean} redirect - whether to redirect to dashboard
  */
-function checkPermissions(necessary, onMissing) {
+function checkPermissions(necessary, title, text, redirect) {
   sendRequest('GET', 'Permissions', null, 'json', true, null, function(permissions) {
     var hasPermission = permissions.reduce(function(b, p) {
       return b && permissions[p];
     }, true);
+    var redir;
+    if (redirect) {
+      redir = function(isConfirm) { window.location.href = 'dashboard.html'; };
+    } else {
+      redir = function(isConfirm) {};
+    }
     if (!hasPermission) {
-      onMissing();
+      swal({
+        title: title,
+        text: text,
+        type: 'error'
+      }, redir);
     }
   });
 }

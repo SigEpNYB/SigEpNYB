@@ -1,12 +1,7 @@
-checkPermissions(['DeleteEvent'], function() {
-  swal({
-      title: "Sorry, you don't have permission to delete events",
-      text: "Talk to the VP of Programming to delete an event",
-      type: 'error',
-  }, function(isConfirm) {
-    window.location.href = 'dashboard.html';
-  });
-});
+checkPermissions(['DeleteEvent'], 
+  "Sorry, you don't have permission to delete events",
+  "Talk to the VP of Programming to delete an event",
+  true);
 
 function deleteEvent() {
   var eventId = document.getElementById('eventId').value;

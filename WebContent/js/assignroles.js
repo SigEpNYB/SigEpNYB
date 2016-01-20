@@ -1,12 +1,7 @@
-checkPermissions(['AssignRoles'], function() {
-  swal({
-      title: "Sorry, you don't have permission to assign roles",
-      text: 'Go to "View Members" to see the list of brothers',
-      type: 'error'
-  }, function(isConfirm) {
-    window.location.href = 'dashboard.html';
-  });
-});
+checkPermissions(['AssignRoles'],
+  "Sorry, you don't have permission to assign roles",
+  'Go to "View Members" to see the list of brothers',
+  true);
 
 function getRoles() {
   var netid = document.getElementById('netid');

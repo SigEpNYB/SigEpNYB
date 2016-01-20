@@ -17,7 +17,7 @@ html(lang="en")
           br
           .input-group
             span.input-group-addon $
-            input#amount.form-control(type='number', placeholder='Amount')
+            input#amount.form-control(type='number', placeholder='Amount', min='0')
           br
           input#fineSubmit.btn.btn-success.fullWidth(type='submit', value='Submit' onclick='submitFine()')
           br

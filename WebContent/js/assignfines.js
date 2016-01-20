@@ -1,12 +1,7 @@
-checkPermissions(['AssignFines'], function() {
-  swal({
-      title: "Sorry, you don't have permission to give fines",
-      text: 'Go to "View My Fines" to see your fines',
-      type: 'error'
-  }, function(isConfirm) {
-    window.location.href = 'dashboard.html';
-  });
-});
+checkPermissions(['AssignFines'],
+  "Sorry, you don't have permission to give fines",
+  'Go to "View My Fines" to see your fines',
+  true);
 
 sendRequest('GET', 'FinesList', null, 'json', true, null, function(fines) {
   var fineString = fines.map(function(fine) {

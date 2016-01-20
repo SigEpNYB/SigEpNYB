@@ -1,12 +1,7 @@
-checkPermissions(['AssignDuties'], function() {
-  swal({
-    title: "Sorry, you don't have permission to assign duties",
-    text: "Check the calendar to see your upcoming duties",
-    type: 'error',
-  }, function(isConfirm) {
-    window.location.href = 'dashboard.html';
-  });
-});
+checkPermissions(['AssignDuties'],
+  "Sorry, you don't have permission to assign duties",
+  "Check the calendar to see your upcoming duties",
+   true);
 
 $(document).ready(function() {
   $('#submitDuties').hide();
