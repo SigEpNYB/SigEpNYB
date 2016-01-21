@@ -1,0 +1,32 @@
+doctype html
+html(lang="en")
+  head
+    include ../components/deps.jade
+    title Trade Duties | SigEp
+    script(src='js/navbar.js')
+    script(src='js/tradeduties.js')
+  body
+    include ../components/noscript.jade
+    include ../components/navbar.jade
+    .container-fluid
+      .row
+        .col-xs-12.col-md-6.col-md-offset-3
+          input#netid.form-control(type='text', name='netid', placeholder='NetID')
+          br
+          #tradeDuties
+            .tradeDuty
+              select.form-control.selectpicker.tradeType
+                option Risk Manager
+                option Set/Clean
+                option Sober
+                option Driver
+              input.form-control.tradeEventId(type='text', placeholder='Event ID')
+              select.form-control.selectpicker.tradeToFrom
+                option To
+                option From
+              button.btn.btn-primary.addTrade(type='submit', onclick='addDutyToList()') Add Another
+              br
+              br
+          br
+          input#submitTrade.btn.btn-success(type='submit', value='Submit Trade', onclick='submitTrade()')
+    include ../components/footer.jade

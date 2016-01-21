@@ -37,9 +37,9 @@
     <link rel="stylesheet" type="text/css" href="css/navbar.css">
     <link rel="stylesheet" type="text/css" href="css/opensans.css">
     <script src="js/toolkit.js"></script>
-    <title>Dashboard | SigEp</title>
+    <title>Trade Duties | SigEp</title>
     <script src="js/navbar.js"></script>
-    <script src="js/dashboard.js"></script>
+    <script src="js/tradeduties.js"></script>
   </head>
   <body>
     <noscript>You need javascript!</noscript>
@@ -85,14 +85,27 @@
         </div>
       </div>
     </nav>
-    <div class="containter-fluid">
+    <div class="container-fluid">
       <div class="row">
-        <div id="userInfo" class="col-xs-12 col-md-3">
-          <div id="name"></div>
-          <div id="roles"></div><img id="crest" src="img/crest.png">
-        </div>
-        <div class="col-xs-12 col-md-6">
-          <div id="calendar"></div>
+        <div class="col-xs-12 col-md-6 col-md-offset-3">
+          <input id="netid" type="text" name="netid" placeholder="NetID" class="form-control"><br>
+          <div id="tradeDuties">
+            <div class="tradeDuty">
+              <select class="form-control selectpicker tradeType">
+                <option>Risk Manager</option>
+                <option>Set/Clean</option>
+                <option>Sober</option>
+                <option>Driver</option>
+              </select>
+              <input type="text" placeholder="Event ID" class="form-control tradeEventId">
+              <select class="form-control selectpicker tradeToFrom">
+                <option>To</option>
+                <option>From</option>
+              </select>
+              <button type="submit" onclick="addDutyToList()" class="btn btn-primary addTrade">Add Another</button><br><br>
+            </div>
+          </div><br>
+          <input id="submitTrade" type="submit" value="Submit Trade" onclick="submitTrade()" class="btn btn-success">
         </div>
       </div>
     </div><br><br>

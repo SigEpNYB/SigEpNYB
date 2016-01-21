@@ -144,3 +144,26 @@ body#successresponse {
 ::-webkit-calendar-picker-indicator{
     display: none;
 }
+
+/* Trade Duties */
+.tradeDuty > * {
+  display: inline;
+}
+.tradeType {
+  width: 30%;
+}
+.tradeEventId {
+  width: 18%;
+}
+.tradeToFrom {
+  width: 20%;
+}
+.addTrade {
+  width: 30%;
+}
+.tradeEventId2 {
+  width: 20%;
+}
+.tradeToFrom2 {
+  width: 20%;
+}
