@@ -1,10 +1,8 @@
 doctype html
 html(lang="en")
   head
-    include ../components/deps.jade
+    include ../components/css.jade
     title Trade Duties | SigEp
-    script(src='js/navbar.js')
-    script(src='js/tradeduties.js')
   body
     include ../components/noscript.jade
     include ../components/navbar.jade
@@ -17,3 +15,6 @@ html(lang="en")
           br
           input#submitTrade.btn.btn-success(type='submit', value='Submit Trade', onclick='submitTrade()')
     include ../components/footer.jade
+    include ../components/js.jade
+    script(src='js/navbar.js')
+    script(src='js/tradeduties.js')

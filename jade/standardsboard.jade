@@ -1,10 +1,8 @@
 doctype html
 html(lang="en")
   head
-    include ../components/deps.jade
+    include ../components/css.jade
     title Standards Board | SigEp
-    script(src='js/navbar.js')
-    script(src='js/standardsboard.js')
   body
     include ../components/noscript.jade
     include ../components/navbar.jade
@@ -16,3 +14,7 @@ html(lang="en")
           textarea#reason(class="form-control", rows="4", placeholder="Reason for Appeal")
           br
           button#submit(class="btn btn-primary fullWidth" onclick="submitAppeal()") Submit Appeal
+    include ../components/footer.jade
+    include ../components/js.jade
+    script(src='js/navbar.js')
+    script(src='js/standardsboard.js')

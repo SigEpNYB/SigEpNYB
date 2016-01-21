@@ -1,10 +1,8 @@
 doctype html
 html(lang="en")
   head
-    include ../components/deps.jade
+    include ../components/css.jade
     title Edit Event | SigEp
-    script(src='js/navbar.js')
-    script(src='js/editevent.js')
   body
     include ../components/noscript.jade
     include ../components/navbar.jade
@@ -39,3 +37,7 @@ html(lang="en")
           input#drivers.form-control.eventInput(type='number', placeholder='# of Drivers', min='0')
           br
           input#eventSubmit.btn.btn-success.eventInput(type='submit', value='Create', onclick='updateEvent()')
+    include ../components/footer.jade
+    include ../components/js.jade
+    script(src='js/navbar.js')
+    script(src='js/editevent.js')

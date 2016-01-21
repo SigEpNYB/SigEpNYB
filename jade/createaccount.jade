@@ -1,9 +1,8 @@
 doctype html
 html(lang="en")
   head
-    include ../components/deps.jade
+    include ../components/css.jade
     title Create Account | SigEp
-    script(src='js/createaccount.js')
   body#createaccount
     include ../components/noscript.jade
     .container-fluid
@@ -30,3 +29,5 @@ html(lang="en")
             input#passwordConfirm.loginInput(type='password', placeholder='RE-ENTER', name='passwordConfirm')
             br
             input#createAccountButton.loginButton(type='submit', value='CREATE', onclick='submitAccount()')
+    include ../components/js.jade
+    script(src='js/createaccount.js')

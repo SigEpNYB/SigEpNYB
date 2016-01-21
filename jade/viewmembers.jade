@@ -1,10 +1,8 @@
 doctype html
 html(lang="en")
   head
-    include ../components/deps.jade
+    include ../components/css.jade
     title View Members | SigEp
-    script(src='js/navbar.js')
-    script(src='js/viewmembers.js')
   body
     include ../components/noscript.jade
     include ../components/navbar.jade
@@ -20,3 +18,6 @@ html(lang="en")
                 th Phone Number
             tbody#members
     include ../components/footer.jade
+    include ../components/js.jade
+    script(src='js/navbar.js')
+    script(src='js/viewmembers.js')

@@ -5,3 +5,4 @@
 build/*
 /build/
 sql-scripts/backups/*
+node_modules/

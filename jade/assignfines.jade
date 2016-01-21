@@ -1,10 +1,8 @@
 doctype html
 html(lang="en")
   head
-    include ../components/deps.jade
+    include ../components/css.jade
     title Assign Fines | SigEp
-    script(src='js/navbar.js')
-    script(src='js/assignfines.js')
   body
     include ../components/noscript.jade
     include ../components/navbar.jade
@@ -33,3 +31,6 @@ html(lang="en")
             tbody#fines
           input#updateFines.btn.btn-success.fullWidth(type='submit', value='Update Fines', onclick='updateFines()')
     include ../components/footer.jade
+    include ../components/js.jade
+    script(src='js/navbar.js')
+    script(src='js/assignfines.js')

@@ -1,10 +1,8 @@
 doctype html
 html(lang="en")
   head
-    include ../components/deps.jade
+    include ../components/css.jade
     title Assign Roles | SigEp
-    script(src='js/navbar.js')
-    script(src='js/accountrequests.js')
   body
     include ../components/noscript.jade
     include ../components/navbar.jade
@@ -31,3 +29,6 @@ html(lang="en")
             span.input-group-btn
               button#submitNewRole.btn.btn-success(type='submit', onclick='submitNewRole()') Add Role
     include ../components/footer.jade
+    include ../components/js.jade
+    script(src='js/navbar.js')
+    script(src='js/accountrequests.js')

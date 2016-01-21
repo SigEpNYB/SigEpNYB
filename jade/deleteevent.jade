@@ -1,10 +1,8 @@
 doctype html
 html(lang='en')
   head
-    include ../components/deps.jade
+    include ../components/css.jade
     title Delete Event | SigEp
-    script(src='js/navbar.js')
-    script(src='js/deleteevent.js')
   body
     include ../components/noscript.jade
     include ../components/navbar.jade
@@ -15,3 +13,6 @@ html(lang='en')
           br
           input.btn.btn-danger.fullWidth(type='submit', name='deleteEvent', onclick='deleteEvent()' value='Delete Event')
     include ../components/footer.jade
+    include ../components/js.jade
+    script(src='js/navbar.js')
+    script(src='js/deleteevent.js')

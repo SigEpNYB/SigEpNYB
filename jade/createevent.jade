@@ -1,10 +1,8 @@
 doctype html
 html(lang="en")
   head
-    include ../components/deps.jade
+    include ../components/css.jade
     title Create Event | SigEp
-    script(src='js/navbar.js')
-    script(src='js/createevent.js')
   body
     include ../components/noscript.jade
     include ../components/navbar.jade
@@ -37,3 +35,6 @@ html(lang="en")
           br
           input#eventSubmit.btn.btn-success.eventInput(type='submit', value='Create', onclick='addEvent()')
     include ../components/footer.jade
+    include ../components/js.jade
+    script(src='js/navbar.js')
+    script(src='js/createevent.js')
