@@ -37,9 +37,9 @@
     <link rel="stylesheet" type="text/css" href="css/navbar.css">
     <link rel="stylesheet" type="text/css" href="css/opensans.css">
     <script src="js/toolkit.js"></script>
-    <title>Profile | SigEp</title>
+    <title>Standards Board | SigEp</title>
     <script src="js/navbar.js"></script>
-    <script src="js/profile.js"></script>
+    <script src="js/standardsboard.js"></script>
   </head>
   <body>
     <noscript>You need javascript!</noscript>
@@ -88,20 +88,12 @@
     </nav>
     <div class="container-fluid">
       <div class="row">
-        <div class="col-xs-12 col-md-8 col-md-offset-2">
-          <div id="name"></div>
-          <div id="netid"></div>
-          <div id="phoneNumber"></div>
-          <div id="roles"></div><br><a href="changepassword.html" class="btn btn-primary">Change Password</a>
+        <div class="col-xs-12 col-md-4 col-md-offset-4">
+          <textarea id="fines" rows="4" placeholder="List of Fines (include reason and amount)" class="form-control"></textarea><br>
+          <textarea id="reason" rows="4" placeholder="Reason for Appeal" class="form-control"></textarea><br>
+          <button id="submit" onclick="submitAppeal()" class="btn btn-primary fullWidth">Submit Appeal</button>
         </div>
       </div>
-    </div><br><br>
-    <footer class="footer">
-      <div class="containter-fluid">
-        <p class="text-muted">
-          <p style="margin-bottom: 0px">(c) 2015 Sigma Phi Epsilon, New York Beta Chapter | <a href='license.html'>License</a></p>sigepfratsite@gmail.com
-        </p>
-      </div>
-    </footer>
+    </div>
   </body>
 </html>

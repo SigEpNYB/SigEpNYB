@@ -1,0 +1,18 @@
+doctype html
+html(lang="en")
+  head
+    include ../components/deps.jade
+    title Standards Board | SigEp
+    script(src='js/navbar.js')
+    script(src='js/standardsboard.js')
+  body
+    include ../components/noscript.jade
+    include ../components/navbar.jade
+    .container-fluid
+      .row
+        .col-xs-12.col-md-4.col-md-offset-4
+          textarea#fines(class="form-control", rows="4", placeholder="List of Fines (include reason and amount)")
+          br
+          textarea#reason(class="form-control", rows="4", placeholder="Reason for Appeal")
+          br
+          button#submit(class="btn btn-primary fullWidth" onclick="submitAppeal()") Submit Appeal

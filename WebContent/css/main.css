@@ -153,17 +153,11 @@ body#successresponse {
   width: 30%;
 }
 .tradeEventId {
-  width: 18%;
+  width: 20%;
 }
 .tradeToFrom {
   width: 20%;
 }
 .addTrade {
   width: 30%;
-}
-.tradeEventId2 {
-  width: 20%;
-}
-.tradeToFrom2 {
-  width: 20%;
 }
