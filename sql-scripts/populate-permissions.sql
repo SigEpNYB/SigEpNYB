@@ -11,3 +11,7 @@ INSERT INTO permissions (name) VALUES ('duties.assign');
 INSERT INTO permissions (name) VALUES ('duties.delete');
 INSERT INTO permissions (name) VALUES ('duties.view');
 INSERT INTO permissions (name) VALUES ('duties.viewstats');
+INSERT INTO permissions (name) VALUES ('fines.create');
+INSERT INTO permissions (name) VALUES ('fines.view');
+INSERT INTO permissions (name) VALUES ('fines.viewall');
+INSERT INTO permissions (name) VALUES ('fines.delete');

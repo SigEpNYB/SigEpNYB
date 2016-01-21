@@ -47,4 +47,6 @@ public interface IDatabase extends AutoCloseable {
 	
 	/** Gets the GroupsDAO */
 	public GroupsDAO getGroupsDAO();
+	
+	public FinesDAO getFinesDAO();
 }

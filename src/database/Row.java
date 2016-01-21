@@ -53,6 +53,8 @@ class Row {
 			Class<?> parameterType = field.getType();
 			if (parameterType == int.class) {
 				values.add(getInt(field.getName()));
+			} else if (parameterType == double.class) {
+				values.add(getDouble(field.getName()));
 			} else if (parameterType == String.class) {
 				values.add(getString(field.getName()));
 			} else if (parameterType == Date.class) {

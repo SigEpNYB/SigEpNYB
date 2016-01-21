@@ -235,6 +235,14 @@ public class Database implements IDatabase {
 	public GroupsDAO getGroupsDAO() {
 		return new GroupsDAO(this);
 	}
+	
+	/* (non-Javadoc)
+	 * @see database.IDatabase#getFinesDAO()
+	 */
+	@Override
+	public FinesDAO getFinesDAO() {
+		return new FinesDAO(this);
+	}
 
 	/* (non-Javadoc)
 	 * @see java.lang.AutoCloseable#close()

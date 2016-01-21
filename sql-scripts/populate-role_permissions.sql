@@ -11,3 +11,7 @@ INSERT INTO role_permissions (idRole, idPermission) VALUES (2, 10);
 INSERT INTO role_permissions (idRole, idPermission) VALUES (2, 11);
 INSERT INTO role_permissions (idRole, idPermission) VALUES (2, 12);
 INSERT INTO role_permissions (idRole, idPermission) VALUES (2, 13);
+INSERT INTO role_permissions (idRole, idPermission) VALUES (2, 14);
+INSERT INTO role_permissions (idRole, idPermission) VALUES (2, 15);
+INSERT INTO role_permissions (idRole, idPermission) VALUES (2, 16);
+INSERT INTO role_permissions (idRole, idPermission) VALUES (2, 17);

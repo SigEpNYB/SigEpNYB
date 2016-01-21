@@ -37,6 +37,10 @@
     <servlet-name>Duties</servlet-name>
     <servlet-class>servlets.Duties</servlet-class>
   </servlet>
+  <servlet>
+    <servlet-name>Fines</servlet-name>
+    <servlet-class>servlets.Fines</servlet-class>
+  </servlet>
   <servlet-mapping>
     <servlet-name>Account</servlet-name>
     <url-pattern>/Account/*</url-pattern>
@@ -64,5 +68,9 @@
   <servlet-mapping>
     <servlet-name>Duties</servlet-name>
     <url-pattern>/Duties/*</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>Fines</servlet-name>
+    <url-pattern>/Fines/*</url-pattern>
   </servlet-mapping>
 </web-app>
