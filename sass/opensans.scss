@@ -1,0 +1,13 @@
+@mixin font-face($family, $path, $svg, $weight: normal, $style: normal) {
+  @font-face {
+    font-family: $family;
+    src: url('#{$path}.eot'), 
+      url('#{$path}.eot?#iefix') format('embedded-opentype'), 
+      url('#{$path}.woff') format('woff'), 
+      url('#{$path}.svg##{$svg}') format('svg');
+    font-weight: $weight;
+    font-style: $style;
+  }
+}
+
+@include font-face('Open Sans', '../fonts/OpenSans-Regular-webfont', 'open_sans_regular')

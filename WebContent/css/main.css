@@ -1,30 +1,25 @@
-/* General Styles */
 html {
-  position:relative;
-  min-height: 100%
-}
+  position: relative;
+  min-height: 100%; }
+
 body {
   text-align: center;
   font-family: 'Open Sans', sans-serif;
-  margin-bottom: 60px;
-}
-.fullWidth {
-  width: 100%;
-}
+  margin-bottom: 60px; }
 
-/* Footer */
+.fullWidth {
+  width: 100%; }
+
 .footer {
   position: absolute;
   bottom: 0;
   width: 100%;
   height: 60px;
-  background-color: #f5f5f5;
-}
-.footer p {
-  margin-top: 0px;
-}
+  background-color: #f5f5f5; }
 
-/* Login */
+.footer p {
+  margin-top: 0; }
+
 .loginInput {
   width: 250px;
   padding: 10px 0 5px 0;
@@ -34,8 +29,8 @@ body {
   color: #ffffff;
   font-size: 20px;
   text-align: center;
-  background: none;
-}
+  background: none; }
+
 .loginButton {
   border: 2px solid;
   border-radius: 30px;
@@ -47,117 +42,96 @@ body {
   letter-spacing: 7px;
   color: #ffffff;
   background: none;
-  width: 250px;
-}
+  width: 250px; }
+
 .loginButton:hover {
-  background: #d0739a;
-}
+  background: #d0739a; }
+
 .loginInput::-webkit-input-placeholder {
-   color: #ffffff;
-   letter-spacing: 7px;
-}
-.loginInput:-moz-placeholder { /* Firefox 18- */
-   color: #ffffff;
-   letter-spacing: 7px;
-}
-.loginInput::-moz-placeholder {  /* Firefox 19+ */
-   color: #ffffff;
-   letter-spacing: 7px;
-}
+  color: #ffffff;
+  letter-spacing: 7px; }
+
+.loginInput:-moz-placeholder {
+  color: #ffffff;
+  letter-spacing: 7px; }
+
+.loginInput::-moz-placeholder {
+  color: #ffffff;
+  letter-spacing: 7px; }
+
 .loginInput:-ms-input-placeholder {
-   color: #ffffff;
-   letter-spacing: 7px;
-}
+  color: #ffffff;
+  letter-spacing: 7px; }
+
 .loginLink {
   font-size: 10px;
   font-weight: 600;
   letter-spacing: 2px;
   color: #d0739a;
-  border: none;
-}
-.loginLink:hover {
-  color: #ffffff;
-}
-.requestSuccessText {
-  color: #ffffff;
-  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-  font-size: 18px;
-}
+  border: none; }
+  .loginLink:hover {
+    color: #ffffff; }
+
 .loginbg {
   margin-top: 8%;
   width: 100%;
   padding: 50px 20px;
-  text-align: center;
-}
-body#login,#createaccount {
-  background: linear-gradient(to right, #9b3bbf , #dd2920);
-}
-body#successresponse {
-  background: linear-gradient(to right, #89cc52 , #b0d941);
-  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-}
-@media (max-width:750px) {
-  .loginbg {
-    margin-top: 5%;
-  }
-}
+  text-align: center; }
 
-/* Tables */
+#login, #createaccount {
+  background: linear-gradient(to right, #9b3bbf, #dd2920); }
+
+@media (max-width: 750px) {
+  .loginbg {
+    margin-top: 5%; } }
+
 .table .text-center {
   text-align: center;
-  vertical-align: middle;
-}
-.buttons {
-  margin: auto
-  display: block;
-}
-.table th {
-  text-align: center
-}
+  vertical-align: middle; }
 
-/* Dashboard */
+.buttons {
+  margin: auto;
+  display: block; }
+
+.table th {
+  text-align: center; }
+
 @media (max-width: 992px) {
   #userInfo {
-    margin-bottom: 40px;
-  }
-  #crest {
-    display: none;
-  }
-}
-#crest {
-  margin-left: 10px;
-}
-.qtip_fratsite {
-  white-space: pre-line;
-}
+    margin-bottom: 25px; } }
 
-/* Create Event */
+#crest {
+  margin-left: 10px; }
+  @media (max-width: 992px) {
+    #crest {
+      display: none; } }
+
+.qtip_fratsite {
+  white-space: pre-line; }
+
 .eventInput {
   width: 100%;
   min-width: 300px;
   vertical-align: middle;
-  margin: auto;
-}
-.datepickerButton {
-  cursor: pointer;
-}
-::-webkit-calendar-picker-indicator{
-    display: none;
-}
+  margin: auto; }
 
-/* Trade Duties */
+.datepickerButton {
+  cursor: pointer; }
+
+::-webkit-calendar-picker-indicator {
+  display: none; }
+
 .tradeDuty > * {
-  display: inline;
-}
+  display: inline; }
+
 .tradeType {
-  width: 30%;
-}
+  width: 30%; }
+
 .tradeEventId {
-  width: 20%;
-}
+  width: 20%; }
+
 .tradeToFrom {
-  width: 20%;
-}
+  width: 20%; }
+
 .addTrade {
-  width: 30%;
-}
+  width: 30%; }
