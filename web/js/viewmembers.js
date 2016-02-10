@@ -1,6 +1,6 @@
-sendRequest('GET', 'Permissions', null, 'json', true, null, function(permissions) {
+//sendRequest('GET', 'Permissions', null, 'json', true, null, function(permissions) {
   sendRequest('GET', 'Accounts', null, 'json', true, null, function(accounts) {
-    var removePermission = permissions['RemoveAccount'];
+    var removePermission = true; //permissions['RemoveAccount'];
 
     var table = accounts.map(function(account) {
       var buttonString = '';
@@ -12,14 +12,14 @@ sendRequest('GET', 'Permissions', null, 'json', true, null, function(permissions
         '<td>' + account.lastName + '</td>' +
         '<td>' + account.netid + '</td>' +
         '<td>' + account.phoneNumber + '</td>' +
-        buttonString + 
+        buttonString +
         '</tr>';
     }).reduce(function(s1, s2) {
       return s1 + s2;
     }, '');
     document.getElementById('members').innerHTML = table;
   });
-});
+//});
 
 /**
  * Sends a request to the server to remove a brother from the site

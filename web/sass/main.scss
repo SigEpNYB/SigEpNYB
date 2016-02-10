@@ -4,7 +4,7 @@ $break-md: 992px;
   #{$class}::-webkit-input-placeholder {@content}
   #{$class}:-moz-placeholder           {@content}
   #{$class}::-moz-placeholder          {@content}
-  #{$class}:-ms-input-placeholder      {@content}  
+  #{$class}:-ms-input-placeholder      {@content}
 }
 
 // General Styles

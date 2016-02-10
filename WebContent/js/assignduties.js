@@ -1,8 +1,8 @@
-checkPermissions(['AssignDuties'],
+/*checkPermissions(['AssignDuties'],
   "Sorry, you don't have permission to assign duties",
   "Check the calendar to see your upcoming duties",
    true);
-
+*/
 $(document).ready(function() {
   $('#submitDuties').hide();
   $('#eventId').keyup(function(event) {

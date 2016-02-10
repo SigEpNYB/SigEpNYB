@@ -14,14 +14,14 @@ $(document).ready(function() {
       $(this).datepicker('hide');
     });
 });
-
-checkPermissions(['CreateEvent'], 
+/*
+checkPermissions(['CreateEvent'],
   "Sorry, you don't have permission to create events",
   "Talk to the VP of Programming to create an event",
   true);
-
+*/
 function addEvent() {
-  var data = buildObj(['title', 'description', 'startTime', 
+  var data = buildObj(['title', 'description', 'startTime',
     'endTime', 'riskManagers', 'setClean', 'sobers', 'drivers']);
   return sendEvent(data);
 }
@@ -44,7 +44,7 @@ function sendEvent(data) {
   sendRequest('POST', 'Events', data, 'json', true, null, function() {
     swal({
       title: 'Event Created!',
-      text: 'Check your dashboard to see it on the calendar', 
+      text: 'Check your dashboard to see it on the calendar',
       type: 'success'
     }, function() {
       clearIds(['title', 'description', 'startTime', 'endTime', 'endTime',

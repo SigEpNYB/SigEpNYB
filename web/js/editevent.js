@@ -1,12 +1,12 @@
 $(document).ready(function() {
   $('.eventInput').hide();
 });
-
+/*
 checkPermissions(['EditEvent'],
   "Sorry, you don't have permission to edit events",
   "Talk to the VP of Programming to edit an event",
   true);
-
+*/
 function getEvent() {
   var eventId = document.getElementById('eventId').value;
   return sendGetEvent(eventId);

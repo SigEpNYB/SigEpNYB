@@ -1,8 +1,8 @@
-checkPermissions(['AssignRoles'],
+/*checkPermissions(['AssignRoles'],
   "Sorry, you don't have permission to assign roles",
   'Go to "View Members" to see the list of brothers',
   true);
-
+*/
 setNetidMap();
 
 function getRoles() {

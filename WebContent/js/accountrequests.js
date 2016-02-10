@@ -1,8 +1,8 @@
-checkPermissions(['AccountRequests'], 
+/*checkPermissions(['AccountRequests'],
   "Sorry, you don't have permission to approve account requests",
   'Go to "View Members" to see the list of brothers',
    true);
-
+*/
 sendRequest('GET', 'AccountRequests', null, 'json', true, null, function(requests) {
   var requestBody = requests.map(function(request) {
     return '<tr>' +
@@ -29,13 +29,14 @@ sendRequest('GET', 'AccountRequests', null, 'json', true, null, function(request
  * @returns {undefined}
  */
 function approveRequest(idRequest) {
+  console.log(idRequest);
   var data = {idRequest: idRequest};
   sendRequest('PUT', 'AccountRequests', data, 'text', true, null, function() {
     swal({
       title: 'Account Approved',
       type: 'success'
     }, function() {
-      event.target.parentNode.parentNode.parentNode.removeChild(event.target.parentNode.parentNode);
+      window.location.reload();
     });
    }, function() {
     swal({
@@ -58,7 +59,7 @@ function rejectRequest(idRequest) {
       title: 'Account Rejected',
       type: 'success'
     }, function() {
-      event.target.parentNode.parentNode.parentNode.removeChild(event.target.parentNode.parentNode);
+      window.location.reload();
     });
   }, function() {
     swal({
@@ -76,8 +77,8 @@ function rejectRequest(idRequest) {
  */
 function approveString(idRequest) {
   return '<button type="button" ' +
-  'class="btn btn-success" ' + 
-  'onclick="approveRequest(event, \'' + idRequest + '\')">' +
+  'class="btn btn-success" ' +
+  'onclick="approveRequest(\'' + idRequest + '\')">' +
   'Approve</button>';
 }
 
@@ -88,7 +89,7 @@ function approveString(idRequest) {
  */
 function rejectString(idRequest) {
   return '<button type="button" ' +
-  'class="btn btn-danger" ' + 
-  'onclick="rejectRequest(event, \'' + idRequest + '\')">' +
+  'class="btn btn-danger" ' +
+  'onclick="rejectRequest(\'' + idRequest + '\')">' +
   'Reject</button>';
 }

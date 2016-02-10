@@ -1,8 +1,8 @@
-checkPermissions(['AssignFines'],
+/*checkPermissions(['AssignFines'],
   "Sorry, you don't have permission to give fines",
   'Go to "View My Fines" to see your fines',
   true);
-
+*/
 setNetidMap();
 
 sendRequest('GET', 'FinesList', null, 'json', true, null, function(fines) {
