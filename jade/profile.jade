@@ -1,0 +1,21 @@
+doctype html
+html(lang="en")
+  head
+    include ../components/css.jade
+    title Profile | SigEp
+  body
+    include ../components/noscript.jade
+    include ../components/navbar.jade
+    .container-fluid
+      .row
+        .col-xs-12.col-md-8.col-md-offset-2
+          #name
+          #netid
+          #phoneNumber
+          #roles
+          br
+          a.btn.btn-primary(href='changepassword.html') Change Password
+    include ../components/footer.jade
+    include ../components/js.jade
+    script(src='js/navbar.js')
+    script(src='js/profile.js')

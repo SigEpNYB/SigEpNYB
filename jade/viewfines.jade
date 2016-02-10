@@ -1,0 +1,22 @@
+doctype html
+html(lang="en")
+  head
+    include ../components/css.jade
+    title View Fines | SigEp
+  body
+    include ../components/noscript.jade
+    include ../components/navbar.jade
+    .container-fluid
+      .row
+        .col-xs-12.col-md-6.col-md-offset-3
+          table.table.table-hover
+            thead
+              tr
+                th Description
+                th Amount
+                th
+            tbody#fines
+    include ../components/footer.jade
+    include ../components/js.jade
+    script(src='js/navbar.js')
+    script(src='js/viewfines.js')

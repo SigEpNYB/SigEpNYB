@@ -1,0 +1,33 @@
+doctype html
+html(lang="en")
+  head
+    include ../components/css.jade
+    title Create Account | SigEp
+  body#createaccount
+    include ../components/noscript.jade
+    .container-fluid
+      .row
+        .col-xs-12.col-md-6.col-md-offset-3
+          .loginbg
+            a(href='index.html')
+              img(src='img/nyblogowhite.png', alt='SigEp NYB', height='78px', width='149px')
+            br
+            br
+            br
+            input#firstName.loginInput(type='text', name='firstname', placeholder='FIRST NAME')
+            br
+            input#lastName.loginInput(type='text', name='lastname', placeholder='LAST NAME')
+            br
+            input#phoneNumber.loginInput(type='text', name='phonenumber', placeholder='PHONE NUMBER')
+            br
+            br
+            br
+            input#netid.loginInput(type='text', name='netid', placeholder='NET ID')
+            br
+            input#password.loginInput(type='password', placeholder='PASSWORD', name='password')
+            br
+            input#passwordConfirm.loginInput(type='password', placeholder='RE-ENTER', name='passwordConfirm')
+            br
+            input#createAccountButton.loginButton(type='submit', value='CREATE', onclick='submitAccount()')
+    include ../components/js.jade
+    script(src='js/createaccount.js')

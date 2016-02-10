@@ -1,0 +1,40 @@
+doctype html
+html(lang="en")
+  head
+    include ../components/css.jade
+    title Create Event | SigEp
+  body
+    include ../components/noscript.jade
+    include ../components/navbar.jade
+    .container-fluid
+      .row
+        .col-xs-12.col-md-4.col-md-offset-4
+          h2 New Event
+          br
+          input#title.form-control.eventInput(type='text', placeholder='Title')
+          br
+          .input-group.eventInput
+            input#startTime.form-control(type='datetime-local')
+            span#startTimeButton.input-group-addon.datepickerButton
+              i.glyphicon.glyphicon-calendar
+          br
+          .input-group.eventInput
+            input#endTime.form-control(type='datetime-local')
+            span#endTimeButton.input-group-addon.datepickerButton
+              i.glyphicon.glyphicon-calendar
+          br
+          input#description.form-control.eventInput(type='text', placeholder='Description')
+          br
+          input#riskManagers.form-control.eventInput(type='number', placeholder='# of Risk Managers', min='0')
+          br
+          input#setClean.form-control.eventInput(type='number', placeholder='# of Set/Clean', min='0')
+          br
+          input#sobers.form-control.eventInput(type='number', placeholder='# of Sobers', min='0')
+          br
+          input#drivers.form-control.eventInput(type='number', placeholder='# of Drivers', min='0')
+          br
+          input#eventSubmit.btn.btn-success.eventInput(type='submit', value='Create', onclick='addEvent()')
+    include ../components/footer.jade
+    include ../components/js.jade
+    script(src='js/navbar.js')
+    script(src='js/createevent.js')
