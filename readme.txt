@@ -102,3 +102,39 @@ Input:
     idDuty: id
 }
 Output: nothing
+
+
+Fines (/Fines):
+------------------------
+POST creates a Fine
+Input:
+{
+    idAccount: id,
+    amount: decimal,
+    reason: "reason"
+}
+Output: nothing
+
+GET gets either all of the fines or only the fines for a specific person
+url params: showAll (boolean)
+if showAll is true, this returns all fines, else just the fines for the current user.  The default is false
+Input: no body
+Output: list of fines
+[
+    {
+        idFine: id,
+        idAccount: id,
+        amount: decimal,
+        reason: "reason"
+    },
+    {
+        ...
+    }
+]
+
+DELETE removes a fine
+Input:
+{
+    idFine: id
+}
+Output: nothing
