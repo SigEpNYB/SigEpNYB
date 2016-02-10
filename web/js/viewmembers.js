@@ -28,7 +28,6 @@
  */
 function removeMember(netid) {
   var data = {netid: netid};
-  console.log(netid);
   sendRequest('DELETE', 'Accounts', data, 'text', true, null, function() {
     swal({
       title: 'User Deleted!',

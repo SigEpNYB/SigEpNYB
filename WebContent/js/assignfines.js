@@ -5,21 +5,23 @@
 */
 setNetidMap();
 
-sendRequest('GET', 'FinesList', null, 'json', true, null, function(fines) {
+sendRequest('GET', 'Fines', null, 'json', true, {showAll: true}, function(fines) {
   var fineString = fines.map(function(fine) {
   return '<tr>' +
-    '<td><input type="text" class="form-control" value="' + fine.netid + '">' + '</td>' +
-    '<td><input type="text" class="form-control" value="' + fine.description + '">' + '</td>' +
-    '<td><input type="text" class="form-control" value="' + fine.amount + '">' + '</td>' +
-    '<td><button onclick="closeFine(' + fine.id +')" class="btn btn-success">Close</button></td>' +
-    '<td><button onclick="deleteFine(' + fine.id + ')" class="btn btn-error">Delete</button></td>' +
+    '<td>' + accountidMap[fine.idAccount] + '</td>' +
+    '<td>' + fine.reason + '</td>' +
+    '<td>' + fine.amount.toFixed(2) + '</td>' +
+    '<td><button onclick="deleteFine(' + fine.idFine + ')" class="btn btn-danger">Delete/Close</button></td>' +
     '</tr>';
+  }).reduce(function(s1, s2) {
+    return s1 + s2;
   });
+  document.getElementById('fines').innerHTML = fineString;
 });
 
 function submitFine() {
-  var data = buildObj(['netid', 'description', 'amount']);
-  data.accountId = netidMap[data.netid];
+  var data = buildObj(['netid', 'reason', 'amount']);
+  data.idAccount = netidMap[data.netid];
   delete data.netid;
   sendFine(data);
 }
@@ -30,7 +32,7 @@ function submitFine() {
  * @returns {undefined}
  */
 function sendFine(data) {
-  sendRequest('POST', 'Fines', null, 'text', true, data, function() {
+  sendRequest('POST', 'Fines', data, 'text', true, null, function() {
     swal({
       title: 'Fine Submitted',
       type: 'success',
@@ -45,30 +47,7 @@ function sendFine(data) {
     });
   }, function(xhr) {
     swal({
-      title: "Server Error",
-      text: 'Error Code: ' + xhr.status,
-      type: 'error'
-    });
-  });
-}
-
-/**
- * Sends a close fine request to the server
- * @param {number} fineId - ID of actual fine
- * @returns {undefined}
- */
-function closeFine(fineId) {
-  var data = {fineId: fineId};
-  sendRequest('POST', 'FinesList', data, 'text', true, null, function() {
-    swal({
-      title: 'Fine Closed',
-      type: 'success'
-    }, function(isConfirm) {
-      window.location.reload();
-    });
-  }, function(xhr) {
-    swal({
-      title: "Server Error",
+      title: "Please make sure the Netid you entered is valid",
       text: 'Error Code: ' + xhr.status,
       type: 'error'
     });
@@ -81,45 +60,13 @@ function closeFine(fineId) {
  * @returns {undefined}
  */
 function deleteFine(fineId) {
-  var data = {fineId: fineId};
-  sendRequest('DELETE', 'FinesList', data, 'text', true, null, function() {
+  var data = {idFine: fineId};
+  sendRequest('DELETE', 'Fines', data, 'text', true, null, function() {
     swal({
       title: 'Fine Deleted',
       type: 'success'
     }, function(isConfirm) {
       window.location.reload();
-    });
-  }, function(xhr) {
-    swal({
-      title: "Server Error",
-      text: 'Error Code: ' + xhr.status,
-      type: 'error'
-    });
-  });
-}
-
-function updateFines() {
-  var data = document.getElementById('fines').childNodes.map(function(tr) {
-    var td = tr.childNodes[0];
-    return {
-      accountId: netidMap[td.childNodes[0].value],
-      description: td.childNodes[1].value,
-      amount: td.childNodes[2].value
-    };
-  });
-  return sendFinesUpdate(data);
-}
-
-/**
- * Updates the fines list
- * @param {Object[]} data - List of fine objects
- * @returns {undefined}
- */
-function sendFinesUpdate(data) {
-  sendRequest('PUT', 'FinesList', data, 'text', true, null, function() {
-    swal({
-      title: 'Fines Updated',
-      type: 'success'
     });
   }, function(xhr) {
     swal({

@@ -21,10 +21,9 @@ function sendRequest(method, url, data, dataType, useToken, queryStringObj, onSu
       queryString += key + '=' + queryStringObj[key] + '&';
     });
   }
-
-  var dataString = JSON.stringify(data || {});
-
   queryString = queryString.slice(0, -1);
+
+  var dataString = ($.isEmptyObject(data) ? undefined : JSON.stringify(data));
 
   var headers = {};
   if (useToken) {
@@ -70,11 +69,13 @@ function checkPermissions(necessary, title, text, redirect) {
   });
 }
 
-var netidMap;
+var netidMap = {};
+var accountidMap = {};
 function setNetidMap() {
   sendRequest('GET', 'Accounts', null, 'json', true, null, function(accounts) {
     accounts.forEach(function(account) {
-      netidMap[account.netid] = account.accountId;
+      netidMap[account.netid] = account.id;
+      accountidMap[account.id] = account.netid;
     });
   });
 }

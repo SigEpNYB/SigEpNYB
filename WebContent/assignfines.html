@@ -64,9 +64,9 @@
     </nav>
     <div class="container-fluid">
       <div class="row">
-        <div class="col-xs-12 col-md-4 col-md-offset-4">
+        <div class="col-xs-12 col-md-6 col-md-offset-3">
           <input id="netid" type="text" placeholder="NetID" class="form-control"><br>
-          <input id="description" type="text" placeholder="Description" class="form-control"><br>
+          <input id="reason" type="text" placeholder="Description" class="form-control"><br>
           <div class="input-group"><span class="input-group-addon">$</span>
             <input id="amount" type="number" placeholder="Amount" min="0" class="form-control">
           </div><br>
@@ -75,7 +75,7 @@
             <thead>
               <tr>
                 <th>NetID</th>
-                <th>Description</th>
+                <th>Reason</th>
                 <th>Amount</th>
                 <th></th>
                 <th></th>
@@ -83,7 +83,6 @@
             </thead>
             <tbody id="fines"></tbody>
           </table>
-          <input id="updateFines" type="submit" value="Update Fines" onclick="updateFines()" class="btn btn-success fullWidth">
         </div>
       </div>
     </div><br><br>

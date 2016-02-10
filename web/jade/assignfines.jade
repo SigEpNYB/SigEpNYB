@@ -8,10 +8,10 @@ html(lang="en")
     include ../components/navbar.jade
     .container-fluid
       .row
-        .col-xs-12.col-md-4.col-md-offset-4
+        .col-xs-12.col-md-6.col-md-offset-3
           input#netid.form-control(type='text', placeholder='NetID')
           br
-          input#description.form-control(type='text', placeholder='Description')
+          input#reason.form-control(type='text', placeholder='Description')
           br
           .input-group
             span.input-group-addon $
@@ -24,12 +24,11 @@ html(lang="en")
             thead
               tr
                 th NetID
-                th Description
+                th Reason
                 th Amount
                 th
                 th
             tbody#fines
-          input#updateFines.btn.btn-success.fullWidth(type='submit', value='Update Fines', onclick='updateFines()')
     include ../components/footer.jade
     include ../components/js.jade
     script(src='js/navbar.js')
