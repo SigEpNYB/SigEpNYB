@@ -181,6 +181,8 @@ function dateToPaddedString(date) {
            ('0' + date.getMinutes()).slice(-2));
 }
 
+function addStr(s1, s2) { return s1 + s2; }
+
 /**
  * Converts a string to proper english case
  * @returns {string}
