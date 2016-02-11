@@ -18,5 +18,11 @@
   "bugs": {
     "url": "https://github.com/DecSander/SigEpNYB/issues"
   },
-  "homepage": "https://github.com/DecSander/SigEpNYB#readme"
+  "homepage": "https://github.com/DecSander/SigEpNYB#readme",
+  "devDependencies": {
+    "gulp": "^3.9.1",
+    "gulp-jade": "^1.1.0",
+    "gulp-sass": "^2.2.0",
+    "gulp-uglify": "^1.5.2"
+  }
 }
