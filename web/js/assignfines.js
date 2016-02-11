@@ -13,9 +13,7 @@ sendRequest('GET', 'Fines', null, 'json', true, {showAll: true}, function(fines)
     '<td>' + fine.amount.toFixed(2) + '</td>' +
     '<td><button onclick="deleteFine(' + fine.idFine + ')" class="btn btn-danger">Delete/Close</button></td>' +
     '</tr>';
-  }).reduce(function(s1, s2) {
-    return s1 + s2;
-  });
+  }).reduce(addStr, '');
   document.getElementById('fines').innerHTML = fineString;
 });
 
