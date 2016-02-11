@@ -23,7 +23,7 @@ sourceSets {
 			srcDir 'src/'
 		}
 	}
-	
+
 	test {
 		java {
 			srcDir 'test/'
@@ -35,7 +35,7 @@ repositories {
 	flatDir {
 		dirs 'localjars'
 	}
-	
+
     mavenCentral()
 }
 
