@@ -38,6 +38,31 @@ if the url parameter idAccount is included, it gets only the details on the acco
 ex: ?idAccount=2
 
 
+Account  (/Account):
+------------------------
+GET Gets information about the current user's account
+Input: none
+Output:
+{
+    firstName: string,
+    lastName: string,
+    netid: string,
+    id: int
+}
+If the optional url parameter showPermissions is true, it instead returns an array of permissions the current user has.
+ex:
+[
+    "accounts.get",
+    "events.get",
+    "accountRequests.view",
+    "accountRequests.accept",
+    "accountRequests.reject",
+    "accounts.delete",
+    "dutues.create",
+    "duties.assign"
+]
+
+
 Events (/Events):
 ------------------------
 POST Creates an Event
