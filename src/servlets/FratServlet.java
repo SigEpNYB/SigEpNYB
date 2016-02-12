@@ -178,7 +178,11 @@ public abstract class FratServlet extends HttpServlet {
 	private JSONArray serializeArr(Object[] arr) throws IllegalAccessException, IllegalArgumentException, InvocationTargetException, JSONException {
 		JSONArray ret = new JSONArray();
 		for (Object obj : arr) {
-			ret.put(serializeObj(obj));
+			if (String.class.equals(obj.getClass())) {
+				ret.put(obj);
+			} else {
+				ret.put(serializeObj(obj));
+			}
 		}
 		return ret;
 	}

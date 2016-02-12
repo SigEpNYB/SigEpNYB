@@ -22,9 +22,14 @@ class Row {
 	private final ResultSet results;
 	private boolean done;
 	
+	private int offset;
+	
 	/** Creates a new Row */
 	Row(ResultSet results) {
 		this.results = results;
+		done = false;
+		
+		offset = 0;
 	}
 
 	/** Tells the executor that this is the last row to process */
@@ -38,67 +43,73 @@ class Row {
 	}
 	
 	/** Builds an object of type T from this row */
+	@SuppressWarnings("unchecked")
 	public <T> T build(Class<T> type) throws SQLException {
-		@SuppressWarnings("unchecked")
-		Constructor<T> constructor = (Constructor<T>) type.getConstructors()[0];
-		
-		Field[] fields = type.getDeclaredFields();
-		List<Object> values = new LinkedList<>();
-		
-		for (int i = 0; i < fields.length; i++) {
-			Field field = fields[i];
-			if (Modifier.isStatic(field.getModifiers())) continue;
-			field.setAccessible(true);
-			
-			Class<?> parameterType = field.getType();
-			if (parameterType == int.class) {
-				values.add(getInt(field.getName()));
-			} else if (parameterType == double.class) {
-				values.add(getDouble(field.getName()));
-			} else if (parameterType == String.class) {
-				values.add(getString(field.getName()));
-			} else if (parameterType == Date.class) {
-				Timestamp timestamp = getTimestamp(field.getName());
-				values.add(timestamp == null ? null : new Date(timestamp.getTime()));
-			} else if (parameterType.isEnum()) {
-				try {
-					Field[] paramFields = parameterType.getDeclaredFields();
-					Field idField = null;
-					for (Field paramField : paramFields) {
-						if (Modifier.isStatic(paramField.getModifiers())) continue;
-						idField = paramField;
-						break;
-					}
-					int id = getInt(idField.getName());
-					
-					for (Object obj : parameterType.getEnumConstants()) {
-						if (id == (int) idField.get(obj)) {
-							values.add(obj);
-							break;
-						}
-					}
-				} catch (SecurityException e) {
-					throw new RuntimeException("Enum: " + parameterType + " id field is not accessable");
-				} catch (IllegalArgumentException e) {
-					throw new RuntimeException("Enum: " + parameterType + " id field is not accessable");
-				} catch (IllegalAccessException e) {
-					throw new RuntimeException("Enum: " + parameterType + " id field is not accessable");
+		if (type == int.class) {
+			return (T) ((Integer) getInt(1));
+		} else if (type == double.class) {
+			return (T) ((Double) getDouble(1));
+		} else if (type == String.class) {
+			return (T) getString(1);
+		} else if (type == Date.class) {
+			Timestamp timestamp = getTimestamp(1);
+			return (T) (timestamp == null ? null : new Date(timestamp.getTime()));
+		} else if (type.isEnum()) {
+			try {
+				Field[] paramFields = type.getDeclaredFields();
+				Field idField = null;
+				for (Field paramField : paramFields) {
+					if (Modifier.isStatic(paramField.getModifiers())) continue;
+					idField = paramField;
+					break;
 				}
-			} else {
-				values.add(build(parameterType));
+				int id = getInt(idField.getName());
+				
+				for (Object obj : type.getEnumConstants()) {
+					if (id == (int) idField.get(obj)) {
+						return (T) obj;
+					}
+				}
+			} catch (SecurityException e) {
+				throw new RuntimeException("Enum: " + type + " id field is not accessable");
+			} catch (IllegalArgumentException e) {
+				throw new RuntimeException("Enum: " + type + " id field is not accessable");
+			} catch (IllegalAccessException e) {
+				throw new RuntimeException("Enum: " + type + " id field is not accessable");
 			}
-		}
-		
-		try {
-			return constructor.newInstance(values.toArray());
-		} catch (InstantiationException e) {
-			throw new RuntimeException("Cannot create object of type " + type, e);
-		} catch (IllegalAccessException e) {
-			throw new RuntimeException("Cannot create object of type " + type, e);
-		} catch (IllegalArgumentException e) {
-			throw new RuntimeException("Cannot create object of type " + type, e);
-		} catch (InvocationTargetException e) {
-			throw new RuntimeException("Cannot create object of type " + type, e);
+			
+			throw new RuntimeException("No enum found");
+		} else {
+			Constructor<T> constructor = (Constructor<T>) type.getConstructors()[0];
+			
+			Field[] fields = type.getDeclaredFields();
+			List<Object> values = new LinkedList<>();
+			
+			for (int i = 0; i < fields.length; i++) {
+				Field field = fields[i];
+				if (Modifier.isStatic(field.getModifiers())) continue;
+				field.setAccessible(true);
+				
+				Class<?> parameterType = field.getType();
+				if (parameterType == int.class || parameterType == double.class
+						|| parameterType == String.class || parameterType == Date.class) {
+					offset = results.findColumn(field.getName()) - 1;
+				}
+				values.add(build(parameterType));
+				offset = 0;
+			}
+			
+			try {
+				return constructor.newInstance(values.toArray());
+			} catch (InstantiationException e) {
+				throw new RuntimeException("Cannot create object of type " + type, e);
+			} catch (IllegalAccessException e) {
+				throw new RuntimeException("Cannot create object of type " + type, e);
+			} catch (IllegalArgumentException e) {
+				throw new RuntimeException("Cannot create object of type " + type, e);
+			} catch (InvocationTargetException e) {
+				throw new RuntimeException("Cannot create object of type " + type, e);
+			}
 		}
 	}
 	
@@ -109,7 +120,7 @@ class Row {
 	 * @see java.sql.ResultSet#getBoolean(int)
 	 */
 	public boolean getBoolean(int arg0) throws SQLException {
-		return results.getBoolean(arg0);
+		return results.getBoolean(arg0 + offset);
 	}
 
 	/**
@@ -129,7 +140,7 @@ class Row {
 	 * @see java.sql.ResultSet#getDate(int)
 	 */
 	public Date getDate(int arg0) throws SQLException {
-		return results.getDate(arg0);
+		return results.getDate(arg0 + offset);
 	}
 
 	/**
@@ -149,7 +160,7 @@ class Row {
 	 * @see java.sql.ResultSet#getDouble(int)
 	 */
 	public double getDouble(int arg0) throws SQLException {
-		return results.getDouble(arg0);
+		return results.getDouble(arg0 + offset);
 	}
 
 	/**
@@ -169,7 +180,7 @@ class Row {
 	 * @see java.sql.ResultSet#getInt(int)
 	 */
 	public int getInt(int arg0) throws SQLException {
-		return results.getInt(arg0);
+		return results.getInt(arg0 + offset);
 	}
 
 	/**
@@ -189,7 +200,7 @@ class Row {
 	 * @see java.sql.ResultSet#getLong(int)
 	 */
 	public long getLong(int arg0) throws SQLException {
-		return results.getLong(arg0);
+		return results.getLong(arg0 + offset);
 	}
 
 	/**
@@ -209,7 +220,7 @@ class Row {
 	 * @see java.sql.ResultSet#getString(int)
 	 */
 	public String getString(int arg0) throws SQLException {
-		return results.getString(arg0);
+		return results.getString(arg0 + offset);
 	}
 
 	/**
@@ -229,7 +240,7 @@ class Row {
 	 * @see java.sql.ResultSet#getTime(int)
 	 */
 	public Time getTime(int arg0) throws SQLException {
-		return results.getTime(arg0);
+		return results.getTime(arg0 + offset);
 	}
 
 	/**
@@ -249,7 +260,7 @@ class Row {
 	 * @see java.sql.ResultSet#getTimestamp(int)
 	 */
 	public Timestamp getTimestamp(int arg0) throws SQLException {
-		return results.getTimestamp(arg0);
+		return results.getTimestamp(arg0 + offset);
 	}
 
 	/**
