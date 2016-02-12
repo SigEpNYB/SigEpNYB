@@ -25,4 +25,12 @@ public class PermissionService extends Service<PermissionDAO> {
 		})
 		.unwrap();
 	}
+	
+	/** Gets an array of permissions for the given user */
+	public String[] get(int idAccount) throws InternalServerException {
+		return run(dao -> {
+			return dao.get(idAccount);
+		})
+		.unwrap();
+	}
 }

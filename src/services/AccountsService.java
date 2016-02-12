@@ -17,11 +17,13 @@ import exceptions.PermissionDeniedException;
  * Logic behind accounts
  */
 public class AccountsService extends RestrictedService<AccountsDAO> {
+	private final PermissionService permissionService;
 	private final RoleService roleService;
 	
 	/** Creates an AccountsService */
 	AccountsService(AccountsDAO dao, TokenService tokenService, PermissionService permissionService, RoleService roleService) {
 		super(dao, tokenService, permissionService);
+		this.permissionService = permissionService;
 		this.roleService = roleService;
 	}
 
@@ -71,6 +73,15 @@ public class AccountsService extends RestrictedService<AccountsDAO> {
 				throw new Exception(String.format("Account with given id could not be found but token: '%s' with idAccount: '%d' exists", token, idAccount));
 			}
 			return account;
+		})
+		.unwrap();
+	}
+	
+	/** Gets a list of permissions for the user with the given token */
+	public String[] getPermissions(String token) throws PermissionDeniedException, InvalidTokenException, InternalServerException {
+		return run(token, (dao, t) -> {
+			int idAccount = getAccount(token).getId();
+			return permissionService.get(idAccount);
 		})
 		.unwrap();
 	}

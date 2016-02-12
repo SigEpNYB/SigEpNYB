@@ -19,7 +19,11 @@ public class Account extends FratServlet {
 	 */
 	@Override
 	protected Object get(String token, Map<String, String> urlParams) throws ClientBoundException {
-		return Services.getAccountService().getAccount(token);
+		if (urlParams.containsKey("showPermissions") && urlParams.get("showPermissions").equals("true")) {
+			return Services.getAccountService().getPermissions(token);
+		} else {
+			return Services.getAccountService().getAccount(token);
+		}
 	}
 
 }
