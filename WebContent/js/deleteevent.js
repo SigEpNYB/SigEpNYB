@@ -1,8 +1,8 @@
-/*checkPermissions(['DeleteEvent'],
+checkPermissions(['events.delete'],
   "Sorry, you don't have permission to delete events",
   "Talk to the VP of Programming to delete an event",
   true);
-*/
+
 function deleteEvent() {
   var eventId = document.getElementById('eventId').value;
   return sendDelete(eventId);

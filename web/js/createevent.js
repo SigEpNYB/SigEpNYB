@@ -14,12 +14,12 @@ $(document).ready(function() {
       $(this).datepicker('hide');
     });
 });
-/*
-checkPermissions(['CreateEvent'],
+
+checkPermissions(['events.post'],
   "Sorry, you don't have permission to create events",
   "Talk to the VP of Programming to create an event",
   true);
-*/
+
 function addEvent() {
   var data = buildObj(['title', 'description', 'startTime',
     'endTime', 'riskManagers', 'setClean', 'sobers', 'drivers']);
