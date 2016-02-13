@@ -9,7 +9,10 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import services.Services;
+import data.DutyType;
 import exceptions.ClientBoundException;
+import exceptions.EventNotFoundException;
+import exceptions.InternalServerException;
 import exceptions.MalformedRequestException;
 
 /**
@@ -29,6 +32,24 @@ public class Events extends FratServlet {
 		Date endTime = new Date(data.getLong("endTime"));
 		String description = data.getString("description");
 		int idEvent = Services.getEventService().create(token, title, startTime, endTime, description);
+		
+		if (data.has("duties")) {
+			JSONObject duties = data.getJSONObject("duties");
+			for (DutyType type : DutyType.values()) {
+				String dutyName = type.toString();
+				if (duties.has(dutyName)) {
+					for (int i = 0; i < duties.getInt(dutyName); i++) {
+						try {
+							Services.getDutyService().create(token, idEvent, type);
+						} catch (EventNotFoundException e) {
+							//This should never happen
+							throw new InternalServerException();
+						}
+					}
+				}
+			}
+		}
+		
 		return new IdEvent(idEvent);
 	}
 
