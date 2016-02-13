@@ -71,7 +71,11 @@ Input:
     title: "title",
     startTime: utctimestamp,
     endTime: utctimestamp,
-    description: "description"
+    description: "description",
+    (optional) duties: {
+        <duty_name (see Duties)>: amount,
+        etc
+    }
 }
 Output:
 {
