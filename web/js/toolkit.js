@@ -49,9 +49,9 @@ function sendRequest(method, url, data, dataType, useToken, queryStringObj, onSu
  * @param {boolean} redirect - whether to redirect to dashboard
  */
 function checkPermissions(necessary, title, text, redirect) {
-  sendRequest('GET', 'Permissions', null, 'json', true, null, function(permissions) {
+  sendRequest('GET', 'Account', null, 'json', true, {showPermissions: true}, function(permissions) {
     var hasPermission = permissions.reduce(function(b, p) {
-      return b && permissions[p];
+      return b && (permissions.indexOf(p) >= 0);
     }, true);
     var redir;
     if (redirect) {

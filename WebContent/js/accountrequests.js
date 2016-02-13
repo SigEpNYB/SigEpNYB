@@ -1,8 +1,8 @@
-/*checkPermissions(['AccountRequests'],
+checkPermissions(['accountRequests.view', 'accountRequests.accept', 'accountRequests.reject'],
   "Sorry, you don't have permission to approve account requests",
   'Go to "View Members" to see the list of brothers',
    true);
-*/
+
 sendRequest('GET', 'AccountRequests', null, 'json', true, null, function(requests) {
   var requestBody = requests.map(function(request) {
     return '<tr>' +

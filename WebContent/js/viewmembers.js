@@ -1,6 +1,6 @@
-//sendRequest('GET', 'Permissions', null, 'json', true, null, function(permissions) {
+sendRequest('GET', 'Account', null, 'json', true, {showPermissions: true}, function(permissions) {
   sendRequest('GET', 'Accounts', null, 'json', true, null, function(accounts) {
-    var removePermission = true; //permissions['RemoveAccount'];
+    var removePermission = permissions.indexOf('accounts.delete') >= 0;
 
     var table = accounts.map(function(account) {
       var buttonString = '';
@@ -19,7 +19,7 @@
     }, '');
     document.getElementById('members').innerHTML = table;
   });
-//});
+});
 
 /**
  * Sends a request to the server to remove a brother from the site
