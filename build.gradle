@@ -1,4 +1,4 @@
-defaultTasks 'dbUpdate', 'build', 'jettyRun'
+defaultTasks 'dbUpdate', 'build'
 
 apply plugin: 'java'
 archivesBaseName = "Fratsite"
