@@ -50,7 +50,7 @@ function sendRequest(method, url, data, dataType, useToken, queryStringObj, onSu
  */
 function checkPermissions(necessary, title, text, redirect) {
   sendRequest('GET', 'Account', null, 'json', true, {showPermissions: true}, function(permissions) {
-    var hasPermission = permissions.reduce(function(b, p) {
+    var hasPermission = necessary.reduce(function(b, p) {
       return b && (permissions.indexOf(p) >= 0);
     }, true);
     var redir;
