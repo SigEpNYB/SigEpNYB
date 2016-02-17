@@ -1,4 +1,4 @@
-defaultTasks 'dbUpdate', 'build'
+defaultTasks 'clean', 'dbUpdate', 'build'
 
 apply plugin: 'java'
 archivesBaseName = "Fratsite"
