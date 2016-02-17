@@ -13,5 +13,5 @@ sendRequest('GET', 'Account', null, 'json', true, null, function(account) {
 function logout() {
   sendRequest('DELETE', 'Login', null, 'json', true, null);
   Cookies.expire('token');
-  window.location.href = '/Fratsite';
+  window.location.href = '/';
 }
