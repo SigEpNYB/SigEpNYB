@@ -21,35 +21,7 @@ function sendAccount(data) {
   var empty = Object.keys(data).hasMatch(function(key) {
     return data[key] === '';
   });
-  if (data.password.length < 6) {
-    swal({
-      title: 'Your password is too short',
-      text: 'It needs to be at least 6 characters',
-      type: 'warning',
-      closeOnConfirm: true
-    });
-  } else if (data.password.search(/\d/) === -1) {
-    swal({
-      title: 'Password missing number',
-      text: 'Your password must contain at least 1 number',
-      type: 'warning',
-      closeOnConfirm: true
-    });
-  } else if (data.password.search(/[a-z]/) === -1) {
-    swal({
-      title: 'Password missing lowercase letter',
-      text: 'Your password must contain at least 1 lowercase letter',
-      type: 'warning',
-      closeOnConfirm: true
-    });
-  } else if (data.password.search(/[A-Z]/) === -1) {
-    swal({
-      title: 'Password missing uppercase letter',
-      text: 'Your password must contain at least 1 uppercase letter',
-      type: 'warning',
-      closeOnConfirm: true
-    });
-  } else if (data.netid.search(/[A-Z]!@#$%^&*/) !== -1) {
+  if (data.netid.search(/[A-Z]!@#$%^&*/) !== -1) {
     swal({
       title: 'Invalid NetID',
       text: 'Your NetID can only contain lowercase letters and numbers',
@@ -71,7 +43,6 @@ function sendAccount(data) {
       closeOnConfirm: true
     });
   } else if (data.password !== data.passwordConfirm) {
-      console.log(data);
     swal({
       title: "Your passwords don't match :(",
       text: "Please try again",
