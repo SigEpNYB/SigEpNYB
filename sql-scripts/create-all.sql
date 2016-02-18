@@ -2,7 +2,7 @@ CREATE TABLE version (
 version INT NOT NULL
 );
 
-INSERT INTO version (version) VALUES (5);
+INSERT INTO version (version) VALUES (8);
 
 source create-accounts.sql;
 source create-tokens.sql;
@@ -21,6 +21,7 @@ source create-duties.sql;
 source create-groups.sql;
 source create-group_members.sql;
 source create-duty_switches.sql;
+source create-fines.sql;
 
 source populate-accounts.sql;
 source populate-permissions.sql;
