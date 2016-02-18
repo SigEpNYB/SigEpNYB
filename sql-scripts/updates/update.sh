@@ -1,6 +1,6 @@
 #!/bin/bash
 
-cd sql-scripts/updates
+cd sql-scripts
 
 RED='\033[0;31m'
 GREEN='\033[0;32m'
@@ -19,6 +19,7 @@ fi
 echo "Your database is currently at version $version"
 
 maxVersion=1
+cd updates/
 for f in *.sql
 do
     v=${f:2:1}
@@ -27,6 +28,7 @@ do
         maxVersion=$v
     fi
 done
+cd ..
 
 echo "Your database should be at version $maxVersion"
 
@@ -43,24 +45,26 @@ then
     exit 0
 fi
 
-mkdir -p ../backups
+mkdir -p backups/
 
 let version=$version+1
 for v in `seq $version $maxVersion`
 do
     echo "Updating to version $v..."
-    mysqldump -u builder fratdata > ../backups/beforeV$v.sql
-    mysql -u builder -D fratdata < to$v.sql
+    mysqldump -u builder fratdata > backups/beforeV$v.sql
+    mysql -u builder -D fratdata < updates/to$v.sql
     status=$?
-    mysqldump -u builder fratdata > ../backups/afterV$v.sql
     if [ $status != "0" ]
     then
         echo "Error updating"
+        echo "Reverting to pre update $v"
+        mysql -u builder -D fratdata < backups/beforeV$v.sql
+        echo "Revert complete"
         echo -e "${RED}Aborting.${NC}"
         exit $status
     fi
-    
     mysql -u builder -D fratdata -e "UPDATE version SET version = $v"
+    mysqldump -u builder fratdata > backups/afterV$v.sql
 done
 
 echo -e "${GREEN}Updates complete.${NC}"

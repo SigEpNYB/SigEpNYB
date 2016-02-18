@@ -1,1 +1,1 @@
-source ../create-fines.sql
+source create-fines.sql
