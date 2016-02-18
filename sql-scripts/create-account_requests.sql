@@ -1,9 +1,10 @@
 CREATE TABLE account_requests (
 idRequest INT NOT NULL AUTO_INCREMENT,
-netid VARCHAR(7) NOT NULL,
-password VARCHAR(15) NOT NULL,
+netid VARCHAR(7) NOT NULL UNIQUE,
+password VARCHAR(63) NOT NULL,
 firstName VARCHAR(15) NOT NULL,
 lastName VARCHAR(15) NOT NULL,
+phone VARCHAR(16) NOT NULL,
 idTodo INT NOT NULL,
 PRIMARY KEY (idRequest),
 FOREIGN KEY (idTodo) REFERENCES todos(idTodo)

@@ -11,13 +11,15 @@ public class AccountData {
 	private final String netid;
 	private final String firstName;
 	private final String lastName;
+	private final String phone;
 	
 	/** Creates an Account */
-	public AccountData(int idAccount, String netid, String firstName, String lastName) {
+	public AccountData(int idAccount, String netid, String firstName, String lastName, String phone) {
 		this.idAccount = idAccount;
 		this.netid = netid;
 		this.firstName = firstName;
 		this.lastName = lastName;
+		this.phone = phone;
 	}
 
 	/**
@@ -46,5 +48,12 @@ public class AccountData {
 	 */
 	public String getLastName() {
 		return lastName;
+	}
+	
+	/**
+	 * @return the phone number
+	 */
+	public String getPhone() {
+		return phone;
 	}
 }

@@ -31,7 +31,7 @@ public class AccountRequestDAOTest {
 	@ReturnVariable("idRequest")
 	public int start(String netid, String password, String firstName, String lastName, int idTodo) throws SQLException {
 		int numRequests = dao.getAll().length;
-		dao.create(netid, password, firstName, lastName, idTodo);
+		dao.create(netid, password, firstName, lastName, "", idTodo);
 		AccountRequest[] requests = dao.getAll();
 		assertEquals(numRequests + 1, requests.length);
 		

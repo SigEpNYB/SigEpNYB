@@ -29,7 +29,7 @@ public class AccountsDAOTest {
 	@ReturnVariable("idAccount")
 	public int start(String netid, String password, String firstName, String lastName) throws SQLException {
 		int numAccounts = dao.getAccounts().length;
-		dao.create(netid, password, firstName, lastName);
+		dao.create(netid, password, firstName, lastName, "");
 		assertEquals(numAccounts + 1, dao.getAccounts().length);
 		
 		int idAccount = dao.getId(netid);

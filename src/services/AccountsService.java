@@ -4,6 +4,9 @@
 package services;
 
 import iservice.RestrictedService;
+
+import org.mindrot.jbcrypt.BCrypt;
+
 import data.AccountData;
 import data.Permission;
 import data.Role;
@@ -28,9 +31,9 @@ public class AccountsService extends RestrictedService<AccountsDAO> {
 	}
 
 	/** Creates an account */
-	void create(String netid, String password, String firstName, String lastName) throws InternalServerException, InvalidTokenException, PermissionDeniedException {
+	void create(String netid, String password, String firstName, String lastName, String phone) throws InternalServerException, InvalidTokenException, PermissionDeniedException {
 		run(dao -> {
-			dao.create(netid, password, firstName, lastName);
+			dao.create(netid, password, firstName, lastName, phone);
 			int idAccount = dao.getId(netid);
 			roleService.assign(idAccount, Role.BROTHER);
 		})
@@ -48,7 +51,11 @@ public class AccountsService extends RestrictedService<AccountsDAO> {
 	/** Gets the account id for the given netid and password */
 	public int getId(String netid, String password) throws InternalServerException, AccountNotFoundException {
 		return run(dao -> {
-			int idAccount = dao.getId(netid, password);
+			int idAccount = dao.getId(netid);
+			if (!BCrypt.checkpw(password, dao.getPassword(netid))) {
+				idAccount = AccountsDAO.ACCOUNT_NOT_FOUND;
+			}
+			
 			if (idAccount == AccountsDAO.ACCOUNT_NOT_FOUND) throw new AccountNotFoundException();
 			return idAccount;
 		})

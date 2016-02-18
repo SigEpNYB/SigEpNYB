@@ -3,6 +3,8 @@
  */
 package services;
 
+import org.mindrot.jbcrypt.BCrypt;
+
 import iservice.RestrictedService;
 import services.EmailService.EmailType;
 import data.AccountData;
@@ -38,14 +40,14 @@ public class AccountRequestService extends RestrictedService<AccountRequestDAO> 
 	}
 	
 	/** Creates an account request */
-	public void create(String netid, String password, String firstName, String lastName) throws InternalServerException, AccountExistsException, RequestExistsException {
+	public void create(String netid, String password, String firstName, String lastName, String phone) throws InternalServerException, AccountExistsException, RequestExistsException {
 		run(dao -> {
 			AccountData[] accounts = groupService.getMembers(Group.ACCOUNT_REQUEST_REVIEWERS);
 			int idTodo = todoService.create(String.format("Review account request for: %s %s (%s)", firstName, lastName, netid), accounts);
 			
 			if (dao.has(netid)) throw new RequestExistsException();
 			if (accountsService.hasAccount(netid)) throw new AccountExistsException();
-			dao.create(netid, password, firstName, lastName, idTodo);
+			dao.create(netid, BCrypt.hashpw(password, BCrypt.gensalt()), firstName, lastName, phone, idTodo);
 			
 			emailService.send(netid, EmailType.ACCOUNT_REQUESTED);
 		})
@@ -74,7 +76,8 @@ public class AccountRequestService extends RestrictedService<AccountRequestDAO> 
 			String password = request.getPassword();
 			String firstName = request.getData().getFirstName();
 			String lastName = request.getData().getLastName();
-			accountsService.create(netid, password, firstName, lastName);
+			String phone = request.getData().getPhone();
+			accountsService.create(netid, password, firstName, lastName, phone);
 			
 			todoService.done(request.getData().getIdTodo());
 			
