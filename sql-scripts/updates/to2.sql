@@ -1,1 +1,1 @@
-source ../create-duty_switches.sql
+source create-duty_switches.sql
