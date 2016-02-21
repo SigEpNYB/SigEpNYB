@@ -34,7 +34,7 @@ public class AccountRequests extends FratServlet {
 		String password = data.getString("password");
 		String firstName = data.getString("firstName");
 		String lastName = data.getString("lastName");
-		String phone = data.getString("phoneNumber");
+		String phone = data.getString("phone");
 		try {
 			Services.getAccountRequestService().create(netid, password, firstName, lastName, phone);
 		} catch (AccountExistsException e) {
