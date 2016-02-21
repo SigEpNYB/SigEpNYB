@@ -1,4 +1,4 @@
-defaultTasks 'clean', 'dbUpdate', 'build'
+defaultTasks 'clean', 'dbUpdate', 'build', 'gulp_development'
 
 apply plugin: 'java'
 archivesBaseName = "Fratsite"
@@ -7,6 +7,8 @@ apply plugin: 'eclipse'
 
 apply plugin: 'war'
 webAppDirName = "WebContent"
+
+apply plugin: 'gulp'
 
 apply plugin: 'jetty'
 httpPort = 8080
@@ -37,6 +39,15 @@ repositories {
 	}
 
     mavenCentral()
+}
+
+buildscript {
+    repositories {
+        jcenter()
+    }
+    dependencies {
+        classpath 'be.filipblondeel.gradle:gradle-gulp-plugin:0.1'
+    }
 }
 
 dependencies {

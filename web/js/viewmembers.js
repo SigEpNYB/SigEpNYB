@@ -11,7 +11,7 @@ sendRequest('GET', 'Account', null, 'json', true, {showPermissions: true}, funct
         '<td>' + account.firstName + '</td>' +
         '<td>' + account.lastName + '</td>' +
         '<td>' + account.netid + '</td>' +
-        '<td>' + account.phoneNumber + '</td>' +
+        '<td>' + account.phone + '</td>' +
         buttonString +
         '</tr>';
     }).reduce(function(s1, s2) {
