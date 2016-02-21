@@ -7,7 +7,7 @@ $(document).ready(function() {
 
 function submitAccount() {
   var data = buildObj(['firstName', 'lastName', 'netid','password', 
-    'phoneNumber', 'passwordConfirm']);
+    'phone', 'passwordConfirm']);
     return sendAccount(data);
 }
 

@@ -4,7 +4,7 @@ sendRequest('GET', 'Account', null, 'json', true, null, function(account) {
   document.getElementById('netid').innerHTML =
     '<h1>' + account.netid + '</h1>';
   document.getElementById('phoneNumber').innerHTML =
-    '<h2>' + account.phoneNumber + '</h2>';
+    '<h2>' + account.phone + '</h2>';
 });
 
 sendRequest('GET', 'Roles', null, 'json', true, null, function(roles) {

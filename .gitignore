@@ -7,3 +7,6 @@ build/*
 sql-scripts/backups/*
 /bin/
 node_modules/
+WebContent/*.html
+WebContent/js
+WebContent/css
