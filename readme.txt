@@ -3,8 +3,9 @@ SET UP
 1. Get access to the git repo and pull
 2. Download and install Node
     a. Precompiled binaries can be found on https://nodejs.org/en/
-    b. Make sure you have node by typing 'npm -v'
-    c. Type 'npm install -g gulp'
+    b. Also you can install it through apt-get on linux (https://nodejs.org/en/download/package-manager/)
+    c. Make sure you have node by typing 'npm -v'
+    d. Type 'npm install -g gulp'
 3. Download the MySQL server and make sure its running on your local machine
     a. You can do this by going into the command line and opening the mysql terminal
         i. If you set up a password type 'mysql -u root -p' without the quotes and hit enter, then enter you password and hit enter
@@ -18,10 +19,12 @@ SET UP
         ii. If you included the '-p' you will have to supply your password on the next line
 5. Build everything
     a. Go to the root directory of the project
-    b. Type './gradlew' and hit enter
+    b. Type './gradlew installGulp'
+    c. Type './gradlew npmInstall'
+    d. Type './gradlew' and hit enter
         i. This will build all the code and run the jetty web server
         ii. You will do this every time you want to build and run (every time you make changes and want to test them)
-    c. You can stop the server by pressing control-c (or command-c on a mac I think), or by opening up a new tab in the terminal and typing './gradlew jettyStop' and hitting enter
+    e. You can stop the server by pressing control-c (or command-c on a mac I think), or by opening up a new tab in the terminal and typing './gradlew jettyStop' and hitting enter
 6. Test that it works
     a. Make sure jetty is running
         i. If you stopped it just run it again with './gradlew'
