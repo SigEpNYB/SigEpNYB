@@ -1,28 +1,33 @@
 SET UP
 ==========================================
 1. Get access to the git repo and pull
-2. Download the MySQL server and make sure its running on your local machine
+2. Download and install Node
+    a. Precompiled binaries can be found on https://nodejs.org/en/
+    b. Make sure you have node by typing 'npm -v'
+    c. Type 'npm install -g gulp'
+3. Download the MySQL server and make sure its running on your local machine
     a. You can do this by going into the command line and opening the mysql terminal
         i. If you set up a password type 'mysql -u root -p' without the quotes and hit enter, then enter you password and hit enter
         ii. If you didn't set up a password type 'mysql -u root' without the quotes and hit enter
     b. You should get a prompt saying welcome to mysql etc, etc...
     c. Quit by typing 'exit' and pressing enter
-3. Set up the database by running the setup script
+4. Set up the database by running the setup script
     a. Make sure you are in the sql-scripts directory on the command line
     b. Type 'mysql -u root -p < setup.sql' without the quotes and hit enter
         i. Like before if you didn't set up a password exclude the '-p'
         ii. If you included the '-p' you will have to supply your password on the next line
-4. Build everything
+5. Build everything
     a. Go to the root directory of the project
     b. Type './gradlew' and hit enter
         i. This will build all the code and run the jetty web server
         ii. You will do this every time you want to build and run (every time you make changes and want to test them)
     c. You can stop the server by pressing control-c (or command-c on a mac I think), or by opening up a new tab in the terminal and typing './gradlew jettyStop' and hitting enter
-5. Test that it works
+6. Test that it works
     a. Make sure jetty is running
         i. If you stopped it just run it again with './gradlew'
     b. Point a browser at 'http://localhost:8080/Fratsite'
     c. You should see the login page
+7. To automate the build process on the server, type 'build' from anywhere and hit enter
 ==========================================
 
 
