@@ -1,5 +1,5 @@
 $(document).ready(function() {
-  $('#phoneNumber').formance('format_phone_number');
+  $('#phone').formance('format_phone_number');
   $('.loginInput').keyup(function(event) {
     if (event.keyCode === 13) submitAccount();
   });
@@ -35,7 +35,7 @@ function sendAccount(data) {
       type: 'warning',
       closeOnConfirm: true
     });
-  } else if (data.phoneNumber.length < 16) {
+  } else if (data.phone.length < 16) {
     swal({
       title: 'Incomplete Phone Number',
       text: 'Please make sure to enter your area code too (+1 not necessary)',
