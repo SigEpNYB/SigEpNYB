@@ -32,8 +32,7 @@ $(document).ready(function() {
             '<b>Risk Managers:</b> ' + dutyObj.riskManager + '\n' +
             '<b>Set/Clean:</b> ' + dutyObj.setClean + '\n' +
             '<b>Sobers:</b> ' + dutyObj.sober + '\n' +
-            '<b>Drivers:</b> ' + dutyObj.driver + '\n\n' +
-            '<b>ID:</b> ' + event.id;
+            '<b>Drivers:</b> ' + dutyObj.driver + '\n';
           var overlayText = event.title + '\n\n' + event.description;
           var dutyColors = {
             backgroundColor: eventColor,
