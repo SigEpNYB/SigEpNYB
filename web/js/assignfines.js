@@ -8,7 +8,7 @@ setNetidMap();
 sendRequest('GET', 'Fines', null, 'json', true, {showAll: true}, function(fines) {
   var fineString = fines.map(function(fine) {
   return '<tr>' +
-    '<td>' + accountidMap[fine.idAccount] + '</td>' +
+    '<td>' + accountidMap[fine.idAccount].netid + '</td>' +
     '<td>' + fine.reason + '</td>' +
     '<td>' + fine.amount.toFixed(2) + '</td>' +
     '<td><button onclick="deleteFine(' + fine.idFine + ')" class="btn btn-danger">Delete/Close</button></td>' +
@@ -19,7 +19,7 @@ sendRequest('GET', 'Fines', null, 'json', true, {showAll: true}, function(fines)
 
 function submitFine() {
   var data = buildObj(['netid', 'reason', 'amount']);
-  data.idAccount = netidMap[data.netid];
+  data.idAccount = netidMap[data.netid].id;
   delete data.netid;
   sendFine(data);
 }

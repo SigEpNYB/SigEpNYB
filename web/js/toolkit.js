@@ -74,8 +74,8 @@ var accountidMap = {};
 function setNetidMap() {
   sendRequest('GET', 'Accounts', null, 'json', true, null, function(accounts) {
     accounts.forEach(function(account) {
-      netidMap[account.netid] = account.id;
-      accountidMap[account.id] = account.netid;
+      netidMap[account.netid] = account;
+      accountidMap[account.id] = account;
     });
   });
 }

@@ -1,3 +1,5 @@
+setNetidMap();
+
 $(document).ready(function() {
   var date = new Date();
   var eventData = {
@@ -31,7 +33,7 @@ $(document).ready(function() {
             '<b>Set/Clean:</b> ' + dutyObj.setClean + '\n' +
             '<b>Sobers:</b> ' + dutyObj.sober + '\n' +
             '<b>Drivers:</b> ' + dutyObj.driver + '\n\n' +
-            '<b>ID:</b> ' + event.id;       
+            '<b>ID:</b> ' + event.id;
           var overlayText = event.title + '\n\n' + event.description;
           var dutyColors = {
             backgroundColor: eventColor,
@@ -95,8 +97,11 @@ function dutyMapReduce(duties, type) {
   return duties.filter(function(duty) {
     return duty.type === type;
   }).map(function(duty) {
-    return duty.firstName + ' ' + duty.lastName + ', ';
-  }).reduce(function(s1,s2) {
-    return s1 + s2;
-  }, '').trimLastChar().trimLastChar();
+    if (duty.idAccount == 0) {
+      return '';
+    } else {
+      var dutyPerson = accountidMap[duty.idAccount];
+      return dutyPerson.firstName + ' ' + dutyPerson.lastName + ', '
+    }
+  }).reduce(addStr, '').trimLastChar().trimLastChar();
 }

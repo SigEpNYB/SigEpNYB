@@ -7,7 +7,7 @@ setNetidMap();
 
 function getRoles() {
   var netid = document.getElementById('netid');
-  return sendGetRoles(netidMap[netid]);
+  return sendGetRoles(netidMap[netid].id);
 }
 
 /**
