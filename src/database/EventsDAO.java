@@ -16,6 +16,7 @@ public class EventsDAO {
 	
 	private static final String CREATE_EVENT_SQL = "INSERT INTO events (title, startTime, endTime, description) VALUES ('%s', '%s', '%s', '%s')";
 	private static final String EVENT_EXISTS_SQL = "SELECT idEvent FROM events WHERE idEvent = %d";
+	private static final String GET_EVENT_SQL = "SELECT idEvent, title, startTime, endTime, description FROM events WHERE idEvent = %d";
 	private static final String GET_EVENTS_SQL = "SELECT idEvent, title, startTime, endTime, description FROM events "
 			+ "WHERE NOT (startTime > '%s' OR endTime < '%s')";
 	private static final String DELETE_EVENT_SQL = "DELETE FROM events WHERE idEvent = %d";
@@ -42,6 +43,11 @@ public class EventsDAO {
 	/** Gets the events that occur between the given start and end dates */
 	public Event[] get(Date start, Date end) throws SQLException {
 		return database.buildArray(Event.class, GET_EVENTS_SQL, Database.dateToString(end), Database.dateToString(start));
+	}
+	
+	/** Gets the event with the given id */
+	public Event get(int idEvent) throws SQLException {
+		return database.build(Event.class, GET_EVENT_SQL, idEvent);
 	}
 	
 	/** Cancels the event with the given idEvent */

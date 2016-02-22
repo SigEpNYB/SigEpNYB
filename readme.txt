@@ -90,10 +90,12 @@ Output:
     idEvent: id
 }
 
-GET Gets all the events which intersect with a given range
-Input:
-/Events?startTime=utctimestamp&endTime=utctimestamp
-*No body*
+GET
+Gets all the events with the given ids
+Input: /Events?idEvent=id1,id2,id3,...
+-----or-----
+Gets all the events which intersect with a given range
+Input: /Events?startTime=utctimestamp&endTime=utctimestamp
 
 Output:
 [
