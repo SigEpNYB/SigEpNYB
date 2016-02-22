@@ -8,8 +8,10 @@ import javax.servlet.annotation.WebServlet;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import services.EventService;
 import services.Services;
 import data.DutyType;
+import data.Event;
 import exceptions.ClientBoundException;
 import exceptions.EventNotFoundException;
 import exceptions.InternalServerException;
@@ -58,25 +60,40 @@ public class Events extends FratServlet {
 	 */
 	@Override
 	protected Object get(String token, Map<String, String> urlParams) throws ClientBoundException {
-		String startStr = urlParams.get("startTime");
-		if (startStr == null) throw new MalformedRequestException("Expected url parameter: startTime");
-		long start;
-		try {
-			start = Long.parseLong(startStr);
-		} catch (NumberFormatException e) {
-			throw new MalformedRequestException("startTime must be an integer");
-		}
+		EventService eventService = Services.getEventService();
 		
-		String endStr = urlParams.get("endTime");
-		if (endStr == null) throw new MalformedRequestException("Expected url parameter: endTime");
-		long end;
-		try {
-			end = Long.parseLong(endStr);
-		} catch (NumberFormatException e) {
-			throw new MalformedRequestException("endTime must be an integer");
+		if (urlParams.containsKey("idEvent")) {
+			String idstr = urlParams.get("idEvent");
+			
+			String[] ids = idstr.split(",");
+			Event[] events = new Event[ids.length];
+			
+			for (int i = 0; i < ids.length; i++) {
+				events[i] = eventService.get(token, Integer.parseInt(ids[i]));
+			}
+			
+			return events;
+		} else {
+			String startStr = urlParams.get("startTime");
+			if (startStr == null) throw new MalformedRequestException("Expected url parameter: startTime");
+			long start;
+			try {
+				start = Long.parseLong(startStr);
+			} catch (NumberFormatException e) {
+				throw new MalformedRequestException("startTime must be an integer");
+			}
+			
+			String endStr = urlParams.get("endTime");
+			if (endStr == null) throw new MalformedRequestException("Expected url parameter: endTime");
+			long end;
+			try {
+				end = Long.parseLong(endStr);
+			} catch (NumberFormatException e) {
+				throw new MalformedRequestException("endTime must be an integer");
+			}
+			
+			return eventService.get(token, new Date(start), new Date(end));
 		}
-		
-		return Services.getEventService().get(token, new Date(start), new Date(end));
 	}
 	
 	/** A wrapper class for an event id */

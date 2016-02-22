@@ -51,6 +51,13 @@ public class EventService extends RestrictedService<EventsDAO> {
 		.unwrap();
 	}
 	
+	public Event get(String token, int idEvent) throws InternalServerException, PermissionDeniedException, InvalidTokenException {
+		return run(token, Permission.GETEVENTS, dao -> {
+			return dao.get(idEvent);
+		})
+		.unwrap();
+	}
+	
 	/** Cancels the given event */
 	public void cancel(String token, int idEvent) throws InternalServerException, PermissionDeniedException, InvalidTokenException {
 		run(token, Permission.DELETEEVENTS, dao -> {
