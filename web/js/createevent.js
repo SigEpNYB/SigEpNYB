@@ -35,25 +35,22 @@ function sendEvent(data) {
   var startTime = new Date(data.startTime);
   var endTime = new Date(data.endTime);
   var offset = (new Date()).getTimezoneOffset() / 60;
-  var counts = buildObj(['riskManagers', 'setClean', 'sobers', 'drivers']);
+  var duties = buildObj(['RISKMANAGER', 'SETCLEAN', 'SOBER', 'DRIVER']);
 
   startTime.setHours(startTime.getHours() + offset);
   endTime.setHours(endTime.getHours() + offset);
   data.startTime = startTime.getTime();
   data.endTime = endTime.getTime();
+  data.duties = duties;
 
   sendRequest('POST', 'Events', data, 'json', true, null, function(data) {
-    sendDuties('RISKMANAGER', data.idEvent, counts.riskManagers);
-    sendDuties('SETCLEAN', data.idEvent, counts.setClean);
-    sendDuties('SOBER', data.idEvent, counts.sobers);
-    sendDuties('DRIVER', data.idEvent, counts.drivers);
     swal({
       title: 'Event Created!',
       text: 'Check your dashboard to see it on the calendar',
       type: 'success'
     }, function() {
       clearIds(['title', 'description', 'startTime', 'endTime', 'endTime',
-        'riskManagers', 'setClean', 'sobers', 'drivers']);
+        'RISKMANAGER', 'SETCLEAN', 'SOBER', 'DRIVER']);
     });
   }, function() {
     swal({
@@ -62,12 +59,4 @@ function sendEvent(data) {
       type: 'error'
     });
   });
-}
-
-function sendDuties(dutyName, idEvent, n) {
-  for (var i = 0; i<n; i++) {
-    var data = {type: dutyName, idEvent: idEvent};
-    console.log(data);
-    sendRequest('POST', 'Duties', data, 'text', true, null);
-  }
 }

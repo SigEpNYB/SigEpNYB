@@ -128,7 +128,7 @@ function adjustDate(date, year, month, day) {
   year = typeof year !== 'undefined' ? year : 0;
   month = typeof month !== 'undefined' ? month : 0;
   day = typeof day !== 'undefined' ? day : 0;
-  var adjustedDate = date;
+  var adjustedDate = new Date(date);
   adjustedDate.setYear(date.getFullYear() + year);
   adjustedDate.setMonth(date.getMonth() + month);
   adjustedDate.setDate(date.getDate() + day);

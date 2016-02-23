@@ -78,7 +78,7 @@ function submitDuties() {
 
 function dutyString(type, title, date, dutyId) {
   return '<tr>' + 
-  '<td>' + type + '</td>' +
+  '<td>' + type.toProperCase() + '</td>' +
   '<td>' + title + '</td>' +
   '<td>' + date + '</td>' +
   '<td><input type="text" id="duty' + dutyId + '" class="form-control" placeholder="NetID"></td>' +

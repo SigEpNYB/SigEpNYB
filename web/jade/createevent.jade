@@ -25,13 +25,13 @@ html(lang="en")
           br
           input#description.form-control.eventInput(type='text', placeholder='Description')
           br
-          input#riskManagers.form-control.eventInput(type='number', placeholder='# of Risk Managers', min='0')
+          input#RISKMANAGER.form-control.eventInput(type='number', placeholder='# of Risk Managers', min='0')
           br
-          input#setClean.form-control.eventInput(type='number', placeholder='# of Set/Clean', min='0')
+          input#SETCLEAN.form-control.eventInput(type='number', placeholder='# of Set/Clean', min='0')
           br
-          input#sobers.form-control.eventInput(type='number', placeholder='# of Sobers', min='0')
+          input#SOBER.form-control.eventInput(type='number', placeholder='# of Sobers', min='0')
           br
-          input#drivers.form-control.eventInput(type='number', placeholder='# of Drivers', min='0')
+          input#DRIVER.form-control.eventInput(type='number', placeholder='# of Drivers', min='0')
           br
           input#eventSubmit.btn.btn-success.eventInput(type='submit', value='Create', onclick='addEvent()')
     include ../components/footer.jade
