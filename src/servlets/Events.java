@@ -29,6 +29,8 @@ public class Events extends FratServlet {
 	 */
 	@Override
 	protected Object post(String token, Map<String, String> urlParams, JSONObject data) throws ClientBoundException, JSONException {
+		System.out.println(data);
+		
 		String title = data.getString("title"); 
 		Date startTime = new Date(data.getLong("startTime"));
 		Date endTime = new Date(data.getLong("endTime"));

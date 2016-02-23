@@ -12,11 +12,11 @@ import data.Group;
  * Manages groups
  */
 public class GroupsDAO {
-	private static final String ADD_MEMBER_SQL = "INSERT INTO group_members (idGroup, idAccount) VALUES (%d, %d)";
+	private static final String ADD_MEMBER_SQL = "INSERT INTO group_members (idGroup, idAccount) VALUES (?, ?)";
 	private static final String GET_MEMBERS_SQL = "SELECT accounts.idAccount, accounts.netid, accounts.firstName, accounts.lastName, accounts.phone FROM group_members "
 			+ "JOIN accounts ON group_members.idAccount = accounts.idAccount "
-			+ "WHERE group_members.idGroup = %d";
-	private static final String REMOVE_MEMBERS_SQL = "DELETE FROM group_members WHERE idGroup = %d AND idAccount = %d";
+			+ "WHERE group_members.idGroup = ?";
+	private static final String REMOVE_MEMBERS_SQL = "DELETE FROM group_members WHERE idGroup = ? AND idAccount = ?";
 	
 	private final Database database;
 	

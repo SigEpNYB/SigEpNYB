@@ -17,13 +17,13 @@ public class AccountsDAO {
 	private static final String IDACCOUNT = "idAccount";
 	private static final String PASSWORD = "password";
 	
-	private static final String CREATE_ACCOUNT_SQL = "INSERT INTO accounts (netid, password, firstName, lastName, phone) VALUES ('%s', '%s', '%s', '%s', '%s')";
-	private static final String GET_IDACCOUNT_NET_PASS_SQL = "SELECT idAccount FROM accounts WHERE netid = '%s' AND password = '%s'";
-	private static final String GET_IDACCOUNT_NET_SQL = "SELECT idAccount FROM accounts WHERE netid = '%s'";
-	private static final String GET_PASSWORD_SQL = "SELECT password FROM accounts WHERE netid = '%s'";
-	private static final String GET_ACCOUNT_SQL = "SELECT idAccount, netid, firstName, lastName, phone FROM accounts WHERE idAccount = %d";
+	private static final String CREATE_ACCOUNT_SQL = "INSERT INTO accounts (netid, password, firstName, lastName, phone) VALUES (?, ?, ?, ?, ?)";
+	private static final String GET_IDACCOUNT_NET_PASS_SQL = "SELECT idAccount FROM accounts WHERE netid = ? AND password = ?";
+	private static final String GET_IDACCOUNT_NET_SQL = "SELECT idAccount FROM accounts WHERE netid = ?";
+	private static final String GET_PASSWORD_SQL = "SELECT password FROM accounts WHERE netid = ?";
+	private static final String GET_ACCOUNT_SQL = "SELECT idAccount, netid, firstName, lastName, phone FROM accounts WHERE idAccount = ?";
 	private static final String GET_ACCOUNTS_SQL = "SELECT idAccount, netid, firstName, lastName, phone FROM accounts";
-	private static final String DELETE_ACCOUNT_SQL = "DELETE FROM accounts WHERE idAccount = %d";
+	private static final String DELETE_ACCOUNT_SQL = "DELETE FROM accounts WHERE idAccount = ?";
 	
 	private final Database database;
 	

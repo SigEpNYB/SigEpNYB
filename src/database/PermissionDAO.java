@@ -14,12 +14,12 @@ import data.Permission;
 public class PermissionDAO {
 	private static final String GET_PERMISSION_SQL = "SELECT role_permissions.idPermission FROM user_roles "
 			+ "JOIN role_permissions ON user_roles.idRole = role_permissions.idRole "
-			+ "WHERE user_roles.idAccount = %d AND role_permissions.idPermission = %d";
+			+ "WHERE user_roles.idAccount = ? AND role_permissions.idPermission = ?";
 	
 	private static final String GET_PERMISSIONS_SQL = "SELECT permissions.name FROM permissions "
 			+ "LEFT JOIN role_permissions ON permissions.idPermission = role_permissions.idPermission "
 			+ "LEFT JOIN user_roles ON role_permissions.idRole = user_roles.idRole "
-			+ "WHERE user_roles.idAccount = %d";
+			+ "WHERE user_roles.idAccount = ?";
 	
 	private final Database database;
 	

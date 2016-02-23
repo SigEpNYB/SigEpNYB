@@ -24,7 +24,7 @@ public class PagesDAO {
 			+ "JOIN roles ON user_roles.idRole = roles.idRole "
 			+ "JOIN role_pages ON roles.idRole = role_pages.idRole "
 			+ "JOIN pages ON role_pages.idPage = pages.idPage "
-			+ "WHERE user_roles.idAccount = %d";
+			+ "WHERE user_roles.idAccount = ?";
 	
 	private final Database database;
 	

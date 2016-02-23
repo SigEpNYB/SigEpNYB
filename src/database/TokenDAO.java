@@ -12,11 +12,11 @@ import data.Token;
  * Manages tokens
  */
 public class TokenDAO {
-	private static final String INSERT_TOKEN_SQL = "INSERT INTO tokens (token, idAccount, loggedIn, lastActive) VALUES ('%s', %d, '%s', '%s')";
-	private static final String GET_TOKEN_IDACCOUNT_SQL = "SELECT token, idAccount, loggedIn, lastActive FROM tokens WHERE idAccount = %d";
-	private static final String GET_TOKEN_SQL = "SELECT token, idAccount, loggedIn, lastActive FROM tokens WHERE token = '%s'";
-	private static final String UPDATE_LASTACTIVE_SQL = "UPDATE tokens SET lastActive='%s' WHERE token='%s'";
-	private static final String DELETE_TOKEN_SQL = "DELETE FROM tokens WHERE token = '%s'";
+	private static final String INSERT_TOKEN_SQL = "INSERT INTO tokens (token, idAccount, loggedIn, lastActive) VALUES (?, ?, ?, ?)";
+	private static final String GET_TOKEN_IDACCOUNT_SQL = "SELECT token, idAccount, loggedIn, lastActive FROM tokens WHERE idAccount = ?";
+	private static final String GET_TOKEN_SQL = "SELECT token, idAccount, loggedIn, lastActive FROM tokens WHERE token = ?";
+	private static final String UPDATE_LASTACTIVE_SQL = "UPDATE tokens SET lastActive = ? WHERE token = ?";
+	private static final String DELETE_TOKEN_SQL = "DELETE FROM tokens WHERE token = ?";
 	
 	private final Database database;
 	

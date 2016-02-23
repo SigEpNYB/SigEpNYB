@@ -11,10 +11,10 @@ import data.Role;
  * Manages Roles
  */
 public class RolesDAO {
-	private static final String INSERT_ROLE_SQL = "INSERT INTO user_roles (idAccount, idRole) VALUES (%d, %d)";
-	private static final String GET_ROLE_SQL = "SELECT idRole FROM user_roles WHERE idAccount = %d AND idRole = %d";
-	private static final String REMOVE_ROLE_SQL = "DELETE FROM user_roles WHERE idAccount = %d AND idRole = %d";
-	private static final String REMOVE_ALL_ROLES_SQL = "DELETE FROM user_roles WHERE idAccount = %d";
+	private static final String INSERT_ROLE_SQL = "INSERT INTO user_roles (idAccount, idRole) VALUES (?, ?)";
+	private static final String GET_ROLE_SQL = "SELECT idRole FROM user_roles WHERE idAccount = ? AND idRole = ?";
+	private static final String REMOVE_ROLE_SQL = "DELETE FROM user_roles WHERE idAccount = ? AND idRole = ?";
+	private static final String REMOVE_ALL_ROLES_SQL = "DELETE FROM user_roles WHERE idAccount = ?";
 	
 	private final Database database;
 	
