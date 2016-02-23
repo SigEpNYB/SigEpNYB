@@ -28,7 +28,11 @@ function getUnassignedDuties() {
       eventMap[event.id] = {date: dateString, title: event.title};
     });
     sendRequest('GET', 'Duties', null, 'json', true, null, function(duties) {
-      duties.map(function(duty) {
+      duties.sort(function(duty1, duty2) {
+        var duty1Date = new Date(eventMap[duty1.idEvent].date);
+        var duty2Date = new Date(eventMap[duty2.idEvent].date);
+        return duty1Date - duty2Date;
+      }).map(function(duty) {
         var dutyEvent = eventMap[duty.idEvent];
         document.getElementById('duties').innerHTML += dutyString(duty.type, dutyEvent.title, dutyEvent.date, duty.id);
       });
@@ -74,7 +78,7 @@ function submitDuties() {
 
 function dutyString(type, title, date, dutyId) {
   return '<tr>' + 
-  '<td>' + type + '</td>' +
+  '<td>' + type.toProperCase() + '</td>' +
   '<td>' + title + '</td>' +
   '<td>' + date + '</td>' +
   '<td><input type="text" id="duty' + dutyId + '" class="form-control" placeholder="NetID"></td>' +
