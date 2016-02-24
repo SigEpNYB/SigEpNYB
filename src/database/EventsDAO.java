@@ -14,12 +14,12 @@ import data.Event;
 public class EventsDAO {
 	public static final int CREATE_FAILED = -1;
 	
-	private static final String CREATE_EVENT_SQL = "INSERT INTO events (title, startTime, endTime, description) VALUES ('%s', '%s', '%s', '%s')";
-	private static final String EVENT_EXISTS_SQL = "SELECT idEvent FROM events WHERE idEvent = %d";
-	private static final String GET_EVENT_SQL = "SELECT idEvent, title, startTime, endTime, description FROM events WHERE idEvent = %d";
+	private static final String CREATE_EVENT_SQL = "INSERT INTO events (title, startTime, endTime, description) VALUES (?, ?, ?, ?)";
+	private static final String EVENT_EXISTS_SQL = "SELECT idEvent FROM events WHERE idEvent = ?";
+	private static final String GET_EVENT_SQL = "SELECT idEvent, title, startTime, endTime, description FROM events WHERE idEvent = ?";
 	private static final String GET_EVENTS_SQL = "SELECT idEvent, title, startTime, endTime, description FROM events "
-			+ "WHERE NOT (startTime > '%s' OR endTime < '%s')";
-	private static final String DELETE_EVENT_SQL = "DELETE FROM events WHERE idEvent = %d";
+			+ "WHERE NOT (startTime > ? OR endTime < ?)";
+	private static final String DELETE_EVENT_SQL = "DELETE FROM events WHERE idEvent = ?";
 	
 	private final Database database;
 	

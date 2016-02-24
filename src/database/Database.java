@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.lang.reflect.Array;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -25,10 +26,10 @@ import java.util.Properties;
  */
 public class Database implements IDatabase {
 	private static final DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-	private static final String CREATE_DATABASE_SQL = "CREATE DATABASE %s";
+	private static final String CREATE_DATABASE_SQL = "CREATE DATABASE ";
 	private static final String CREATE_ALL_SCRIPT = "sql-scripts/create-all.sql";
-	private static final String USE_DATABASE_SQL = "USE %s";
-	private static final String DROP_DATABASE_SQL = "DROP DATABASE IF EXISTS %s";
+	private static final String USE_DATABASE_SQL = "USE ";
+	private static final String DROP_DATABASE_SQL = "DROP DATABASE IF EXISTS ";
 	
 	/** Takes a date and formats it to a string */
 	public static String dateToString(Date date) {
@@ -65,8 +66,11 @@ public class Database implements IDatabase {
 	
 	/** Executes the given sql */
 	void execute(String sql, Object... args) throws SQLException {
-		Statement statement = connection.createStatement();
-		statement.executeUpdate(String.format(sql, args));
+		PreparedStatement statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+		for (int i = 0; i < args.length; i++) {
+			statement.setObject(i + 1, args[i]);
+		}
+		statement.execute();
 		statement.close();
 	}
 	
@@ -82,8 +86,11 @@ public class Database implements IDatabase {
 	 * @throws SQLException 
 	 */
 	<R, T extends Exception> R execute(RowProcessor<R, T> processor, R init, String sql, Object... args) throws T, SQLException {
-		Statement statement = connection.createStatement();
-		statement.execute(String.format(sql, args), Statement.RETURN_GENERATED_KEYS);
+		PreparedStatement statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+		for (int i = 0; i < args.length; i++) {
+			statement.setObject(i + 1, args[i]);
+		}
+		statement.execute();
 		ResultSet results = statement.getResultSet();
 		if (results == null) results = statement.getGeneratedKeys();
 		Row row = new Row(results);
@@ -142,8 +149,8 @@ public class Database implements IDatabase {
 	 */
 	@Override
 	public void createSchema(String name) throws SQLException, IOException {
-		execute(CREATE_DATABASE_SQL, name);
-		execute(USE_DATABASE_SQL, name);
+		execute(CREATE_DATABASE_SQL + name);
+		execute(USE_DATABASE_SQL + name);
 		execScript(CREATE_ALL_SCRIPT);
 	}
 	
@@ -152,7 +159,7 @@ public class Database implements IDatabase {
 	 */
 	@Override
 	public void dropSchema(String name) throws SQLException {
-		execute(DROP_DATABASE_SQL, name);
+		execute(DROP_DATABASE_SQL + name);
 	}
 	
 	

@@ -11,10 +11,10 @@ import data.Fine;
  * Manages Fines
  */
 public class FinesDAO {
-	private static final String CREATE_FINE_SQL = "INSERT INTO fines (idAccount, amount, reason) VALUES (%d, %f, \"%s\")";
-	private static final String GET_FINES_SQL = "SELECT idFine, idAccount, amount, reason FROM fines WHERE idAccount = %d";
+	private static final String CREATE_FINE_SQL = "INSERT INTO fines (idAccount, amount, reason) VALUES (?, ?, ?)";
+	private static final String GET_FINES_SQL = "SELECT idFine, idAccount, amount, reason FROM fines WHERE idAccount = ?";
 	private static final String GET_ALL_FINES_SQL = "SELECT idFine, idAccount, amount, reason FROM fines";
-	private static final String DELETE_FINE_SQL = "DELETE FROM fines WHERE idFine = %d";
+	private static final String DELETE_FINE_SQL = "DELETE FROM fines WHERE idFine = ?";
 	
 	private final Database database;
 	
