@@ -71,11 +71,16 @@ function checkPermissions(necessary, title, text, redirect) {
 
 var netidMap = {};
 var accountidMap = {};
+var nameMap = {};
+var nameList = [];
 function setNetidMap() {
   sendRequest('GET', 'Accounts', null, 'json', true, null, function(accounts) {
     accounts.forEach(function(account) {
       netidMap[account.netid] = account;
       accountidMap[account.id] = account;
+      var name = account.firstName + ' ' + account.lastName;
+      nameMap[name] = account;
+      nameList.push(name);
     });
   });
 }
@@ -182,6 +187,28 @@ function dateToPaddedString(date) {
 }
 
 function addStr(s1, s2) { return s1 + s2; }
+
+function substringMatcher(strs) {
+  return function findMatches(q, cb) {
+    var matches, substringRegex;
+
+    // an array that will be populated with substring matches
+    matches = [];
+
+    // regex used to determine if a string contains the substring `q`
+    substrRegex = new RegExp(q, 'i');
+
+    // iterate through the pool of strings and for any string that
+    // contains the substring `q`, add it to the `matches` array
+    $.each(strs, function(i, str) {
+      if (substrRegex.test(str)) {
+        matches.push(str);
+      }
+    });
+
+    cb(matches);
+  };
+};
 
 /**
  * Converts a string to proper english case

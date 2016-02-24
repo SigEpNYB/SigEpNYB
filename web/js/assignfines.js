@@ -5,22 +5,38 @@ checkPermissions(['fines.create', 'fines.viewall', 'fines.delete'],
 
 setNetidMap();
 
-sendRequest('GET', 'Fines', null, 'json', true, {showAll: true}, function(fines) {
-  var fineString = fines.map(function(fine) {
-  return '<tr>' +
-    '<td>' + accountidMap[fine.idAccount].netid + '</td>' +
-    '<td>' + fine.reason + '</td>' +
-    '<td>' + fine.amount.toFixed(2) + '</td>' +
-    '<td><button onclick="deleteFine(' + fine.idFine + ')" class="btn btn-danger">Delete/Close</button></td>' +
-    '</tr>';
-  }).reduce(addStr, '');
-  document.getElementById('fines').innerHTML = fineString;
+$(document).ready(function() {
+  getFines();
+});
+
+function getFines() {
+  sendRequest('GET', 'Fines', null, 'json', true, {showAll: true}, function(fines) {
+    var fineString = fines.map(function(fine) {
+    return '<tr>' +
+      '<td>' + accountidMap[fine.idAccount].firstName + ' ' + accountidMap[fine.idAccount].lastName + '</td>' +
+      '<td>' + fine.reason + '</td>' +
+      '<td>' + '$' + fine.amount.toFixed(2) + '</td>' +
+      '<td><button onclick="deleteFine(' + fine.idFine + ')" class="btn btn-danger">Delete/Close</button></td>' +
+      '</tr>';
+    }).reduce(addStr, '');
+    document.getElementById('fines').innerHTML = fineString;
+
+  });
+}
+
+$('.typeahead').typeahead({
+  hint: false,
+  minLength: 2,
+  highlight: true
+}, {
+  name: 'Names',
+  source: substringMatcher(nameList)
 });
 
 function submitFine() {
-  var data = buildObj(['netid', 'reason', 'amount']);
-  data.idAccount = netidMap[data.netid].id;
-  delete data.netid;
+  var data = buildObj(['name', 'reason', 'amount']);
+  data.idAccount = nameMap[data.name].id;
+  delete data.name;
   sendFine(data);
 }
 

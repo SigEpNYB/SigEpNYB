@@ -36,6 +36,14 @@ function getUnassignedDuties() {
         var dutyEvent = eventMap[duty.idEvent];
         document.getElementById('duties').innerHTML += dutyString(duty.type, dutyEvent.title, dutyEvent.date, duty.id);
       });
+      $('.typeahead').typeahead({
+        hint: false,
+        minLength: 2,
+        highlight: true
+      }, {
+        name: 'Names',
+        source: substringMatcher(nameList)
+      });
     });
   });
 }
@@ -45,7 +53,7 @@ function submitDuties() {
   Array.prototype.slice.call(document.getElementById('duties').childNodes).forEach(function(tr) {
     var input = tr.getElementsByClassName('form-control')[0];
     if (input.value !== '') {
-      var data = {idDuty: input.id.slice(4), idAccount: netidMap[input.value].id};
+      var data = {idDuty: input.id.slice(4), idAccount: nameMap[input.value].id};
       sendRequest('PUT', 'Duties', data, 'text', true, null, null, function() {
         failed = true;
       });
@@ -81,6 +89,6 @@ function dutyString(type, title, date, dutyId) {
   '<td>' + type.toProperCase() + '</td>' +
   '<td>' + title + '</td>' +
   '<td>' + date + '</td>' +
-  '<td><input type="text" id="duty' + dutyId + '" class="form-control" placeholder="NetID"></td>' +
+  '<td><input type="text" id="duty' + dutyId + '" class="form-control typeahead" placeholder="Name"></td>' +
   '</tr>'
 }
