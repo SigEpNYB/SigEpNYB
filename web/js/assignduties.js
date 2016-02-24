@@ -49,14 +49,25 @@ function getUnassignedDuties() {
 }
 
 function submitDuties() {
-  var failed = false
+  var failed = false;
   Array.prototype.slice.call(document.getElementById('duties').childNodes).forEach(function(tr) {
     var input = tr.getElementsByClassName('form-control')[0];
     if (input.value !== '') {
-      var data = {idDuty: input.id.slice(4), idAccount: nameMap[input.value].id};
-      sendRequest('PUT', 'Duties', data, 'text', true, null, null, function() {
-        failed = true;
-      });
+      var account = nameMap[input.value];
+      if (account !== undefined) {
+        var data = {idDuty: input.id.slice(4), idAccount: account.id};
+        sendRequest('PUT', 'Duties', data, 'text', true, null, null, function() {
+          failed = true;
+        });
+      } else {
+        swal({
+          title: 'Invalid Name',
+          closeOnConfirm: true,
+          confirmButtonText: 'Try Again',
+          text: 'Invalid Name ' + input.value,
+          type: 'error'
+        });
+      }
     }
   });
   $(document).ajaxStop(function() {
@@ -75,7 +86,7 @@ function submitDuties() {
       });
     } else {
       swal({
-        title: "Please make sure all the NetIDs are valid",
+        title: "Server Error",
         type: 'error'
       }, function() {
         window.location.reload();

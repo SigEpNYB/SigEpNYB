@@ -35,9 +35,20 @@ $('.typeahead').typeahead({
 
 function submitFine() {
   var data = buildObj(['name', 'reason', 'amount']);
-  data.idAccount = nameMap[data.name].id;
-  delete data.name;
-  sendFine(data);
+  data.idAccount = nameMap[data.name];
+  if (data.idAccount !== undefined) {
+    delete data.name;
+    data.idAccount = data.idAccount.id;
+    sendFine(data);
+  } else {
+    swal({
+      title: 'Invalid Name',
+      closeOnConfirm: true,
+      confirmButtonText: 'Try Again',
+      text: 'Invalid Name ' + data.name,
+      type: 'error'
+    });
+  }
 }
 
 /**
