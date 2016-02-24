@@ -173,6 +173,9 @@ body {
   padding: 3px 20px;
   font-size: 18px;
   line-height: 24px;
+  &:first-child {
+    background-color: #cde3f9;
+  }
 }
 
 .tt-suggestion.tt-is-under-cursor {
