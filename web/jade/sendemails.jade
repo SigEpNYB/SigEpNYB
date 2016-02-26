@@ -1,0 +1,29 @@
+doctype html
+html(lang="en")
+  head
+    include ../components/css.jade
+    title Send Emails | SigEp
+  body
+    include ../components/noscript.jade
+    include ../components/navbar.jade
+    .container-fluid
+      .row
+        .col-xs-12.col-md-6.col-md-offset-3
+          table.table#emailsTable
+            tbody
+              tr#programmingEmail
+                td Programming
+                td
+                  button.btn.btn-success(onClick='sendProgrammingEmail()') Send Email
+              tr#dutiesEmail
+                td Duties
+                td
+                  button.btn.btn-success(onClick='sendDutiesEmail()') Send Email
+              tr#finesEmail
+                td Fines
+                td
+                  button.btn.btn-success(onClick='sendFinesEmail()') Send Email
+    include ../components/footer.jade
+    include ../components/js.jade
+    script(src='js/navbar.js')
+    script(src='js/sendemails.js')
