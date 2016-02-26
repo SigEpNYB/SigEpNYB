@@ -238,3 +238,7 @@ String.prototype.trimLastChar = function() {
 Array.prototype.hasMatch = function(predicate) {
   return (this.filter(predicate)).length > 0;
 }
+
+Array.prototype.contains = function(val) {
+  return this.indexOf(val) > -1;
+}
