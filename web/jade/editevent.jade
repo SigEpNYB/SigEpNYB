@@ -9,11 +9,6 @@ html(lang="en")
     .container-fluid
       .row
         .col-xs-12.col-md-4.col-md-offset-4
-          .input-group
-            input#eventId.form-control(type='number', placeholder='Event ID')
-            span.input-group-btn
-              button#getEvent.btn.btn-primary(type='submit', onclick='getEvent()') Get Event
-          br
           input#title.form-control.eventInput(type='text', placeholder='Title')
           br
           .input-group.eventInput
@@ -36,7 +31,7 @@ html(lang="en")
           br
           input#drivers.form-control.eventInput(type='number', placeholder='# of Drivers', min='0')
           br
-          input#eventSubmit.btn.btn-success.eventInput(type='submit', value='Create', onclick='updateEvent()')
+          input#eventSubmit.btn.btn-success.eventInput(type='submit', value='Update', onclick='updateEvent()')
     include ../components/footer.jade
     include ../components/js.jade
     script(src='js/navbar.js')

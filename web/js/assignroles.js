@@ -5,17 +5,14 @@
 */
 setNetidMap();
 
-function getRoles() {
-  var netid = document.getElementById('netid');
-  return sendGetRoles(netidMap[netid].id);
-}
-
 /**
  * Gets the roles for a netid
  * @param {string} accountId
  * @returns {undefined}
  */
-function sendGetRoles(accountId) {
+function getRoles(accountId) {
+  var netid = document.getElementById('netid');
+  var accountId = sendGetRoles(netidMap[netid].id);
   var data = {accountId: accountId};
   sendRequest('GET', 'Roles', null, 'json', true, data, function(roles) {
     var roleStrings = roles.map(function(role) {
@@ -53,18 +50,7 @@ function removeRole(accountId, role) {
       text: 'Refresh the page to see the chages',
       type: 'success'
     });
-  }, function() {
-    swal({
-      title: 'Role Removal Failed',
-      text: 'Please try again later',
-      type: 'error'
-    });
-  });
-}
-
-function submitNewRole() {
-  var data = buildObj(['netid', 'newRole']);
-  return sendNewRole(data);
+  }, onSendFail);
 }
 
 /**
@@ -72,20 +58,15 @@ function submitNewRole() {
  * @param {Object} data - contains netid and newRole
  * @returns {undefined}
  */
-function sendNewRole(data) {
+function submitNewRole() {
+  var data = buildObj(['netid', 'newRole']);
   sendRequest('POST', 'Roles', data, 'text', true, null, function() {
     swal({
       title: 'Role Added',
       text: 'Refresh the page to see the chages',
       type: 'success'
     });
-  }, function() {
-    swal({
-      title: 'Role Creation Failed',
-      text: 'Please make sure the role is spelled correctly',
-      type: 'error'
-    });
-  });
+  }, onSendFail);
 }
 
 /**

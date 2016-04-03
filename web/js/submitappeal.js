@@ -17,11 +17,5 @@ function sendAppeal(data) {
     }, function(isConfirm) {
       clearIds(['fines', 'reason']);
     });
-  }, function(xhr) {
-    swal({
-      title: "Server Error",
-      text: 'Error Code: ' + xhr.status,
-      type: 'error'
-    });
-  });
+  }, onSendFail);
 }

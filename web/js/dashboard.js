@@ -58,6 +58,8 @@ $(document).ready(function() {
     events: [],
     editable: false,
     eventRender: function(event, element) {
+      element[0].className = element[0].className + ' contextmenu';
+      element[0].id = event.id;
       element.qtip({
         content: {
           title: event.name,
@@ -68,6 +70,45 @@ $(document).ready(function() {
         }
       });
     }
+  });
+
+  sendRequest('GET', 'Account', null, 'json', true, {showPermissions: true}, function(permissions) {
+    if (permissions.indexOf('events.post') === -1) return;
+    $.contextMenu({
+      selector: '.contextmenu', 
+      items: {
+          "edit": {
+            name: "Edit", 
+            icon: "edit",
+            callback: function(key, options) {
+              var eventId = options.$trigger[0].id;
+              window.location.href = 'editevent.html?eventId=' + eventId;
+            }
+          },
+          "delete": {
+            name: "Delete",
+            icon: "delete",
+            callback: function(key, options) {
+              var eventId = options.$trigger[0].id;
+              var data = {eventId: eventId};
+              sendRequest('DELETE', 'Event', data, 'text', true, null, function() {
+                swal({
+                  title: 'Event Deleted',
+                  type: 'success',
+                  confirmButtonText: 'Delete More Events',
+                  showCancelButton: true,
+                  cancelButtonText: 'Go To Dashboard',
+                  closeOnConfirm: true,
+                  closeOnCancel: true
+                }, function(isConfirm) {
+                    if (isConfirm) clearIds(['eventId']);
+                    else window.location.href = 'dashboard.html';
+                });
+              }, onSendFail);
+            }
+          }
+        }
+      });
   });
 });
 

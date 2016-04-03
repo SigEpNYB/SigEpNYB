@@ -186,6 +186,68 @@ function dateToPaddedString(date) {
            ('0' + date.getMinutes()).slice(-2));
 }
 
+function onSendFail(xhr, onCompletion) {
+  if (typeof xhr !== 'object') xhr = {status: 600}
+  if (typeof onCompletion !== 'function') onCompletion = $.noop;
+  switch (xhr.status) {
+    case 400:
+      swal({
+        title: 'Front-End Error',
+        text: 'Please tell one of the developers and try again later',
+        type: 'error'
+      });
+      break;
+    case 401:
+      swal({
+        title: 'Invalid Token',
+        text: 'Please try logging in again',
+        type: 'error'
+      });
+      break;
+    case 403:
+      swal({
+        title: 'Login Failed',
+        text: 'Please make sure your NetID and Password are correct',
+        type: 'error'
+      });
+      break;
+    case 404:
+      swal({
+        title: 'Invalid Endpoint',
+        text: 'Please tell one of the developers and try again later',
+        type: 'error'
+      });
+      break;
+    case 405:
+      swal({
+        title: 'Invalid HTTP Method',
+        text: 'Please tell one of the developers and try again later',
+        type: 'error'
+      });
+      break;
+    case 500:
+      swal({
+        title: 'Server Error',
+        text: 'Please tell one of the developers and try again later',
+        type: 'error'
+      });
+      break;
+    case 600:
+      swal({
+        title: 'One of the Requests failed',
+        text: "We'll refresh so you can see which ones failed",
+        type: 'error'
+      });
+    default:
+      swal({
+        title: 'Unhandled Exception',
+        text: 'Error Code: ' + xhr.status,
+        type: 'error'
+      })
+  }
+  onCompletion();
+}
+
 function addStr(s1, s2) { return s1 + s2; }
 
 function substringMatcher(strs) {
@@ -208,7 +270,11 @@ function substringMatcher(strs) {
 
     cb(matches);
   };
-};
+}
+
+function reloadPage() {
+  window.location.reload();
+}
 
 /**
  * Converts a string to proper english case

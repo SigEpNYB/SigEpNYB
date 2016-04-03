@@ -15,13 +15,7 @@ sendRequest('GET', 'AccountRequests', null, 'json', true, null, function(request
     return s1 + s2;
   }, '');
   document.getElementById('requests').innerHTML = requestBody;
-  }, function(xhr) {
-  swal({
-    title: "Server Error",
-    text: 'Error Code: ' + xhr.status,
-    type: 'error'
-  });
-});
+}, onSendFail);
 
 /**
  * Sends an account approval request to the server
@@ -29,7 +23,6 @@ sendRequest('GET', 'AccountRequests', null, 'json', true, null, function(request
  * @returns {undefined}
  */
 function approveRequest(idRequest) {
-  console.log(idRequest);
   var data = {idRequest: idRequest};
   sendRequest('PUT', 'AccountRequests', data, 'text', true, null, function() {
     swal({
@@ -38,13 +31,7 @@ function approveRequest(idRequest) {
     }, function() {
       window.location.reload();
     });
-   }, function() {
-    swal({
-      title: 'Failed To Approve Account',
-      text: 'Please Try again later',
-      type: 'error'
-    });
-  });
+   }, onSendFail);
 }
 
 /**
@@ -61,13 +48,7 @@ function rejectRequest(idRequest) {
     }, function() {
       window.location.reload();
     });
-  }, function() {
-    swal({
-      title: 'Failed To Reject Account',
-      text: 'Please try again later',
-      type: 'error'
-    });
-  });
+  }, onSendFail);
 }
 
 /**

@@ -85,12 +85,7 @@ function submitDuties() {
         else window.location.href = 'dashboard.html';
       });
     } else {
-      swal({
-        title: "Server Error",
-        type: 'error'
-      }, function() {
-        window.location.reload();
-      });
+      onSendFail(null, reloadPage);
     }
   });
 }

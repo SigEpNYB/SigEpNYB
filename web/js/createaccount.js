@@ -5,19 +5,13 @@ $(document).ready(function() {
   });
 });
 
-function submitAccount() {
-  var data = buildObj(['firstName', 'lastName', 'netid','password', 
-    'phone', 'passwordConfirm']);
-    return sendAccount(data);
-}
-
 /**
  * Sends an account to the server
- * @param {Object} data - must contain firstName, lastName, netid, password
- * and phoneNumber
  * @returns {undefined}
  */
-function sendAccount(data) {
+function submitAccount() {
+  var data = buildObj(['firstName', 'lastName', 'netid','password', 
+    'phone', 'passwordConfirm'])
   var empty = Object.keys(data).hasMatch(function(key) {
     return data[key] === '';
   });

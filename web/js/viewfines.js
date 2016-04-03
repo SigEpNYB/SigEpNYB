@@ -7,10 +7,4 @@ sendRequest('GET', 'Fines', null, 'json', true, null, function(fines) {
     '</tr>';
   }).reduce(addStr, '');
   document.getElementById('fines').innerHTML = finesString;
-}, function(xhr) {
-  swal({
-    title: "Server Error",
-    text: 'Error Code: ' + xhr.status,
-    type: 'error'
-  });
-});
+}, onSendFail);

@@ -45,13 +45,7 @@ function sendTrade(data) {
     }, function(isConfirm) {
       window.location.reload();
     })
-  }, function(xhr) {
-    swal({
-      title: "Server Error",
-      text: 'Error Code: ' + xhr.status,
-      type: 'error'
-    });
-  });
+  }, onSendFail);
 }
 
 function genDutyString() {

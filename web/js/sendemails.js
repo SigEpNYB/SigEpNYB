@@ -5,13 +5,7 @@ function sendProgrammingEmail() {
       text: 'The email was sent to the sigepnyb-discussion group',
       type: 'success'
     })
-  }, function(xhr) {
-    swal({
-      title: 'Email Sending Failed',
-      text: 'Error Code: ' + xhr.status,
-      type: 'error'
-    });
-  });
+  }, onSendFail);
 }
 
 function sendDutiesEmail() {
@@ -21,13 +15,7 @@ function sendDutiesEmail() {
       text: 'The email was sent to the sigepnyb-discussion group',
       type: 'success'
     })
-  }, function(xhr) {
-    swal({
-      title: 'Email Sending Failed',
-      text: 'Error Code: ' + xhr.status,
-      type: 'error'
-    });
-  });
+  }, onSendFail);
 }
 
 function sendFinesEmail() {
@@ -37,13 +25,7 @@ function sendFinesEmail() {
       text: 'The email was sent to the sigepnyb-discussion group',
       type: 'success'
     })
-  }, function(xhr) {
-    swal({
-      title: 'Email Sending Failed',
-      text: 'Error Code: ' + xhr.status,
-      type: 'error'
-    });
-  });
+  }, onSendFail);
 }
 
 $(document).ready(function() {
