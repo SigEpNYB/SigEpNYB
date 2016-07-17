@@ -47,26 +47,48 @@ public class Database implements IDatabase {
 		}
 	}
 	
-	private final Connection connection;
+	private final String user;
+	private final String password;
+	private final String database;
+	private Connection connection;
 	
 	/** 
 	 * Creates a new database connection
 	 */
 	public Database(String user, String password, String database) throws SQLException, InstantiationException, IllegalAccessException, ClassNotFoundException {
+		this.user = user;
+		this.password = password;
+		this.database = database;
+		
+		Class.forName("com.mysql.jdbc.Driver");
+		makeConnection();
+	}
+	
+	/**
+	 * Makes the connection to the database
+	 */
+	private void makeConnection() throws SQLException {
 		Properties properties = new Properties();
 		properties.put("user", user);
 		if (password != null) {
 			properties.put("password", password);
 		}
 		properties.put("allowMultiQueries", "true");
-		
-		Class.forName("com.mysql.jdbc.Driver");
+		properties.put("autoReconnect", "true");
 		connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/" + database, properties);
+	}
+	
+	/**
+	 * Gets a statement for the given sql 
+	 */
+	private PreparedStatement getStatement(String sql) throws SQLException {
+		if (!connection.isValid(1)) makeConnection();
+		return connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 	}
 	
 	/** Executes the given sql */
 	void execute(String sql, Object... args) throws SQLException {
-		PreparedStatement statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+		PreparedStatement statement = getStatement(sql);
 		for (int i = 0; i < args.length; i++) {
 			statement.setObject(i + 1, args[i]);
 		}
@@ -86,7 +108,7 @@ public class Database implements IDatabase {
 	 * @throws SQLException 
 	 */
 	<R, T extends Exception> R execute(RowProcessor<R, T> processor, R init, String sql, Object... args) throws T, SQLException {
-		PreparedStatement statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+		PreparedStatement statement = getStatement(sql);
 		for (int i = 0; i < args.length; i++) {
 			statement.setObject(i + 1, args[i]);
 		}
