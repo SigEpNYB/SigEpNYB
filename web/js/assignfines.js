@@ -36,10 +36,17 @@ $('.typeahead').typeahead({
 function submitFine() {
   var data = buildObj(['name', 'reason', 'amount']);
   data.idAccount = nameMap[data.name];
-  if (data.idAccount !== undefined) {
+  if ((data.idAccount !== undefined) && (data.amount < 10000)) {
     delete data.name;
     data.idAccount = data.idAccount.id;
     sendFine(data);
+  } else if (data.amount >= 10000) {
+    swal({
+      title: 'Fine too large',
+      closeOnConfirm: true,
+      confirmButtonText: 'Fines must be less than $10,000',
+      type: 'error'
+    });
   } else {
     swal({
       title: 'Invalid Name',
