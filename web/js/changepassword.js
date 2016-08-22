@@ -26,6 +26,7 @@ function sendPassword(data) {
       clearIds(['newPassword', 'passwordConfirm']);
     });
   } else {
+    delete data.passwordConfirm;
     sendRequest('PUT', 'Account', data, 'text', true, null, function() {
       swal({
         title: 'Password Changed',
