@@ -10,9 +10,9 @@ if (start !== -1) {
   var idEvent = parseInt(window.location.href.substring(start));
   var data = {idEvent: idEvent};
 
-  sendRequest('GET', 'Events', null, 'json', data, function(event) {
-    setIds(['title', 'startTime', 'endTime', 'description', 'riskManagers',
-      'setClean', 'sobers', 'drivers'], event)
+  sendRequest('GET', 'Events', null, 'json', true, data, function(event) {
+    setIds(['title', 'description', 'riskManagers', 'setClean', 'sobers', 'drivers'], event[0]);
+    setDates(['startTime', 'endTime'], event[0]);
   }, function() {
     swal({
       title: 'Invalid Event ID',
@@ -25,7 +25,7 @@ if (start !== -1) {
 function updateEvent() {
   var data = buildObj(['title', 'startTime', 'endTime', 'description', 
     'riskManagers', 'setClean', 'sobers', 'drivers']);
-  sendRequest('PUT', 'Events', data, 'text', null, function() {
+  sendRequest('PUT', 'Events', data, 'text', true, null, function() {
     swal({
       title: 'Updated Event',
       type: 'success'
@@ -40,3 +40,20 @@ function updateEvent() {
     });
   });
 }
+
+$(document).ready(function() {
+  $(".eventInput").keyup(function(event){
+    if (event.keyCode === 13) addEvent();
+  });
+
+  $('#startTimeButton').datepicker({orientation: "top"})
+    .on('changeDate', function(clickEvent) {
+      $('#startTime').val(dateToPaddedString(clickEvent.date));
+      $(this).datepicker('hide');
+    });
+  $('#endTimeButton').datepicker({orientation: "top"})
+    .on('changeDate', function(clickEvent) {
+      $('#endTime').val(dateToPaddedString(clickEvent.date));
+      $(this).datepicker('hide');
+    });
+});
