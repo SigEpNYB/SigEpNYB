@@ -2,7 +2,7 @@ CREATE TABLE version (
 version INT NOT NULL
 );
 
-INSERT INTO version (version) VALUES (8);
+INSERT INTO version (version) VALUES (9);
 
 source create-accounts.sql;
 source create-tokens.sql;
