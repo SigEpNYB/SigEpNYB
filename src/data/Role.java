@@ -5,9 +5,10 @@ package data;
 
 /** The different Roles */
 public enum Role {
-	BROTHER(1),
-	PRESIDENT(2),
-	VPPROGRAMMING(3);
+	SUPERUSER(1),
+	BROTHER(2),
+	PRESIDENT(3),
+	VPPROGRAMMING(4);
 	
 	public final int id;
 	
