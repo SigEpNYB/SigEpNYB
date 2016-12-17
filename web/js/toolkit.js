@@ -122,6 +122,20 @@ function setIds(ids, data) {
 }
 
 /**
+ * Sets the values of a list of times
+ * @param {string[]} ids - array of IDs
+ * @param {Object} data - object containing value for each id
+ * @returns {undefined}
+ */
+function setDates(ids, data) {
+  ids.forEach(function(id) {
+    var dateObj = new Date(data[id]);
+    var stringObj = dateObj.toISOString().slice(0, -1);
+    document.getElementById(id).value = stringObj;
+  });
+}
+
+/**
  * Adjusts the given date by the given amounts
  * @param {Date} date
  * @param {number} year
