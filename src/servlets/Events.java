@@ -95,6 +95,16 @@ public class Events extends FratServlet {
 			return eventService.get(token, new Date(start), new Date(end));
 		}
 	}
+
+	/* (non-Javadoc)
+	 * @see servlets.FratServlet#delete(java.lang.String, org.json.JSONObject)
+	 */
+	@Override
+	protected Object delete(String token, Map<String, String> urlParams, JSONObject data) throws ClientBoundException, JSONException {
+		int idEvent = data.getInt("idEvent");
+		Services.getEventService().cancel(token, idEvent);
+		return null;
+	}
 	
 	/** A wrapper class for an event id */
 	private class IdEvent {

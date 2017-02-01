@@ -12,12 +12,12 @@ $(document).ready(function() {
 function getFines() {
   sendRequest('GET', 'Fines', null, 'json', true, {showAll: true}, function(fines) {
     var fineString = fines.map(function(fine) {
-    return '<tr>' +
-      '<td>' + accountidMap[fine.idAccount].firstName + ' ' + accountidMap[fine.idAccount].lastName + '</td>' +
-      '<td>' + fine.reason + '</td>' +
-      '<td>' + '$' + fine.amount.toFixed(2) + '</td>' +
-      '<td><button onclick="deleteFine(' + fine.idFine + ')" class="btn btn-danger">Delete/Close</button></td>' +
-      '</tr>';
+      return '<tr>' +
+        '<td>' + accountidMap[fine.idAccount].firstName + ' ' + accountidMap[fine.idAccount].lastName + '</td>' +
+        '<td>' + fine.reason + '</td>' +
+        '<td>' + '$' + fine.amount.toFixed(2) + '</td>' +
+        '<td><button onclick="deleteFine(' + fine.idFine + ')" class="btn btn-danger">Delete/Close</button></td>' +
+        '</tr>';
     }).reduce(addStr, '');
     document.getElementById('fines').innerHTML = fineString;
 
