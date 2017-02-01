@@ -90,19 +90,15 @@ $(document).ready(function() {
             icon: "delete",
             callback: function(key, options) {
               var eventId = options.$trigger[0].id;
-              var data = {eventId: eventId};
-              sendRequest('DELETE', 'Event', data, 'text', true, null, function() {
+              var data = {idEvent: eventId};
+              sendRequest('DELETE', 'Events', data, 'text', true, null, function() {
                 swal({
                   title: 'Event Deleted',
                   type: 'success',
-                  confirmButtonText: 'Delete More Events',
-                  showCancelButton: true,
-                  cancelButtonText: 'Go To Dashboard',
+                  confirmButtonText: 'Go To Dashboard',
                   closeOnConfirm: true,
-                  closeOnCancel: true
-                }, function(isConfirm) {
-                    if (isConfirm) clearIds(['eventId']);
-                    else window.location.href = 'dashboard.html';
+                }, function() {
+                    window.location.href = 'dashboard.html';
                 });
               }, onSendFail);
             }
