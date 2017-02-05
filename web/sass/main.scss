@@ -105,7 +105,7 @@ body {
 }
 
 // Dashboard
-#userInfo {
+#announcements {
   @media (max-width: $break-md) {
     margin-bottom: 25px;
   }
@@ -186,4 +186,13 @@ body {
 
 .twitter-typeahead {
   width: 100%
+}
+
+// Create Announcement
+.announcementInput {
+  width: 100%;
+  min-width: 300px;
+  vertical-align: middle;
+  margin: auto;
+  margin-bottom: 30px;
 }

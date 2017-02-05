@@ -43,7 +43,7 @@ function sendEvent(data) {
   data.endTime = endTime.getTime();
   data.duties = duties;
 
-  sendRequest('POST', 'Events', data, 'json', true, null, function(data) {
+  sendRequest('POST', 'Events', data, 'json', true, null, function() {
     swal({
       title: 'Event Created!',
       text: 'Check your dashboard to see it on the calendar',

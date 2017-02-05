@@ -2,7 +2,7 @@ sendRequest('GET', 'Account', null, 'json', true, {showPermissions: true}, funct
   sendRequest('GET', 'Accounts', null, 'json', true, null, function(accounts) {
     var removePermission = permissions.indexOf('accounts.delete') >= 0;
 
-    var table = accounts.map(function(account) {
+    document.getElementById('members').innerHTML = accounts.map(function(account) {
       var buttonString = '';
       if (removePermission) {
         buttonString = btnStr(account.netid);
@@ -17,7 +17,6 @@ sendRequest('GET', 'Account', null, 'json', true, {showPermissions: true}, funct
     }).reduce(function(s1, s2) {
       return s1 + s2;
     }, '');
-    document.getElementById('members').innerHTML = table;
   });
 });
 

@@ -1,0 +1,19 @@
+doctype html
+html(lang="en")
+  head
+    include ../components/css.jade
+    title Create Announcement | SigEp
+  body
+    include ../components/noscript.jade
+    include ../components/navbar.jade
+    .container-fluid
+      .row
+        .col-xs-12.col-md-4.col-md-offset-4
+          h2 New Announcement
+          br
+          textarea#body.form-control.announcementInput(placeholder='Body', rows="8")
+          input#announcementSubmit.btn.btn-success.eventInput(type='submit', value='Create', onclick='addAnnouncement()')
+    include ../components/footer.jade
+    include ../components/js.jade
+    script(src='js/navbar.js')
+    script(src='js/createannouncement.js')

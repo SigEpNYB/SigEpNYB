@@ -55,6 +55,7 @@ $(document).ready(function() {
       right: 'month,agendaWeek,agendaDay'
     },
     defaultView: 'agendaWeek',
+    scrollTime: '12:00:00',
     events: [],
     editable: false,
     eventRender: function(event, element) {
@@ -114,12 +115,21 @@ sendRequest('GET', 'Account', null, 'json', true, null, function(account) {
 });
 
 sendRequest('GET', 'Roles', null, 'json', true, null, function(roles) {
-  var roleString = roles.map(function(role) {
+  document.getElementById('roles').innerHTML = roles.map(function(role) {
     return '<h3>' + role.role + '</h3>';
   }).reduce(function(s1, s2) {
     return s1 + s2;
   }, '');
-  document.getElementById('roles').innerHTML = roleString;
+});
+
+var start = changeDateFormat(adjustDate(new Date(), 0, -1), 'UTC');
+var end = changeDateFormat(new Date(), 'UTC');
+sendRequest('GET', 'Announcements', null, 'json', true, {start: start, end: end}, function(announcements) {
+  document.getElementById('announcements').innerHTML = announcements.map(function(announcement) {
+    return '<h5>' + announcement.date + '</h5><p>' + announcement.text + '</p>';
+  }).reduce(function(s1, s2) {
+    return s1 + s2;
+  }, '');
 });
 
 /**

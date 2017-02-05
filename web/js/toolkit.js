@@ -23,8 +23,6 @@ function sendRequest(method, url, data, dataType, useToken, queryStringObj, onSu
   }
   queryString = queryString.slice(0, -1);
 
-  var dataString = ($.isEmptyObject(data) ? undefined : JSON.stringify(data));
-
   var headers = {};
   if (useToken) {
     headers['Auth'] = Cookies.get('token');
@@ -32,7 +30,7 @@ function sendRequest(method, url, data, dataType, useToken, queryStringObj, onSu
   $.ajax({
     method: method,
     url: url + queryString,
-    data: dataString,
+    data: ($.isEmptyObject(data) ? undefined : JSON.stringify(data)),
     dataType: dataType,
     headers: headers,
     success: onSuccess,
