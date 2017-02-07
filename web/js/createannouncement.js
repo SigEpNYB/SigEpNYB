@@ -1,4 +1,4 @@
-checkPermissions(['announcements.post'],
+checkPermissions(['announcements.create'],
   "Sorry, you don't have permission to create announcements",
   "Talk to the President to create an announcement",
   true);

@@ -23,4 +23,12 @@ public class AnnouncementService extends RestrictedService<AnnouncementsDAO> {
     })
     .unwrap();
   }
+
+  /** Gets the announcements occurring between the start and end date */
+  public Announcement[] get(String token, Date start, Date end) throws InternalServerException, PermissionDeniedException, InvalidTokenException {
+    return run(token, Permission.GETANNOUNCEMENT, dao -> {
+      return dao.get(start, end);
+    })
+    .unwrap();
+  }
 }

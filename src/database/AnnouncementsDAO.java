@@ -13,6 +13,8 @@ import data.Announcement;
  */
 public class AnnouncementsDAO {
   private static final String CREATE_ANNOUNCEMENT_SQL = "INSERT INTO fines (body, postTime) VALUES (?, ?)";
+  private static final String GET_ANNOUNCEMENTS_SQL = "SELECT idAnnouncement, body, postTime"
+      + "WHERE NOT (postTime > ? OR postTime < ?)";
   
   private final Database database;
   
@@ -24,5 +26,10 @@ public class AnnouncementsDAO {
   /** Creates an announcement */
   public void create(String body, Date postTime) throws SQLException {
     database.execute(CREATE_ANNOUNCEMENT_SQL, body, postTime);
+  }
+
+  /** Gets the announcements that occur between the given start and end dates */
+  public Announcement[] get(Date start, Date end) throws SQLException {
+    return database.buildArray(Announcement.class, GET_ANNOUNCEMENTS_SQL, Database.dateToString(end), Database.dateToString(start));
   }
 }

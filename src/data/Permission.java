@@ -21,7 +21,8 @@ public enum Permission {
 	VIEWFINES(15),
 	VIEWALLFINES(16),
 	DELETEFINE(17),
-	CREATEANNOUNCEMENT(18);
+	CREATEANNOUNCEMENT(18),
+	GETANNOUNCEMENT(19);
 	
 	public final int id;
 	

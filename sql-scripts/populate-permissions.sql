@@ -16,3 +16,4 @@ INSERT INTO permissions (name) VALUES ('fines.view');
 INSERT INTO permissions (name) VALUES ('fines.viewall');
 INSERT INTO permissions (name) VALUES ('fines.delete');
 INSERT INTO permissions (name) VALUES ('announcements.create');
+INSERT INTO permissions (name) VALUES ('announcements.get');
