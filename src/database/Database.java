@@ -208,6 +208,14 @@ public class Database implements IDatabase {
 	public AccountsDAO getAccountsDAO() {
 		return new AccountsDAO(this);
 	}
+
+	/* (non-Javadoc)
+	 * @see database.IDatabase#getPermissionDAO()
+	 */
+	@Override
+	public AnnouncementsDAO getAnnouncementsDAO() {
+		return new AnnouncementsDAO(this);
+	}
 	
 	/* (non-Javadoc)
 	 * @see database.IDatabase#getRolesDAO()

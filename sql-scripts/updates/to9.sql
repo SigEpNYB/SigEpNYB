@@ -1,1 +1,1 @@
-source reset-all.sql
+source reset-all.sql;

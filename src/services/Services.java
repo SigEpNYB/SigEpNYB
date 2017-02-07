@@ -19,6 +19,7 @@ public class Services {
 	private final IDatabase database;
 	private final TokenService tokenService;
 	private final AccountsService accountsService;
+	private final AnnouncementService announcementService;
 	private final PermissionService permissionService;
 	private final EventService eventService;
 	private final PageService pageService;
@@ -43,6 +44,7 @@ public class Services {
 			todoService = new TodoService(database.getTodoDAO());
 			groupService = new GroupService(database.getGroupsDAO());
 			accountsService = new AccountsService(database.getAccountsDAO(), tokenService, permissionService, roleService);
+			announcementService = new AnnouncementService(database.getAnnouncementsDAO(), tokenService, permissionService);
 			accountRequestService = new AccountRequestService(database.getAccountRequestDAO(), tokenService, permissionService, 
 					accountsService, todoService, groupService, emailService);
 			eventService = new EventService(database.getEventsDAO(), tokenService, permissionService);
@@ -70,6 +72,11 @@ public class Services {
 		return getInstance().accountsService;
 	}
 	
+	/** Gets an AnnouncementService */
+	public static AnnouncementService getAnnouncementService() throws InternalServerException {
+		return getInstance().announcementService;
+	}
+
 	/** Gets a PermissionService */
 	public static PermissionService getPermissionService() throws InternalServerException {
 		return getInstance().permissionService;

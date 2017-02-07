@@ -26,6 +26,9 @@ public interface IDatabase extends AutoCloseable {
 	
 	/** Gets the AccountsDAO */
 	public AccountsDAO getAccountsDAO();
+
+	/** Gets the AccountsDAO */
+	public AnnouncementsDAO getAnnouncementsDAO();
 	
 	/** Gets the RolesDAO */
 	public RolesDAO getRolesDAO();

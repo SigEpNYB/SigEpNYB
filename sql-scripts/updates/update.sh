@@ -22,7 +22,8 @@ maxVersion=1
 cd updates/
 for f in *.sql
 do
-    v=${f:2:1}
+    a=${f%.*}
+    v=${a:2}
     if [ $v -gt $maxVersion ]
     then
         maxVersion=$v
