@@ -2,8 +2,6 @@ package servlets;
 
 import java.util.Map;
 
-import javax.servlet.annotation.WebServlet;
-
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -13,7 +11,6 @@ import exceptions.ClientBoundException;
 /**
  * Servlet implementation class Login
  */
-@WebServlet("/Login")
 public class Login extends FratServlet {
 	private static final long serialVersionUID = 1L;
 

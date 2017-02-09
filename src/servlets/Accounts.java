@@ -2,8 +2,6 @@ package servlets;
 
 import java.util.Map;
 
-import javax.servlet.annotation.WebServlet;
-
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -15,7 +13,6 @@ import exceptions.MalformedRequestException;
 /**
  * Servlet implementation class Accounts
  */
-@WebServlet("/Accounts")
 public class Accounts extends FratServlet {
 	private static final long serialVersionUID = 1L;
 

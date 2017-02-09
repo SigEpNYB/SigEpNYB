@@ -24,6 +24,7 @@ public class AccountsDAO {
 	private static final String GET_ACCOUNT_SQL = "SELECT idAccount, netid, firstName, lastName, phone FROM accounts WHERE idAccount = ?";
 	private static final String GET_ACCOUNTS_SQL = "SELECT idAccount, netid, firstName, lastName, phone FROM accounts";
 	private static final String DELETE_ACCOUNT_SQL = "DELETE FROM accounts WHERE idAccount = ?";
+	private static final String UPDATE_PASSWORD_SQL = "UPDATE accounts SET password=? WHERE idAccount = ?";
 	
 	private final Database database;
 	
@@ -65,5 +66,9 @@ public class AccountsDAO {
 	/** Deletes the account with the given netid */
 	public void delete(int idAccount) throws SQLException {
 		database.execute(DELETE_ACCOUNT_SQL, idAccount);
+	}
+
+	public void updatePassword(int idAccount, String newPassword) throws SQLException {
+		database.execute(UPDATE_PASSWORD_SQL, newPassword, idAccount);
 	}
 }

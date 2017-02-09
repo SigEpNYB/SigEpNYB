@@ -15,6 +15,7 @@ import exceptions.AccountNotFoundException;
 import exceptions.InternalServerException;
 import exceptions.InvalidTokenException;
 import exceptions.PermissionDeniedException;
+import exceptions.InvalidCredentialsException;
 
 /**
  * Logic behind accounts
@@ -121,6 +122,25 @@ public class AccountsService extends RestrictedService<AccountsDAO> {
 			dao.delete(idAccount);
 		})
 		.process(AccountNotFoundException.class)
+		.unwrap();
+	}
+
+	public void changePassword(String token, String oldPassword, String newPassword) throws InternalServerException, InvalidTokenException, InvalidCredentialsException {
+		run(token, (dao, t) -> {
+			int idAccount = getAccount(token).getId();
+			AccountData account = dao.get(idAccount);
+
+			if (!BCrypt.checkpw(oldPassword, dao.getPassword(account.getNetid()))) {
+				System.out.println("Failed");
+				throw new InvalidCredentialsException();
+			} else {
+				System.out.println("Success");
+				dao.updatePassword(idAccount, BCrypt.hashpw(newPassword, BCrypt.gensalt()));
+			}
+
+			return 0; // otherwise the type-checker throws an error
+		})
+		.process(InvalidCredentialsException.class)
 		.unwrap();
 	}
 }

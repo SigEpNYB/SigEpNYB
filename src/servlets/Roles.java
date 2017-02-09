@@ -2,15 +2,12 @@ package servlets;
 
 import java.util.Map;
 
-import javax.servlet.annotation.WebServlet;
-
 import services.Services;
 import exceptions.ClientBoundException;
 
 /**
  * Servlet implementation class Roles
  */
-@WebServlet("/Roles")
 public class Roles extends FratServlet {
 	private static final long serialVersionUID = 1L;
 

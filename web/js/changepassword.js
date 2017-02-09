@@ -18,7 +18,7 @@ function changePassword() {
 function sendPassword(data) {
   if (data.newPassword !== data.passwordConfirm) {
     swal({
-      title: "Your passwords don't match :(",
+      title: "Your passwords don't match",
       text: "Please try again",
       type: "warning",
       closeOnConfirm: true
@@ -39,7 +39,7 @@ function sendPassword(data) {
     }, function() {
       swal({
         title: 'Password Change Failed',
-        text: "Doesn't look like your old password was correct :(",
+        text: "Doesn't look like your old password was correct",
         type: 'error',
         closeOnConfirm: true
       });

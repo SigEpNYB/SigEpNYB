@@ -5,8 +5,6 @@ package servlets;
 
 import java.util.Map;
 
-import javax.servlet.annotation.WebServlet;
-
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -21,7 +19,6 @@ import exceptions.RequestExistsException;
 /**
  * Servlet implementation of class AccountRequests
  */
-@WebServlet("/AccountRequests")
 public class AccountRequests extends FratServlet {
 	private static final long serialVersionUID = 1L;
 
