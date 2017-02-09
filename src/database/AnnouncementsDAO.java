@@ -12,8 +12,8 @@ import data.Announcement;
  * Manages announcements
  */
 public class AnnouncementsDAO {
-  private static final String CREATE_ANNOUNCEMENT_SQL = "INSERT INTO fines (body, postTime) VALUES (?, ?)";
-  private static final String GET_ANNOUNCEMENTS_SQL = "SELECT idAnnouncement, body, postTime"
+  private static final String CREATE_ANNOUNCEMENT_SQL = "INSERT INTO announcements (body, postTime) VALUES (?, ?)";
+  private static final String GET_ANNOUNCEMENTS_SQL = "SELECT idAnnouncement, body, postTime FROM announcements "
       + "WHERE NOT (postTime > ? OR postTime < ?)";
   
   private final Database database;

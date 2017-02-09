@@ -14,7 +14,7 @@ function addAnnouncement() {
  * @returns {undefined}
  */
 function sendAnnouncement(data) {
-  sendRequest('POST', 'Announcements', data, 'json', true, null, function(data) {
+  sendRequest('POST', 'Announcements', data, 'text', true, null, function(data) {
     swal({
       title: 'Announcement Posted!',
       text: 'Check your dashboard to see all announcements',
@@ -22,7 +22,7 @@ function sendAnnouncement(data) {
     }, function() {
       clearIds(['body']);
     });
-  }, function() {
+  }, function(xhr, textStatus, error) {
     swal({
       title: 'Announcement Creation Failed',
       text: 'Please make sure the body is filled out',

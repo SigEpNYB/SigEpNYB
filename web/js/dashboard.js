@@ -124,9 +124,11 @@ sendRequest('GET', 'Roles', null, 'json', true, null, function(roles) {
 
 var start = changeDateFormat(adjustDate(new Date(), 0, -1), 'UTC');
 var end = changeDateFormat(new Date(), 'UTC');
-sendRequest('GET', 'Announcements', null, 'json', true, {start: start, end: end}, function(announcements) {
+var announcementData = {startTime: start, endTime: end};
+sendRequest('GET', 'Announcements', null, 'json', true, announcementData, function(announcements) {
   document.getElementById('announcements').innerHTML = announcements.map(function(announcement) {
-    return '<h5>' + announcement.date + '</h5><p>' + announcement.text + '</p>';
+    return '<h4 class="announcementText">' + announcement.body + '</h4>' + 
+           '<p class="announcementTime">' + (new Date(announcement.postTime)).toLocaleString() + '</p>';
   }).reduce(function(s1, s2) {
     return s1 + s2;
   }, '');

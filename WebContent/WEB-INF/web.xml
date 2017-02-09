@@ -22,6 +22,10 @@
     <servlet-class>servlets.Accounts</servlet-class>
   </servlet>
   <servlet>
+    <servlet-name>Announcements</servlet-name>
+    <servlet-class>servlets.Announcements</servlet-class>
+  </servlet>
+  <servlet>
     <servlet-name>Events</servlet-name>
     <servlet-class>servlets.Events</servlet-class>
   </servlet>
@@ -52,6 +56,10 @@
   <servlet-mapping>
     <servlet-name>Accounts</servlet-name>
     <url-pattern>/Accounts/*</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>Announcements</servlet-name>
+    <url-pattern>/Announcements/*</url-pattern>
   </servlet-mapping>
   <servlet-mapping>
     <servlet-name>Events</servlet-name>
