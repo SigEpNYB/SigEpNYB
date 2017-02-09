@@ -131,10 +131,8 @@ public class AccountsService extends RestrictedService<AccountsDAO> {
 			AccountData account = dao.get(idAccount);
 
 			if (!BCrypt.checkpw(oldPassword, dao.getPassword(account.getNetid()))) {
-				System.out.println("Failed");
 				throw new InvalidCredentialsException();
 			} else {
-				System.out.println("Success");
 				dao.updatePassword(idAccount, BCrypt.hashpw(newPassword, BCrypt.gensalt()));
 			}
 
