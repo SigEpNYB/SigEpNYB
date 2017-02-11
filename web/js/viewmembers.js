@@ -2,11 +2,10 @@ sendRequest('GET', 'Account', null, 'json', true, {showPermissions: true}, funct
   sendRequest('GET', 'Accounts', null, 'json', true, null, function(accounts) {
     var removePermission = permissions.indexOf('accounts.delete') >= 0;
 
-    document.getElementById('members').innerHTML = accounts.map(function(account) {
-      var buttonString = '';
-      if (removePermission) {
-        buttonString = btnStr(account.netid);
-      };
+    document.getElementById('members').innerHTML = accounts.sort(function(account1, account2) {
+      return account1.firstName.toUpperCase().localeCompare(account2.firstName.toUpperCase());
+    }).map(function(account) {
+      var buttonString = removePermission ? btnStr(account.netid) : '';
       return '<tr>' +
         '<td>' + account.firstName + '</td>' +
         '<td>' + account.lastName + '</td>' +
